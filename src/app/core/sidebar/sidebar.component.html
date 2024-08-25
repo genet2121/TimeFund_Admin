@@ -1,0 +1,39 @@
+<!-- <div class="sidenav-header">
+  <div class="toggle-button">
+    <button mat-icon-button>
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+  </div>
+</div> -->
+
+<mat-nav-list>
+  <a
+    mat-list-item
+    *ngFor="let item of menuItems()"
+    [routerLink]="item.route"
+    routerLinkActive="active-item"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+  <!-- <mat-icon>{{ item.icon }}</mat-icon> -->
+    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+    <span matListItemTitle>{{ item.label }}</span>
+  </a>
+</mat-nav-list>
+
+
+<!-- <mat-nav-list>
+  <a mat-list-item *ngFor=" let item of menuItems()" [routerLink]="item.route">
+    <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
+    <span matListItemTitle >{{item.label}}</span>
+  </a>
+</mat-nav-list> -->
+
+
+ <!-- <img src="../../assets/image.png" [width]="profilePicSize()" [height]="profilePicSize()"/> -->
+  <!-- <div class="header-text" [class.hide-header-text]="sideNavCollapsed()">
+    <h2>your profile</h2>
+    <p>Hello Admin</p>
+  </div> -->
+   <!-- <div style="width: 40px; height: 40px; background: white; border-radius: 9999px; border: 1px #D9D9D9 solid"><button mat-icon-button (click)="collapsed.set(!collapsed())">
+    <mat-icon>menu</mat-icon>
+  </button></div> -->

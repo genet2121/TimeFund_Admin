@@ -1,0 +1,19 @@
+.content {
+  padding: 24px;
+  background: #F3F3F9;
+}
+
+.mat-toolbar {
+  position: relative;
+  z-index: 5;
+  background: #FFFFFF;
+}
+
+.mat-sidenav-container {
+  height: calc(100vh - 64px);
+  background: #FFFFFF;
+}
+
+
+
+
