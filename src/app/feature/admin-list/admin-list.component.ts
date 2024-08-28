@@ -33,7 +33,7 @@ export class AdminListComponent {
 
   handleAction(element: any) {
     console.log('Action performed on:', element.id);
-    // this.router.navigate([`/admin/view/${element.id}`]);
+    // this.router.navigate([/admin/view/${element.id}]);
     window.location.href = `/admin/view/${element.id}`
   }
 
@@ -43,4 +43,18 @@ export class AdminListComponent {
   }
 
   currentPage = 2;
+  handleAddClick() {
+
+    console.log('Add button clicked');
+  }
+
+  handleSearchClick() {
+
+    console.log('Search button clicked');
+  }
+
+  handleSettingsClick() {
+
+    console.log('Settings button clicked');
+  }
 }
