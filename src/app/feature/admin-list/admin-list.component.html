@@ -1,12 +1,12 @@
 <app-table
-  tableTitle="Contact Us"
+  tableTitle="Admins"
   [columns]="tableColumns"
   [data]="tableData"
-  [page]="2"
+  [page]="currentPage"
   [allowedActions]="allowedActions"
   [pageSize]="40"
   [DeleteAction]="handleAction"
   [EditAction]="handleAction"
-  [DeleteAction]="handleAction"
+  [ViewAction]="handleAction"
   [PageChangeAction]="changePage"
 ></app-table>

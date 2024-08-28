@@ -23,13 +23,13 @@
   }
 } */
 .active-item {
-  color: white;
-  border-left: 5px solid #883AC5;
+  background-color: #ffffffb6;
+  border-left: 4px solid #883AC5;
 }
 
 .active-item .mat-mdc-list-item-title {
   color: #5D328F;
- font-weight: bold;
+ font-weight: normal;
 }
 .active-item .mat-mdc-list-item-icon {
   color: #5D328F;

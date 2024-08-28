@@ -2,6 +2,8 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
+import { AdminFormComponent } from './admin-form/admin-form.component';
+import { AdminListComponent } from './admin-list/admin-list.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -16,6 +18,14 @@ export const featureRoutes: Routes = [
   {
     path: 'users',
     component:UsersComponent
+  },
+  {
+    path: 'admins',
+    component:AdminListComponent
+  },
+  {
+    path: 'admin/view/:id',
+    component:AdminFormComponent
   },
   { path: '**', redirectTo: 'dashboard' },
 
