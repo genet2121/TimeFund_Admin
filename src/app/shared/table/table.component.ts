@@ -65,7 +65,7 @@ export class TableComponent {
     this.EditAction(element);
   }
   onViewAction(element: any) {
-    this.onViewAction(element);
+    this.ViewAction(element);
   }
   onPageChangeAction(element:any){
     this.onPageChangeAction(element)
