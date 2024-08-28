@@ -1,0 +1,12 @@
+<app-table
+  tableTitle="Admins"
+  [columns]="tableColumns"
+  [data]="tableData"
+  [page]="currentPage"
+  [allowedActions]="allowedActions"
+  [pageSize]="40"
+  [DeleteAction]="handleAction"
+  [EditAction]="handleAction"
+  [ViewAction]="handleAction"
+  [PageChangeAction]="changePage"
+></app-table>
