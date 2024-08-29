@@ -10,7 +10,6 @@ export class HelperService {
 
   constructor() {
     this.user = JSON.parse(localStorage.getItem('user')!);
-    console.log('HelperService initialized, user:', this.user);
   }
 
   public get getLogInUser() {

@@ -1,8 +1,10 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Column } from '../../core/model/tablecolumn.model';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import {
   MatPaginator,
   MatPaginatorModule,
@@ -35,6 +37,9 @@ export class TableComponent {
   @Input() page: number = 0;
   @Input() allowedActions?: tablePermission = undefined;
   @Input() pageSize: number = 0;
+  @Output() addClick = new EventEmitter<void>();
+  @Output() searchClick = new EventEmitter<void>();
+  @Output() settingsClick = new EventEmitter<void>();
 
   dataSource!: MatTableDataSource<any>;
 
@@ -69,5 +74,19 @@ export class TableComponent {
   }
   onPageChangeAction(element:any){
     this.onPageChangeAction(element)
+  }
+
+
+
+  onAddClick() {
+    this.addClick.emit();
+  }
+
+  onSearchClick() {
+    this.searchClick.emit();
+  }
+
+  onSettingsClick() {
+    this.settingsClick.emit();
   }
 }
