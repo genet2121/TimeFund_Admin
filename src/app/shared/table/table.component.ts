@@ -3,6 +3,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Column } from '../../core/model/tablecolumn.model';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import {
   MatPaginator,
   MatPaginatorModule,

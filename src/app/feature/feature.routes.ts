@@ -24,6 +24,14 @@ export const featureRoutes: Routes = [
     component:AdminListComponent
   },
   {
+    path: 'admin/create',
+    component:AdminFormComponent
+  },
+  {
+    path: 'admin/edit/:id',
+    component:AdminFormComponent
+  },
+  {
     path: 'admin/view/:id',
     component:AdminFormComponent
   },
