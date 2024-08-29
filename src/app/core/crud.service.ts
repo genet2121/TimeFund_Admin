@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { HelperService } from './helper.service';
+import { environment } from '../../environmets/environment';
+
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +45,9 @@ export class CrudService<T> {
     });
   }
 
-  post(endpoint: string, formData: FormData): Observable<any> {
+  post(endpoint: string, payload: any): Observable<any> {
     const headers = this.helperService.getUserToken();
-    return this.http.post(`${this.apiUrl}/${endpoint}`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/${endpoint}`, payload, { headers });
   }
 
   delete(endpoint: string, id: number): Observable<void> {
