@@ -16,7 +16,7 @@ export class HelperService {
     return this.user;
   }
 
-  public set setLogInUser(user: any) {
+  public set setLogInUser(user: admin) {
     this.user = user;
     localStorage.setItem('user', JSON.stringify(user));
   }

@@ -9,6 +9,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { HelperService } from '../helper.service';
 
 @Component({
   selector: 'app-workspace',
@@ -29,6 +30,11 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrl: './workspace.component.css',
 })
 export class WorkspaceComponent {
+  constructor(private helperService: HelperService) {}
   collapsed = signal(false);
   sidenavWidth = computed(() => (this.collapsed() ? '64px' : '200px'));
+  userName: string = '';
+  ngOnInit() {
+    this.userName = this.helperService.getLogInUser.fullName;
+  }
 }
