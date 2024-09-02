@@ -12,6 +12,7 @@ import {
 } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import tablePermission from '../../core/model/tablepermissions.mode';
+import { CrudService } from '../../core/crud.service';
 
 @Component({
   selector: 'app-table',
@@ -39,12 +40,15 @@ export class TableComponent {
   @Output() searchClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
 
+
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [];
+  constructor(private router: Router,  private crudservice: CrudService<any>){
 
+  }
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.data);
     this.displayedColumns = this.columns.map((col) => col.key);
@@ -61,9 +65,7 @@ export class TableComponent {
       this.dataSource.data = this.data;
     }
   }
-constructor(private router: Router){
 
-}
   // ngAfterViewInit() {
   //   this.dataSource.paginator = this.paginator;
   //   this.paginator.pageIndex = this.page;
@@ -72,9 +74,13 @@ constructor(private router: Router){
   // onPageChange(event: PageEvent) {
   //   this.page = event.pageIndex;
   // }
-  onDeleteAction(element: any) {
+  onDeleteAction = (element: any) => {
     this.DeleteAction(element);
+    console.log('++++++++++', this.crudservice)
+    // console.log('DeleteAction:', this.DeleteAction);
+
   }
+
   onEditAction(element: any) {
     this.EditAction(element);
   }

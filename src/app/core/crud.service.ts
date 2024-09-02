@@ -55,6 +55,12 @@ export class CrudService<T> {
       headers,
     });
   }
+  deleteItem(endpoint: string, id: number): Observable<any> {
+    const headers = this.helperService.getUserToken();
+    return this.http.delete<void>(`${this.apiUrl}/${endpoint}/${id}`, {
+      headers,
+    });
+  }
 
   updateByQueryParam(
     endpoint: string,

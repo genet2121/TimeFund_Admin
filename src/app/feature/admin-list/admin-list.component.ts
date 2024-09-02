@@ -5,6 +5,7 @@ import { CrudService } from '../../core/crud.service';
 import { TableComponent } from '../../shared/table/table.component';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import admin from '../../core/model/admin.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-list',
@@ -14,6 +15,7 @@ import admin from '../../core/model/admin.model';
   styleUrls: ['./admin-list.component.css']
 })
 export class AdminListComponent implements OnInit {
+   val:any[] = [];
   tableColumns = [
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
@@ -30,40 +32,62 @@ export class AdminListComponent implements OnInit {
   };
   tableData: admin[] = [];
 
-  constructor(private router: Router, private crudService: CrudService<any>) {}
+  constructor(private router: Router, private crudservice: CrudService<any>,  private snackBar: MatSnackBar,) {}
 
   ngOnInit() {
     this.fetchData();
   }
 
   fetchData() {
-    this.crudService.getAll('admin/getalladmins')
+    this.crudservice.getAll('admin/getalladmins')
       .subscribe((data: admin[]) => {
-        this.tableData = data;
+        this.tableData = this.transformDataForTable(data);
         console.log('thus', this.tableData)
       });
   }
+  transformDataForTable(admins: admin[]): any[] {
+    return admins.map((adminTableData) => ({
+      id: adminTableData.admin_id,
+      fullName:
+      adminTableData.fullName,
+        email: adminTableData.email,
+        user_group_id: adminTableData.UserGroup.user_group_name,
 
+      isActive: adminTableData.isActive ? 'Active' : 'inActive',
+    }));
+  }
   handleViewAction(element: any) {
-    // this.router.navigate(['/admin', element.admin_id, 'view'], {
-    //   state: { view: true }
-    // });
-    this.router.navigate(['/admin', element.admin_id, 'view'], {
+
+    this.router.navigate(['/admin', element.id, 'view'], {
       queryParams: { view: true }
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/admin', element.admin_id, 'edit'], {
+    this.router.navigate(['/admin', element.id, 'edit'], {
       state: { edit: true }
     });
+
 
   }
 
   handleDeleteAction(element: any) {
-    console.log('Action performed on:', element.id);
-  }
 
+   if(this.crudservice&&element.id){
+    this.crudservice.deleteItem('admin/deleteadmins', element.id).subscribe(res =>{
+      this.val = res as admin[];
+      this.snackBar.open('admin deleted successfully!', 'Close', {
+        duration: 3000,
+         verticalPosition: 'top'
+      });
+       this.fetchData();
+
+    })
+   }else{
+    console.log('error')
+   }
+}
+  
   changePage(event: any) {
     console.log('Page changed:', event);
   }
