@@ -30,11 +30,11 @@ import { HelperService } from '../helper.service';
   styleUrl: './workspace.component.css',
 })
 export class WorkspaceComponent {
+  constructor(private helperService: HelperService) {}
   collapsed = signal(false);
   sidenavWidth = computed(() => (this.collapsed() ? '64px' : '200px'));
-  // profileData:
-  constructor(private helperService:HelperService){
-    console.log('+++++++++++++++++', this.helperService.getLogInUser.admin_id)
-
+  userName: string = '';
+  ngOnInit() {
+    this.userName = this.helperService.getLogInUser.fullName;
   }
 }

@@ -65,7 +65,7 @@ export type MenuItem = {
   standalone: true,
   imports: [MatListModule, CommonModule, MatIconModule, RouterModule],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
   constructor(private router: Router) {}
@@ -77,6 +77,7 @@ export class SidebarComponent {
 
   menuItems = signal<MenuItem[]>([
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
+    { icon: 'trending_up', label: 'Projects', route: '/projects' },
     { icon: 'person', label: 'Admins', route: '/admins' },
     { icon: 'groups', label: 'Users', route: '/users' },
     { icon: 'volunteer_activism', label: 'Fundraisers', route: '/fundraisers' },

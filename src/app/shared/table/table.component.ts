@@ -1,10 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Column } from '../../core/model/tablecolumn.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import tablePermission from '../../core/model/tablepermissions.mode';
 
@@ -17,12 +22,11 @@ import tablePermission from '../../core/model/tablepermissions.mode';
     CommonModule,
     MatPaginatorModule,
     MatIconModule,
-
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
-export class TableComponent implements OnChanges {
+export class TableComponent {
   @Input() tableTitle: string = '';
   @Input() columns: Column[] = [];
   @Input() data: any[] = [];
@@ -30,19 +34,25 @@ export class TableComponent implements OnChanges {
   @Input() EditAction: (element: any) => void = () => {};
   @Input() ViewAction: (element: any) => void = () => {};
   @Input() PageChangeAction: (element: any) => void = () => {};
-  @Input() page: number = 0;
   @Input() allowedActions?: tablePermission = undefined;
-  @Input() pageSize: number = 0;
   @Output() addClick = new EventEmitter<void>();
   @Output() searchClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource!: MatTableDataSource<any>;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [];
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.data);
+    this.displayedColumns = this.columns.map((col) => col.key);
+    if (!this.displayedColumns.includes('action')) {
+      this.displayedColumns.push('action');
+    }
+  }
+    ngOnChanges(changes: SimpleChanges) {
     if (changes['columns']) {
       this.updateDisplayedColumns();
     }
@@ -54,26 +64,17 @@ export class TableComponent implements OnChanges {
 constructor(private router: Router){
 
 }
-  ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-      this.paginator.pageIndex = this.page;
-      this.paginator.pageSize = this.pageSize;
-    }
-  }
-
-  onPageChange(event: PageEvent) {
-    this.page = event.pageIndex;
-  }
-
-  onPageChangeAction(element: any) {
-    this.PageChangeAction(element);
-  }
-
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.paginator.pageIndex = this.page;
+  //   this.paginator.pageSize = this.pageSize;
+  // }
+  // onPageChange(event: PageEvent) {
+  //   this.page = event.pageIndex;
+  // }
   onDeleteAction(element: any) {
     this.DeleteAction(element);
   }
-
   onEditAction(element: any) {
     this.EditAction(element);
   }
@@ -81,6 +82,11 @@ constructor(private router: Router){
   onViewAction(element: any) {
     this.ViewAction(element);
   }
+  onPageChangeAction(element:any){
+    this.onPageChangeAction(element)
+  }
+
+
 
   onAddClick() {
     this.addClick.emit();
