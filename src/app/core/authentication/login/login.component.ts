@@ -33,7 +33,8 @@ export class LoginComponent {
       })
       .subscribe(
         (result) => {
-          this.helperService.setLogInUser(result);
+
+          this.helperService.setLogInUser = result;
           this.router.navigate(['/dashboard']);
         },
         (error) => {

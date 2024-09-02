@@ -1,15 +1,10 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Column } from '../../core/model/tablecolumn.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent,
-} from '@angular/material/paginator';
+import { Router, RouterModule } from '@angular/router';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import tablePermission from '../../core/model/tablepermissions.mode';
 
@@ -22,11 +17,12 @@ import tablePermission from '../../core/model/tablepermissions.mode';
     CommonModule,
     MatPaginatorModule,
     MatIconModule,
+
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
-export class TableComponent {
+export class TableComponent implements OnChanges {
   @Input() tableTitle: string = '';
   @Input() columns: Column[] = [];
   @Input() data: any[] = [];
@@ -41,42 +37,50 @@ export class TableComponent {
   @Output() searchClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
 
-  dataSource!: MatTableDataSource<any>;
-
+  dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [];
 
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.data);
-    this.displayedColumns = this.columns.map((col) => col.key);
-    if (!this.displayedColumns.includes('action')) {
-      this.displayedColumns.push('action');
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['columns']) {
+      this.updateDisplayedColumns();
+    }
+
+    if (changes['data']) {
+      this.dataSource.data = this.data;
+    }
+  }
+constructor(private router: Router){
+
+}
+  ngAfterViewInit() {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+      this.paginator.pageIndex = this.page;
+      this.paginator.pageSize = this.pageSize;
     }
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.paginator.pageIndex = this.page;
-    this.paginator.pageSize = this.pageSize;
-  }
   onPageChange(event: PageEvent) {
     this.page = event.pageIndex;
   }
+
+  onPageChangeAction(element: any) {
+    this.PageChangeAction(element);
+  }
+
   onDeleteAction(element: any) {
     this.DeleteAction(element);
   }
+
   onEditAction(element: any) {
     this.EditAction(element);
   }
+
   onViewAction(element: any) {
     this.ViewAction(element);
   }
-  onPageChangeAction(element:any){
-    this.onPageChangeAction(element)
-  }
-
-
 
   onAddClick() {
     this.addClick.emit();
@@ -88,5 +92,12 @@ export class TableComponent {
 
   onSettingsClick() {
     this.settingsClick.emit();
+  }
+
+  private updateDisplayedColumns() {
+    this.displayedColumns = this.columns.map((col) => col.key);
+    if (!this.displayedColumns.includes('action')) {
+      this.displayedColumns.push('action');
+    }
   }
 }

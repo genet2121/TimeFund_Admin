@@ -28,11 +28,11 @@ export const featureRoutes: Routes = [
     component:AdminFormComponent
   },
   {
-    path: 'admin/edit/:id',
+    path: 'admin/:id/edit',
     component:AdminFormComponent
   },
   {
-    path: 'admin/view/:id',
+    path: 'admin/:id/view',
     component:AdminFormComponent
   },
   { path: '**', redirectTo: 'dashboard' },
