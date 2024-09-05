@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CrudService } from '../../core/crud.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Fundraising } from '../../core/model/fundraiser.model';
+import { PhaseComponent } from "../../shared/phase/phase.component";
 
 @Component({
   selector: 'app-viewproject',
   standalone: true,
-  imports: [],
+  imports: [PhaseComponent],
   templateUrl: './viewproject.component.html',
   styleUrl: './viewproject.component.css',
 })

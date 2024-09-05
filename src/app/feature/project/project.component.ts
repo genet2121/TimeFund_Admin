@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
       .getAll('fundraising/getallfundraisings/undefined')
       .subscribe(
         (result: Fundraising[]) => {
-          this.tabledata = this.transformData(result);
+          this.tabledata = this.transformData(result.filter(project => project.for_project === true));
         },
         (error) => {
           console.error('Error fetching data', error);
@@ -57,9 +57,8 @@ export class ProjectComponent implements OnInit {
         fundraising.title.length > 10
           ? fundraising.title.slice(0, 10) + '...'
           : fundraising.title,
-      category: fundraising.Wegen_BusinessCategory
-        ? fundraising.Wegen_BusinessCategory.category_type
-        : fundraising.Category?.category_type || 'N/A',
+      category:
+        fundraising.Wegen_BusinessCategory.business_category_type || 'N/A',
       goal: fundraising.goal,
       closingdate: new Date(fundraising.end_date).toLocaleDateString(),
       status: fundraising.is_active ? 'Active' : 'Suspended',

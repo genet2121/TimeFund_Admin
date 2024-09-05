@@ -22,6 +22,7 @@
         type="text"
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         [value]="fundraisingInfo?.description"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -31,7 +32,8 @@
       <input
         type="text"
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
-        [value]="fundraisingInfo?.Category?.category_type"
+        [value]="fundraisingInfo?.Wegen_BusinessCategory.business_category_type"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -41,7 +43,10 @@
       <input
         type="text"
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
-        [value]="fundraisingInfo?.Wegen_SubCategory?.sub_category_type"
+        [value]="
+          fundraisingInfo?.Wegen_BusinessSubCategory.business_sub_category_type
+        "
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -50,6 +55,7 @@
         type="text"
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         [value]="fundraisingInfo?.goal"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -60,6 +66,7 @@
         type="text"
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         [value]="fundraisingInfo?.organizer_address"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -71,6 +78,7 @@
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         formControlName="email"
         [value]="fundraisingInfo?.start_date"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -82,6 +90,7 @@
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         formControlName="email"
         [value]="fundraisingInfo?.end_date"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -93,6 +102,7 @@
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         formControlName="email"
         [value]="fundraisingInfo?.Wegen_FundraisingType?.fundraising_type"
+        readonly
       />
     </div>
 
@@ -105,6 +115,7 @@
         class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
         formControlName="email"
         [value]="fundraisingInfo?.Wegen_Currency?.currency_type"
+        readonly
       />
     </div>
     <div class="col-span-2">
@@ -131,5 +142,9 @@
       <!-- <button class="bg-violet-800 text-white h-10 px-11 rounded-xl border" (click)="onSave()">Save</button> -->
       <!-- <button class="bg-violet-800 text-white h-10 px-11 rounded-xl border" (click)="onEdit()">Edit</button> -->
     </div>
+  </div>
+  <!--Start of Phases Section -->
+  <div>
+    <app-phase> </app-phase>
   </div>
 </div>
