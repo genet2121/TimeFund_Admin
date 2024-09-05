@@ -1,50 +1,57 @@
-<div class="p-8 max-w-4xl mx-auto bg-white shadow-md rounded-md">
-  <button mat-icon-button>
-    <mat-icon>arrow_back</mat-icon>
+
+<div class="p-8 max-w-4xl mx-auto bg-white shadow-md rounded-md" [formGroup]="userGroupForm">
+  <button mat-icon-button class="mb-3" (click)="onBack()">
+    <mat-icon color="primary">arrow_back</mat-icon>
+
   </button>
 
-  <h2 class="text-xl font-semibold mt-4 mb-6">Create User groups</h2>
+  <h2 class="text-xs  mt-4 mb-6">Create User groups</h2>
 
-  <mat-form-field appearance="outline" class="w-80 mb-4">
-    <mat-select placeholder="Group Name">
+  <mat-form-field appearance="outline"  class="w-80  mb-4 custom-border">
+    <mat-select placeholder="Group Name" formControlName="user_group_id">
       <mat-option *ngFor="let group of groups" [value]="group.user_group_id">
         {{ group.user_group_name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <div class="overflow-y-auto overflow-x-hidden max-h-96">
+  <div class="overflow-y-auto max-h-96">
     <table class="min-w-full divide-y divide-gray-200">
       <thead>
         <tr>
           <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pages</th>
           <th class="px-16 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View</th>
-          <th class="px-14 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Add</th>
-          <th class="px-11 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edit</th>
-          <th class="px-11 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delete</th>
+          <th class="px-16 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Add</th>
+          <th class="px-16 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View Detail</th>
+          <th class="px-16 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update</th>
+          <th class="px-16 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delete</th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <tr *ngFor="let page of pages">
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ page.tab_name }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-center">
-            <mat-checkbox></mat-checkbox>
+      <tbody formArrayName="permissions">
+        <tr *ngFor="let permission of permissionsArray.controls; let i = index" [formGroupName]="i">
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ getTableName(permission.get('table_id')?.value) }}
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-center">
-            <mat-checkbox></mat-checkbox>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <mat-checkbox color="primary" formControlName="can_view"></mat-checkbox>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-center">
-            <mat-checkbox></mat-checkbox>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <mat-checkbox color="primary" formControlName="can_add"></mat-checkbox>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-center">
-            <mat-checkbox></mat-checkbox>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <mat-checkbox color="primary" formControlName="can_view_detail"></mat-checkbox>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <mat-checkbox color="primary" formControlName="can_update"></mat-checkbox>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <mat-checkbox color="primary" formControlName="can_delete"></mat-checkbox>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-
   <div class="flex justify-end mt-6">
-    <button mat-raised-button color="primary" class="bg-purple-600 text-white">Create group</button>
+    <button mat-raised-button color="primary" class="bg-purple-600 text-white" (click)="onSubmit()">Create group</button>
   </div>
 </div>
