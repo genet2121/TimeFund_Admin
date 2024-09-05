@@ -5,6 +5,8 @@ import { AdminFormComponent } from './admin-form/admin-form.component';
 import { AdminListComponent } from './admin-list/admin-list.component';
 import { ProjectComponent } from './project/project.component';
 import { ViewprojectComponent } from './viewproject/viewproject.component';
+import { UserGroupListComponent } from './user-group-list/user-group-list.component';
+import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -44,6 +46,26 @@ export const featureRoutes: Routes = [
   {
     path: 'project/:id',
     component: ViewprojectComponent,
+  },
+  {
+    path: 'user_groups',
+    component:UserGroupListComponent
+  },
+  {
+    path: 'user_groups/create',
+    component: UserGroupFormComponent
+  },
+  {
+    path: 'user_groups/:id/assign_role',
+    component: UserGroupFormComponent
+  },
+  {
+    path: 'user_groups/:id/edit',
+    component: UserGroupFormComponent
+  },
+  {
+    path: 'user_groups/:id/view',
+    component: UserGroupFormComponent
   },
   { path: '**', redirectTo: 'dashboard' },
 ];

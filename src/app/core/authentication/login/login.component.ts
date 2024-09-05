@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CrudService } from '../../crud.service';
-import { HelperService } from '../../helper.service';
+import { CrudService } from '../../services/crud.service';
+import { HelperService } from '../../services/helper.service';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -33,7 +33,7 @@ export class LoginComponent {
       })
       .subscribe(
         (result) => {
- 
+
           this.helperService.setLogInUser = result;
 
           this.helperService.setLogInUser = result;

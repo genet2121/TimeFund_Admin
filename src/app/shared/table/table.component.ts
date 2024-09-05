@@ -12,7 +12,7 @@ import {
 } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import tablePermission from '../../core/model/tablepermissions.mode';
-import { CrudService } from '../../core/crud.service';
+import { CrudService } from '../../core/services/crud.service';
 
 @Component({
   selector: 'app-table',
@@ -34,6 +34,7 @@ export class TableComponent {
   @Input() DeleteAction: (element: any) => void = () => {};
   @Input() EditAction: (element: any) => void = () => {};
   @Input() ViewAction: (element: any) => void = () => {};
+  @Input() AssignRoleAction: (element: any) => void = () => {};
   @Input() PageChangeAction: (element: any) => void = () => {};
   @Input() allowedActions?: tablePermission = undefined;
   @Output() addClick = new EventEmitter<void>();
@@ -87,6 +88,10 @@ export class TableComponent {
 
   onViewAction(element: any) {
     this.ViewAction(element);
+  }
+  onAssignRoleAction(element: any){
+    this.AssignRoleAction(element);
+
   }
   onPageChangeAction(element:any){
     this.onPageChangeAction(element)

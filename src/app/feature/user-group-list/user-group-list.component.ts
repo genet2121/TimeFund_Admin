@@ -6,21 +6,20 @@ import { TableComponent } from '../../shared/table/table.component';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import admin from '../../core/model/admin.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import userGroup from '../../core/model/userGroup.model';
 
 @Component({
-  selector: 'app-admin-list',
+  selector: 'app-user-group-list',
   standalone: true,
   imports: [TableComponent],
-  templateUrl: './admin-list.component.html',
-  styleUrls: ['./admin-list.component.css']
+  templateUrl: './user-group-list.component.html',
+  styleUrl: './user-group-list.component.css'
 })
-export class AdminListComponent implements OnInit {
-   val:any[] = [];
+export class UserGroupListComponent {
+  val:any[] = [];
   tableColumns = [
-    { key: 'fullName', label: 'Full Name' },
-    { key: 'email', label: 'E-mail' },
-    { key: 'user_group_id', label: 'Role' },
-    { key: 'isActive', label: 'Status' },
+    { key: 'user_group_name', label: 'UserGroup Name' },
+    { key: 'is_active', label: 'Status' },
   ];
   displayedColumns = this.tableColumns.map(c => c.key).concat('action');
 
@@ -29,9 +28,9 @@ export class AdminListComponent implements OnInit {
     edit: true,
     view: true,
     delete: true,
-    assign_role:false
+    assign_role: true
   };
-  tableData: admin[] = [];
+  tableData: any[] = [];
 
   constructor(private router: Router, private crudservice: CrudService<any>,  private snackBar: MatSnackBar,) {}
 
@@ -40,37 +39,40 @@ export class AdminListComponent implements OnInit {
   }
 
   fetchData() {
-    this.crudservice.getAll('admin/getalladmins')
-      .subscribe((data: admin[]) => {
-        this.tableData = this.transformDataForTable(data);
+    this.crudservice.getAll('userGroup/getAllUserGroups')
+      .subscribe((data:any) => {
+        // this.tableData = data.data ;
+        this.tableData = this.transformDataForTable(data.data);
         console.log('thus', this.tableData)
       });
   }
-  transformDataForTable(admins: admin[]): any[] {
-    return admins.map((adminTableData) => ({
-      id: adminTableData.admin_id,
-      fullName:
-      adminTableData.fullName,
-        email: adminTableData.email,
-        user_group_id: adminTableData.UserGroup.user_group_name,
-
-      isActive: adminTableData.isActive ? 'Active' : 'inActive',
+  transformDataForTable(userGroups: userGroup[]): any[] {
+    return userGroups.map((userGroupTableData) => ({
+      id: userGroupTableData.user_group_id,
+      user_group_name: userGroupTableData.user_group_name,
+      is_active: userGroupTableData.is_active ? 'Active' : 'inActive',
     }));
   }
   handleViewAction(element: any) {
 
-    this.router.navigate(['/admin', element.id, 'view'], {
+    this.router.navigate(['/user_groups', element.id, 'view'], {
       queryParams: { view: true }
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/admin', element.id, 'edit'], {
+    this.router.navigate(['/user_groups', element.id, 'edit'], {
       state: { edit: true }
     });
 
 
   }
+  handleAssignRoleAction(element:any){
+    this.router.navigate(['/user_groups', element.id, 'assign_role'], {
+      state: { edit: true }
+    });
+  }
+
 
   handleDeleteAction(element: any) {
 
@@ -96,7 +98,7 @@ export class AdminListComponent implements OnInit {
   currentPage = 2;
 
   handleAddClick() {
-    window.location.href = `/admin/create`;
+    window.location.href = `user_groups/create`;
   }
 
   handleSearchClick() {
@@ -106,4 +108,9 @@ export class AdminListComponent implements OnInit {
   handleSettingsClick() {
     console.log('Settings button clicked');
   }
+
 }
+
+
+
+
