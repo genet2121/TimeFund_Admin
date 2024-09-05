@@ -13,6 +13,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { CrudService } from '../../core/services/crud.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-table',
@@ -47,7 +48,9 @@ export class TableComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [];
-  constructor(private router: Router,  private crudservice: CrudService<any>){
+  constructor(private router: Router,  private crudservice: CrudService<any>,
+    public dialog: MatDialog,
+  ){
 
   }
   ngOnInit() {

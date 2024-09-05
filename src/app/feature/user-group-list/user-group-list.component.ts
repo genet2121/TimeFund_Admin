@@ -7,6 +7,8 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import admin from '../../core/model/admin.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import userGroup from '../../core/model/userGroup.model';
+import { MatDialog } from '@angular/material/dialog';
+import { UserGroupDialogComponent } from '../../shared/dialog/user-group-dialog/user-group-dialog.component';
 
 @Component({
   selector: 'app-user-group-list',
@@ -26,13 +28,14 @@ export class UserGroupListComponent {
 
   allowedActions: tablePermission = {
     edit: true,
-    view: true,
+    view: false,
     delete: true,
     assign_role: true
   };
   tableData: any[] = [];
 
-  constructor(private router: Router, private crudservice: CrudService<any>,  private snackBar: MatSnackBar,) {}
+  constructor(private router: Router, private crudservice: CrudService<any>,
+    private snackBar: MatSnackBar,  public dialog: MatDialog,) {}
 
   ngOnInit() {
     this.fetchData();
@@ -41,7 +44,7 @@ export class UserGroupListComponent {
   fetchData() {
     this.crudservice.getAll('userGroup/getAllUserGroups')
       .subscribe((data:any) => {
-        // this.tableData = data.data ;
+
         this.tableData = this.transformDataForTable(data.data);
         console.log('thus', this.tableData)
       });
@@ -54,15 +57,22 @@ export class UserGroupListComponent {
     }));
   }
   handleViewAction(element: any) {
+    const dialogRef = this.dialog.open(UserGroupDialogComponent, {
+      width: '500px',
+      data: {id: element.id, view: true }
 
-    this.router.navigate(['/user_groups', element.id, 'view'], {
-      queryParams: { view: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/user_groups', element.id, 'edit'], {
-      state: { edit: true }
+    const dialogRef = this.dialog.open(UserGroupDialogComponent, {
+      width: '500px',
+      data: {id: element.id}
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
     });
 
 
@@ -77,13 +87,13 @@ export class UserGroupListComponent {
   handleDeleteAction(element: any) {
 
    if(this.crudservice&&element.id){
-    this.crudservice.deleteItem('admin/deleteadmins', element.id).subscribe(res =>{
-      this.val = res as admin[];
-      this.snackBar.open('admin deleted successfully!', 'Close', {
+    this.crudservice.deleteItem('userGroup/delete', element.id).subscribe(res =>{
+
+      this.snackBar.open('user group deleted successfully!', 'Close', {
         duration: 3000,
          verticalPosition: 'top'
       });
-       this.fetchData();
+     window.location.reload();
 
     })
    }else{
@@ -98,7 +108,13 @@ export class UserGroupListComponent {
   currentPage = 2;
 
   handleAddClick() {
-    window.location.href = `user_groups/create`;
+    const dialogRef = this.dialog.open(UserGroupDialogComponent, {
+      width: '500px',
+      data: {}
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   handleSearchClick() {
