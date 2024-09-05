@@ -6,4 +6,9 @@ export default interface admin {
   phoneNumber: string;
   user_group_id: number;
   token: string;
+  isActive: boolean;
+  UserGroup: {
+    user_group_id: number;
+    user_group_name: string;
+  };
 }

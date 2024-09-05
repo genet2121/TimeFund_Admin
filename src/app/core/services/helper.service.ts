@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import admin from './model/admin.model';
+import admin from '../model/admin.model';
 
 @Injectable({
   providedIn: 'root',

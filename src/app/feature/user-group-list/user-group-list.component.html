@@ -1,0 +1,14 @@
+<app-table
+  tableTitle="User Groups"
+  [columns]="tableColumns"
+  [data]="tableData"
+  [allowedActions]="allowedActions"
+  [DeleteAction]="handleDeleteAction"
+  [EditAction]="handleEditAction"
+  [ViewAction]="handleViewAction"
+  [AssignRoleAction]="handleAssignRoleAction"
+  [PageChangeAction]="changePage"
+  (addClick)="handleAddClick()"
+  (searchClick)="handleSearchClick()"
+  (settingsClick)="handleSettingsClick()"
+></app-table>

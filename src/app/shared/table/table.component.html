@@ -23,7 +23,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
-        <div class="flex gap-1">
+        <div class="flex gap-3">
           <button
             mat-icon-button
             (click)="onViewAction(element)"
@@ -46,11 +46,20 @@
             mat-icon-button
             (click)="onDeleteAction(element)"
             class="text-red-600"
-            *ngIf="allowedActions?.delete"
+
             aria-label="Delete"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon>delete_forever</mat-icon>
           </button>
+          <button
+          mat-icon-button
+          (click)="onAssignRoleAction(element)"
+          class="text-cyan-700"
+          *ngIf="allowedActions?.assign_role"
+          aria-label="Edit"
+        >
+          <mat-icon>assignment_add</mat-icon>
+        </button>
         </div>
       </td>
     </ng-container>

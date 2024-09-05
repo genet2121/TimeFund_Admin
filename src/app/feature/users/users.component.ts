@@ -19,7 +19,8 @@ export class UsersComponent {
   allowedActions: tablePermission = {
     edit: true,
     view: true,
-    delete: true  ,
+    delete: true,
+    assign_role:false
   };
 
   tableData = [

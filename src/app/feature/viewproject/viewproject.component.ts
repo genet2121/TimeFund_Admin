@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CrudService } from '../../core/crud.service';
+import { CrudService } from '../../core/services/crud.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Fundraising } from '../../core/model/fundraiser.model';
 import { PhaseComponent } from "../../shared/phase/phase.component";

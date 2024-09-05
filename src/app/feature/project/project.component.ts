@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TableComponent } from '../../shared/table/table.component';
 import { Column } from '../../core/model/tablecolumn.model';
-import { CrudService } from '../../core/crud.service';
+import { CrudService } from '../../core/services/crud.service';
 import { Fundraising } from '../../core/model/fundraiser.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { RouterModule } from '@angular/router';
@@ -26,6 +26,7 @@ export class ProjectComponent implements OnInit {
     view: true,
     edit: true,
     delete: true,
+    assign_role: false
   };
 
   constructor(
