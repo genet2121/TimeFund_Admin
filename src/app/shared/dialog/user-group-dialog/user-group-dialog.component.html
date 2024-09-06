@@ -1,0 +1,29 @@
+<div class="dialog-header">
+  <button mat-button class="close-button" (click)="onCancel()">Close</button>
+  <h1 class="dialog-title">Create User Group</h1>
+</div>
+<div mat-dialog-content>
+  <form [formGroup]="userGroupCreateForm">
+    <mat-form-field appearance="outline">
+
+      <input matInput formControlName="user_group_name" placeholder="Group Name">
+    </mat-form-field>
+  <mat-form-field appearance="outline"  class="w-80  mb-4 custom-border">
+    <mat-select placeholder="Status" formControlName="is_active">
+      <mat-option value="Active" > Active</mat-option>
+      <mat-option value="Inactive" > Inactive</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  </form>
+</div>
+
+<div class="flex justify-center">
+  <button
+    class="bg-purple-700 hover:bg-successActive text-white text-sm py-2.5 px-5 mr-2 mb-2 rounded-xl shadow-md hover:rotate-3 transition duration-300"
+    (click)="onSave()"
+    *ngIf="!isViewDetail">
+    Save
+  </button>
+</div>
+
