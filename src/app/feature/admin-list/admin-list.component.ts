@@ -20,7 +20,7 @@ export class AdminListComponent implements OnInit {
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
     { key: 'user_group_id', label: 'Role' },
-    { key: 'isActive', label: 'Status' },
+    { key: 'is_active', label: 'Status' },
   ];
   displayedColumns = this.tableColumns.map(c => c.key).concat('action');
 
@@ -51,10 +51,10 @@ export class AdminListComponent implements OnInit {
       id: adminTableData.admin_id,
       fullName:
       adminTableData.fullName,
-        email: adminTableData.email,
-        user_group_id: adminTableData.UserGroup.user_group_name,
+      email: adminTableData.email,
+      user_group_id: adminTableData.UserGroup.user_group_name,
+      is_active: adminTableData.isActive ? 'Active' : 'InActive',
 
-      isActive: adminTableData.isActive ? 'Active' : 'inActive',
     }));
   }
   handleViewAction(element: any) {
