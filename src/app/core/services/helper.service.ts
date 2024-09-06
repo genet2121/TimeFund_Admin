@@ -53,6 +53,10 @@ export class HelperService {
     }
     return []; // Return an empty array if user_group_id is not available
   }
+  logoutUser(){
+    localStorage.clear();
+    window.location.href = "/auth/login";
+  }
 
   getemail(): string {
     return this.user.email!;

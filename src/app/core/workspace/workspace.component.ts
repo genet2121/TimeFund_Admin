@@ -37,4 +37,7 @@ export class WorkspaceComponent {
   ngOnInit() {
     this.userName = this.helperService.getLogInUser.fullName;
   }
+  logoutHandler() {
+    this.helperService.logoutUser();
+  }
 }
