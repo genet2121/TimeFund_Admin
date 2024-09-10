@@ -1,17 +1,39 @@
 <div ngbAccordion class="flex flex-col gap-4">
-  <div ngbAccordionItem [collapsed]="true" class="border-none border border-[#8F8F8F] rounded-sm">
-      <button ngbAccordionButton>Simple</button>
+  <div
+    ngbAccordionItem
+    [collapsed]="true"
+    class="border-none border border-[#8F8F8F] rounded-sm mb-2"
+  >
+    <button ngbAccordionButton>{{ phaseTitle }}</button>
     <div ngbAccordionCollapse class="bg-[#F5F6FA]">
-      <div ngbAccordionBody class="">
-        <div class="flex flex-col gap-4 w-full m-auto p-4">
+      <div ngbAccordionBody>
+        <div>
+          <app-phasedetail
+            [startingDate]="startingDate"
+            [endingDate]="endingDate"
+            [phaseStartingDate]="phaseStartingDate"
+            [phaseEndingDate]="phaseEndingDate"
+            [phaseTitle]="phaseTitle"
+            [actionPlan]="actionPlan"
+            [amount]="amount"
+            [description]="description"
+          ></app-phasedetail>
+        </div>
+        <div
+          class="flex flex-col gap-4 w-full m-auto p-4"
+          *ngIf="phaseProgressExists"
+        >
           <div>
             <p>Pictures</p>
             <p class="text-sm font-extralight">
               Upload photos of the progress that your project reached
             </p>
-            <img src="../../../assets/Rectangle 5801.png" alt="" class="w-full"/>
+            <img
+              [src]="phaseProgressImage || '../../../assets/Rectangle 5801.png'"
+              alt=""
+              class="w-full"
+            />
           </div>
-          <!-- ------------------------------------------------------------------ -->
           <div>
             <p>Reports</p>
             <p class="text-sm font-extralight">
@@ -25,30 +47,42 @@
                 <mat-icon>description</mat-icon>
                 <div class="flex flex-col">
                   <p class="font-extralight">Progress Report</p>
-                  <p class="text-[#5D328F]">Click to view</p>
+                  <p
+                    class="text-[#5D328F]"
+                    (click)="navigateTo(phaseProgressReport)"
+                  >
+                    Click to view
+                  </p>
                 </div>
               </div>
             </div>
           </div>
           <!-- ------------------------------------------------------------------ -->
           <p
-            class="flex flex-col items-center mx-auto border-2 border-[#CACACA] rounded-md bg-white pt-2 px-2 pb-12 font-light"
+            class="flex flex-col items-center mx-auto border-2 border-[#CACACA] rounded-md bg-white pt-2 px-2 pb-12 font-light w-full"
           >
-            The construction of the new office complex is progressing on
-            schedule. The foundation has been completed, and the steel framework
-            for the first two floors is now in place. Work on the exterior
-            façade is set to begin next week, with plumbing and electrical
-            installations following shortly after.
+            {{
+              phaseProgressDescription ||
+                "No phase progress description submitted."
+            }}
           </p>
           <!-- ------------------------------------------------------------------ -->
-          <div class="flex w-[40%] mx-auto justify-between">
+          <p *ngIf="phaseStatus !== 'pending'" class="text-2xl text-center">
+            {{ phaseStatus.toLocaleUpperCase() }}
+          </p>
+          <div
+            class="flex w-[40%] mx-auto justify-between"
+            *ngIf="phaseStatus === 'pending'"
+          >
             <button
               class="border-2 py-2 px-4 rounded-md border-[#09BC36] text-[#09BC36] bg-white"
+              (click)="approvePhase()"
             >
               Approve
             </button>
             <button
               class="border-2 py-2 px-4 rounded-md border-[#FF0000] text-[#FF0000] bg-white"
+              (click)="denyPhase()"
             >
               Deny
             </button>

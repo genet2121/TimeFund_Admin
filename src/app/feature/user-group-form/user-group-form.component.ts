@@ -6,7 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { NgFor } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CrudService } from '../../core/services/crud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
@@ -30,22 +36,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     ReactiveFormsModule,
   ],
   templateUrl: './user-group-form.component.html',
-  styleUrl: './user-group-form.component.css'
+  styleUrl: './user-group-form.component.css',
 })
 export class UserGroupFormComponent {
-
-  groups: Array<{ user_group_id: number, user_group_name: string }> = [];
+  groups: Array<{ user_group_id: number; user_group_name: string }> = [];
   userGroupForm: FormGroup;
   id!: number;
-  pages: Array<{ tab_name: string, table_id: number }> = [];
+  pages: Array<{ tab_name: string; table_id: number }> = [];
   responseData: any[] = [];
 
   constructor(
     private crudService: CrudService<any>,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router:Router,
-    private snackBar: MatSnackBar) {
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.userGroupForm = this.fb.group({
       user_group_id: [''],
       permissions: this.fb.array([]),
@@ -71,15 +77,19 @@ export class UserGroupFormComponent {
       this.id = Number(params.get('id'));
     });
 
-    this.crudService.getAll('userGroup/getAllUserGroups').subscribe((res: any) => {
-      this.groups = res.data;
-    });
+    this.crudService
+      .getAll('userGroup/getAllUserGroups')
+      .subscribe((res: any) => {
+        this.groups = res.data;
+      });
 
     if (this.id) {
-      this.crudService.getAll(`permission/getPermissions?user_group_id=${this.id}`).subscribe((res: any) => {
-        this.responseData = res.data;
-        this.patchFormValues(this.responseData);
-      });
+      this.crudService
+        .getAll(`permission/getPermissions?user_group_id=${this.id}`)
+        .subscribe((res: any) => {
+          this.responseData = res.data;
+          this.patchFormValues(this.responseData);
+        });
     }
   }
 
@@ -136,26 +146,45 @@ export class UserGroupFormComponent {
   onSubmit() {
     if (this.userGroupForm.valid) {
       const formData = this.userGroupForm.value;
-      console.log('Form Data:', formData);
 
-      this.crudService.create('permission/createPermission', formData).subscribe(
-        (response) => {
-          console.log('permission created successfully:', response);
-          this.snackBar.open(' group permission successfully!', 'Close', {
-            duration: 3000,
-             verticalPosition: 'top'
-          });
-          this.router.navigate(['/user_groups'])
-        },
-        (error) => {
-          console.error('Error creating user group permission:', error);
-        }
-      );
+      if (this.responseData && this.responseData.length > 0) {
+        this.crudService
+          .update('permission/putPermission', this.id, formData)
+          .subscribe(
+            (response) => {
+              console.log('Permissions updated successfully:', response);
+              this.snackBar.open('Permissions updated successfully!', 'Close', {
+                duration: 3000,
+                verticalPosition: 'top',
+              });
+              this.router.navigate(['/user_groups']);
+            },
+            (error) => {
+              console.error('Error updating permissions:', error);
+            }
+          );
+      } else {
+        this.crudService
+          .post('permission/createPermission', formData)
+          .subscribe(
+            (response) => {
+              console.log('Permissions created successfully:', response);
+              this.snackBar.open('Permissions created successfully!', 'Close', {
+                duration: 3000,
+                verticalPosition: 'top',
+              });
+              this.router.navigate(['/user_groups']);
+            },
+            (error) => {
+              console.error('Error creating permissions:', error);
+            }
+          );
+      }
     } else {
       console.log('Form is not valid');
     }
   }
-  onBack(){
-    this.router.navigate(['/user_groups'])
+  onBack() {
+    this.router.navigate(['/user_groups']);
   }
 }

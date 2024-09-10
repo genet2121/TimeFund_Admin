@@ -1,3 +1,5 @@
+import phase from "./phase.model";
+
 interface FundraisingMedia {
   fundraising_media_id: number;
   fundraising_id: number;
@@ -90,4 +92,5 @@ export interface Fundraising {
   Wegen_BusinessSubCategory: any;
   Wegen_SubCategory: SubCategory;
   Category: Category;
+  phases:phase[];
 }

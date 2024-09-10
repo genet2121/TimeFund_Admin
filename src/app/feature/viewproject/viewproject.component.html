@@ -137,16 +137,25 @@
         Project Image
       </button>
     </div>
-
-    <div class="flex justify-between mt-6 ms-14">
-      <!-- <button class="bg-violet-800 text-white h-10 px-11 rounded-xl border" (click)="onSave()">Save</button> -->
-      <!-- <button class="bg-violet-800 text-white h-10 px-11 rounded-xl border" (click)="onEdit()">Edit</button> -->
-    </div>
   </div>
   <!--Start of Phases Section -->
   <div>
     <p class="text-lg">Projects Phases</p>
-    <app-phase> </app-phase>
+    <app-phase
+      class="flex flex-col gap-2"
+      *ngFor="let phase of fundraisingInfo?.phases"
+      [startingDate]="fundraisingInfo?.start_date + ''"
+      [endingDate]="fundraisingInfo?.end_date + ''"
+      [phaseStartingDate]="phase.phase_start_date"
+      [phaseEndingDate]="phase.phase_end_date"
+      [actionPlan]="phase.phase_action_planDoc"
+      [phaseTitle]="phase.phase_title"
+      [amount]="phase.required_amount"
+      [phaseProgressImage]="phase?.phases?.[0]?.phase_progress_image || ''"
+      [phaseStatus]="phase.status"
+      [phaseId]="phase.phase_id"
+    >
+    </app-phase>
   </div>
   <div class="flex justify-between w-[80%] mx-auto my-4">
     <div class="flex flex-col">
@@ -160,8 +169,19 @@
       <p class="border rounded-md py-2 px-4">Samuel</p>
     </div>
   </div>
-  <div class="flex flex-col justify-center">
-    <button class="bg-[#A70000] text-white mx-auto py-2 px-4 rounded-md">
+  <div class="flex justify-center">
+    <button
+      class="bg-[#09BC36] text-white mx-auto py-2 px-4 rounded-md"
+      *ngIf="!fundraisingInfo?.is_verified"
+      (click)="verifyProject()"
+    >
+      Approve project
+    </button>
+    <button
+      class="bg-[#A70000] text-white mx-auto py-2 px-4 rounded-md"
+      *ngIf="fundraisingInfo?.is_verified"
+      (click)="suspendProject()"
+    >
       Suspend project
     </button>
   </div>
