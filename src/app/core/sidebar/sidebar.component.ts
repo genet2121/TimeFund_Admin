@@ -36,9 +36,6 @@ export class SidebarComponent {
   }
   menuItems = signal<MenuItem[]>([
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
-    { icon: 'trending_up', label: 'Projects', route: '/projects' },
-    { icon: 'campaign', label: 'Fundraisers', route: '/wegen_fundraisings' },
-
   ]);
 
 

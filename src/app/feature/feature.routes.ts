@@ -51,7 +51,7 @@ export const featureRoutes: Routes = [
     component: ViewprojectComponent,
   },
   {
-    path: 'wegen_fundraisings',
+    path: 'fundraisings',
     component: FundraiserComponent,
   },
   {
