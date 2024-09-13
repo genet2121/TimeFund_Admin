@@ -6,8 +6,7 @@ import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HelperService } from '../services/helper.service';
 import { CrudService } from '../services/crud.service';
-import { PermissionItem, PermissionsResponse } from '../model/permission.model';
-import { table } from '../model/sidebarLable.model';
+
 
 
 export type MenuItem = {
@@ -15,36 +14,6 @@ export type MenuItem = {
   label: string;
   route?: string;
 };
-const tablenames: table[] = [
-  {
-table_name: "Fundraisers",
-table_id:42
-},
-{
-table_name: "Admins",
-table_id:3
-},
-{
-table_name: "Users",
-table_id:58
-},
-{
-table_name: "Reported Campaigns",
-table_id:10
-},
-{
-table_name: "Project Category",
-table_id:23
-},
-{
-table_name: "Fundraiser Category",
-table_id:26
-},
-{
-table_name: "User groups",
-table_id:19
-},
-]
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -69,16 +38,9 @@ export class SidebarComponent {
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
     { icon: 'trending_up', label: 'Projects', route: '/projects' },
     { icon: 'campaign', label: 'Fundraisers', route: '/wegen_fundraisings' },
+
   ]);
-  // menuItems = signal<MenuItem[]>([
-  //   { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
-  //   { icon: 'trending_up', label: 'Projects', route: '/projects' },
-  //   { icon: 'person', label: 'Admins', route: '/admins' },
-  //   { icon: 'groups', label: 'Users', route: '/users' },
-  //   { icon: 'volunteer_activism', label: 'Fundraisers', route: '/fundraisers' },
-  //   { icon: 'campaign', label: 'Reports', route: '/reports' },
-  //   { icon: 'home', label: 'Setting', route: '/setting' },
-  // ]);
+
 
   profilePicSize = computed(() => (this.sideNavCollapsed() ? '32' : 100));
   ngOnInit(): void {
@@ -86,68 +48,53 @@ export class SidebarComponent {
     console.log('this.userGroupId', this.userGroupId);
     this.getSidbarLabel(this.userGroupId);
   }
-
   getSidbarLabel(userGroupId: number) {
-    this.crudService
-      .getAll(`permission/getPermissions?user_group_id=${userGroupId}`)
-      .subscribe((res: any) => {
-        this.SidbarLabel = res.data as PermissionItem[];
-        console.log('this sidbar label', this.SidbarLabel);
+    this.crudService.getById('user-group-roles/getUserGroupById', userGroupId).subscribe((res) => {
+      console.log('res on sidebar', res);
+      this.SidbarLabel = res.role;
 
-        const filteredSidebarLabels = this.SidbarLabel.filter(
-          (item: PermissionItem) =>
-            tablenames.some(
-              (table) => table.table_id === item.tableName.table_id
-            )
-        );
 
-        this.menuItems.set([
-          ...this.menuItems(),
-          ...filteredSidebarLabels.map((item: PermissionItem) => {
-            const table = tablenames.find(
-              (table) => table.table_id === item.tableName.table_id
-            );
-            return {
-              icon: this.getIconForTable(item.tableName.tab_name),
-              label: table ? table.table_name : item.tableName.tab_name,
-              route: `/${item.tableName.tab_name}`,
-            };
-          }),
-        ]);
+      const filteredSidebarLabels = this.SidbarLabel.filter((item) => item.can_view&&item.required_on_menu);
+
+      const newMenuItems = filteredSidebarLabels.map((item: any) => {
+        const route = `/${item.page_name.replace(/\s+/g, '-').toLowerCase()}`;
+        console.log(route);
+
+        return {
+          icon: this.getIconForTable(item.page_name),
+          label:  item.page_name,
+          route: `/${item.page_name.replace(/\s+/g, '-').toLowerCase()}`,
+        };
+
       });
+
+      this.menuItems.set([
+        ...this.menuItems(),
+        ...newMenuItems
+      ]);
+    });
   }
 
-  //   getSidbarLabel(userGroupId:number){
-  // this.crudService.getAll(`permission/getPermissions?user_group_id=${userGroupId}`).subscribe((res: any) => {
-  //   this.SidbarLabel = res.data as PermissionItem[];
-  //   console.log('this sidbar label', this.SidbarLabel);
-  //   this.menuItems.set([
-  //     ...this.menuItems(),
-  //     ...this.SidbarLabel.map((item: PermissionItem) => ({
-  //       icon: this.getIconForTable(item.tableName.tab_name),
-  //       label: item.tableName.tab_name,
-  //       route: `/${item.tableName.tab_name}`,
-  //     }))])
-
-  // })
-
-  //   }
   private getIconForTable(tableName: string): string {
     switch (tableName) {
-      case 'admins':
+      case 'Administrator':
         return 'person';
-      case 'wegen_users':
+      case 'Users':
         return 'groups';
-      case 'wegen_fundraisings':
+      case 'Fundraisings':
         return 'volunteer_activism';
       case 'fundraiserreports':
         return 'campaign';
-      case 'wegen_category':
+      case 'Fundraiser Category':
         return 'account_tree';
-      case 'user_groups':
+      case 'User Groups':
         return 'group_add';
-      case 'wegen_business_category':
+      case 'Project Category':
         return 'account_tree';
+      case 'Projects':
+        return 'trending_up';
+      case 'Withdrawal Requests':
+        return 'request_page';
 
       default:
         return 'dashboard';

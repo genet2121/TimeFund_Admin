@@ -9,6 +9,7 @@ import { UserGroupListComponent } from './user-group-list/user-group-list.compon
 import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
 import { FundraiserComponent } from './fundraiser/fundraiser.component';
 import { ViewfundraiserComponent } from './viewfundraiser/viewfundraiser.component';
+import { GroupComponent } from './group/group.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -25,7 +26,7 @@ export const featureRoutes: Routes = [
     component: UsersComponent,
   },
   {
-    path: 'admins',
+    path: 'administrator',
     component: AdminListComponent,
   },
   {
@@ -66,6 +67,18 @@ export const featureRoutes: Routes = [
     component: UserGroupFormComponent,
   },
   {
+    path: 'user-groups',
+    component: UserGroupListComponent,
+  },
+  {
+    path: 'user_groups/create',
+    component: GroupComponent,
+  },
+  {
+    path: 'user_groups/:id/edit',
+    component: GroupComponent,
+  },
+  {
     path: 'user_groups/:id/assign_role',
     component: UserGroupFormComponent,
   },
@@ -76,6 +89,10 @@ export const featureRoutes: Routes = [
   {
     path: 'user_groups/:id/view',
     component: UserGroupFormComponent,
+  },
+  {
+    path: 'user_groups/:id/view',
+    component: GroupComponent,
   },
   { path: '**', redirectTo: 'dashboard' },
 ];

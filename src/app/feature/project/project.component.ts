@@ -20,7 +20,7 @@ export class ProjectComponent implements OnInit {
     { key: 'category', label: 'Business Category' },
     { key: 'goal', label: 'Goal' },
     { key: 'closingdate', label: 'Closing date' },
-    { key: 'status', label: 'Status' },
+    { key: 'is_active', label: 'Status' },
   ];
   permissions: tablePermission = {
     view: true,
@@ -62,7 +62,7 @@ export class ProjectComponent implements OnInit {
         fundraising.Wegen_BusinessCategory.business_category_type || 'N/A',
       goal: fundraising.goal,
       closingdate: new Date(fundraising.end_date).toLocaleDateString(),
-      status: fundraising.is_active ? 'Active' : 'Suspended',
+      is_active: fundraising.is_active ? 'Active' : 'Suspended',
     }));
   }
   viewAction(element: any) {

@@ -20,7 +20,7 @@ export class AdminListComponent implements OnInit {
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
     { key: 'user_group_id', label: 'Role' },
-    { key: 'isActive', label: 'Status' },
+    { key: 'is_active', label: 'Status' },
   ];
   displayedColumns = this.tableColumns.map(c => c.key).concat('action');
 
@@ -46,17 +46,32 @@ export class AdminListComponent implements OnInit {
         console.log('thus', this.tableData)
       });
   }
-  transformDataForTable(admins: admin[]): any[] {
-    return admins.map((adminTableData) => ({
-      id: adminTableData.admin_id,
-      fullName:
-      adminTableData.fullName,
-        email: adminTableData.email,
-        user_group_id: adminTableData.UserGroup.user_group_name,
+  // transformDataForTable(admins: admin[]): any[] {
+  //   return admins.map((adminTableData) => ({
 
-      isActive: adminTableData.isActive ? 'Active' : 'inActive',
-    }));
+  //     id: adminTableData.admin_id,
+  //     fullName:
+  //     adminTableData.fullName,
+  //     email: adminTableData.email,
+  //     user_group_id: adminTableData.UserGroupRole.user_group_name,
+  //     is_active: adminTableData.isActive ? 'Active' : 'InActive',
+
+  //   }));
+  // }
+  transformDataForTable(admins: admin[]): any[] {
+    return admins.map((adminTableData) => {
+      return {
+        id: adminTableData.admin_id,
+        fullName: adminTableData.fullName,
+        email: adminTableData.email,
+        user_group_id: adminTableData.UserGroupRole
+          ? adminTableData.UserGroupRole.user_group_name
+          : 'Unknown',
+        is_active: adminTableData.isActive ? 'Active' : 'InActive',
+      };
+    });
   }
+
   handleViewAction(element: any) {
 
     this.router.navigate(['/admin', element.id, 'view'], {

@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Column } from '../../core/model/tablecolumn.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-
+import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {
   MatPaginator,
   MatPaginatorModule,
@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { CrudService } from '../../core/services/crud.service';
 import { MatDialog } from '@angular/material/dialog';
+import {MatSort, Sort, } from '@angular/material/sort';
 
 @Component({
   selector: 'app-table',
@@ -41,11 +42,13 @@ export class TableComponent {
   @Output() addClick = new EventEmitter<void>();
   @Output() searchClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
-
+  private _liveAnnouncer = inject(LiveAnnouncer);
 
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   displayedColumns: string[] = [];
   constructor(private router: Router,  private crudservice: CrudService<any>,
@@ -60,6 +63,20 @@ export class TableComponent {
       this.displayedColumns.push('action');
     }
   }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+    announceSortChange(sortState: Sort) {
+
+      if (sortState.direction) {
+        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      } else {
+        this._liveAnnouncer.announce('Sorting cleared');
+      }
+    }
+
+
     ngOnChanges(changes: SimpleChanges) {
     if (changes['columns']) {
       this.updateDisplayedColumns();
