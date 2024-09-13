@@ -1,4 +1,4 @@
 export interface table{
   table_name:string,
-  table_id: number
+  // table_id: number
   }

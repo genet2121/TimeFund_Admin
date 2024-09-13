@@ -1,0 +1,95 @@
+<div class="bg-[#fffff] card border-none shadow-sm">
+  <div class="p-3">
+    <h2 class="text-xs text-[#495057]">User Group Role</h2>
+  </div>
+
+  <div class="p-3">
+    <form [formGroup]="dataForm">
+      <div formGroupName="group">
+        <div class="row row-cols-">
+          <div class="col-2">
+            <mat-form-field appearance="outline" class="w-full sm:w-80">
+            <input matInput placeholder="UserGroup Name" formControlName="user_group_name">
+          </mat-form-field>
+
+          </div>
+
+        </div>
+        <div class="mt-1 mb-3 d-flex justify-content-end">
+          <span>
+            <mat-checkbox
+              [checked]="selectAllChecked"
+              (change)="selectAll($event.checked)"
+              autocomplete="off"
+              color="primary"
+            >
+              Select/Deselect All
+            </mat-checkbox>
+          </span>
+        </div>
+        <div class="fixTableHead overflow-y-auto max-h-96 " formGroupName="roles">
+          <table class="w-full border text-center p-2 table table-striped">
+            <thead class="border-b">
+              <tr class="text-left">
+                <th
+                  scope="col"
+                  class="text-sm text-gray-900 border-r"
+                >
+                  #
+                </th>
+                <th
+                  scope="col"
+                  class="text-sm text-gray-900 border-r w-[15rem]"
+                >
+                  Page
+                </th>
+                <th
+                  *ngFor="let title of role_title"
+                  scope="col"
+                  class="text-sm text-center border-r w-1/7"
+                >
+                  {{ title }}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class=" ">
+              <tr
+                *ngFor="let rol of groupRole; index as index"
+                class="border-b text-left"
+              >
+                <td class="border-r">
+                  {{ index + 1 }}
+                </td>
+                <td class="border-r">
+                  <span class="text-small">
+                    {{ rol.page_name }}
+                  </span>
+                </td>
+
+                <td
+                  class="action text-center border-r"
+                  *ngFor="let prop of default_role; index as i"
+                >
+                  <mat-checkbox
+                    color="primary"
+                    [checked]="rol[prop]"
+                    autocomplete="off"
+                    (change)="onChange(index, prop, $event.checked)"
+                  ></mat-checkbox>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="float-right">
+          <button mat-raised-button color="primary" class="bg-purple-600 text-white hover:bg-purple-700 transition-colors py-2 px-6 rounded-md" (click)="onSubmit()">
+            Create Group
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

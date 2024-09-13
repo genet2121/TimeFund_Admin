@@ -28,9 +28,9 @@ export class UserGroupListComponent {
 
   allowedActions: tablePermission = {
     edit: true,
-    view: false,
+    view: true,
     delete: true,
-    assign_role: true
+    assign_role: false
   };
   tableData: any[] = [];
 
@@ -42,7 +42,7 @@ export class UserGroupListComponent {
   }
 
   fetchData() {
-    this.crudservice.getAll('userGroup/getAllUserGroups')
+    this.crudservice.getAll('user-group-roles/getAllUserGroups')
       .subscribe((data:any) => {
 
         this.tableData = this.transformDataForTable(data.data);
@@ -57,23 +57,20 @@ export class UserGroupListComponent {
     }));
   }
   handleViewAction(element: any) {
-    const dialogRef = this.dialog.open(UserGroupDialogComponent, {
-      width: '500px',
-      data: {id: element.id, view: true }
-
-    });
-    dialogRef.afterClosed().subscribe(result => {
+    this.router.navigate(['/user_groups', element.id, 'view'], {
+      queryParams: { view: true }
     });
   }
 
   handleEditAction(element: any) {
-    const dialogRef = this.dialog.open(UserGroupDialogComponent, {
-      width: '500px',
-      data: {id: element.id}
+    this.router.navigate(['/user_groups',  element.id, 'edit',])
+    // const dialogRef = this.dialog.open(UserGroupDialogComponent, {
+    //   width: '500px',
+    //   data: {id: element.id}
 
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    // });
 
 
   }
@@ -87,9 +84,8 @@ export class UserGroupListComponent {
   handleDeleteAction(element: any) {
 
    if(this.crudservice&&element.id){
-    this.crudservice.deleteItem('userGroup/delete', element.id).subscribe(res =>{
-
-      this.snackBar.open('user group deleted successfully!', 'Close', {
+    this.crudservice.deleteItem('user-group-roles/deleteUserGroup', element.id).subscribe(res =>{
+      this.snackBar.open(`${res.message}!`, 'Close', {
         duration: 3000,
          verticalPosition: 'top'
       });
@@ -108,13 +104,14 @@ export class UserGroupListComponent {
   currentPage = 2;
 
   handleAddClick() {
-    const dialogRef = this.dialog.open(UserGroupDialogComponent, {
-      width: '500px',
-      data: {}
+    this.router.navigate(['/user_groups/create'])
+    // const dialogRef = this.dialog.open(UserGroupDialogComponent, {
+    //   width: '500px',
+    //   data: {}
 
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    // });
   }
 
   handleSearchClick() {
