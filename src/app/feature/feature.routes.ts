@@ -7,6 +7,8 @@ import { ProjectComponent } from './project/project.component';
 import { ViewprojectComponent } from './viewproject/viewproject.component';
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
 import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
+import { FundraiserComponent } from './fundraiser/fundraiser.component';
+import { ViewfundraiserComponent } from './viewfundraiser/viewfundraiser.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -32,11 +34,11 @@ export const featureRoutes: Routes = [
   },
   {
     path: 'admin/:id/edit',
-    component:AdminFormComponent
+    component: AdminFormComponent,
   },
   {
     path: 'admin/:id/view',
-    component:AdminFormComponent
+    component: AdminFormComponent,
   },
 
   {
@@ -48,24 +50,32 @@ export const featureRoutes: Routes = [
     component: ViewprojectComponent,
   },
   {
+    path: 'wegen_fundraisings',
+    component: FundraiserComponent,
+  },
+  {
+    path: 'fundraiser/:id',
+    component: ViewfundraiserComponent,
+  },
+  {
     path: 'user_groups',
-    component:UserGroupListComponent
+    component: UserGroupListComponent,
   },
   {
     path: 'user_groups/create',
-    component: UserGroupFormComponent
+    component: UserGroupFormComponent,
   },
   {
     path: 'user_groups/:id/assign_role',
-    component: UserGroupFormComponent
+    component: UserGroupFormComponent,
   },
   {
     path: 'user_groups/:id/edit',
-    component: UserGroupFormComponent
+    component: UserGroupFormComponent,
   },
   {
     path: 'user_groups/:id/view',
-    component: UserGroupFormComponent
+    component: UserGroupFormComponent,
   },
   { path: '**', redirectTo: 'dashboard' },
 ];

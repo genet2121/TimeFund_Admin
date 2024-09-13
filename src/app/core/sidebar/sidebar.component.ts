@@ -53,12 +53,13 @@ table_id:19
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-   userGroupId!:number;
-   SidbarLabel: any[] = [];
+  userGroupId!: number;
+  SidbarLabel: any[] = [];
   constructor(
     private router: Router,
     private helperService: HelperService,
-    private crudService: CrudService<any>) {}
+    private crudService: CrudService<any>
+  ) {}
 
   sideNavCollapsed = signal(false);
   @Input() set collapsed(val: boolean) {
@@ -67,6 +68,7 @@ export class SidebarComponent {
   menuItems = signal<MenuItem[]>([
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
     { icon: 'trending_up', label: 'Projects', route: '/projects' },
+    { icon: 'campaign', label: 'Fundraisers', route: '/wegen_fundraisings' },
   ]);
   // menuItems = signal<MenuItem[]>([
   //   { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
@@ -80,9 +82,9 @@ export class SidebarComponent {
 
   profilePicSize = computed(() => (this.sideNavCollapsed() ? '32' : 100));
   ngOnInit(): void {
-         this.userGroupId = this.helperService.getLogInUser.user_group_id
-         console.log('this.userGroupId', this.userGroupId);
-         this.getSidbarLabel(this.userGroupId)
+    this.userGroupId = this.helperService.getLogInUser.user_group_id;
+    console.log('this.userGroupId', this.userGroupId);
+    this.getSidbarLabel(this.userGroupId);
   }
 
   getSidbarLabel(userGroupId: number) {
@@ -92,42 +94,44 @@ export class SidebarComponent {
         this.SidbarLabel = res.data as PermissionItem[];
         console.log('this sidbar label', this.SidbarLabel);
 
-
-        const filteredSidebarLabels = this.SidbarLabel.filter((item: PermissionItem) =>
-          tablenames.some((table) => table.table_id === item.tableName.table_id)
+        const filteredSidebarLabels = this.SidbarLabel.filter(
+          (item: PermissionItem) =>
+            tablenames.some(
+              (table) => table.table_id === item.tableName.table_id
+            )
         );
-
 
         this.menuItems.set([
           ...this.menuItems(),
           ...filteredSidebarLabels.map((item: PermissionItem) => {
-            const table = tablenames.find((table) => table.table_id === item.tableName.table_id);
+            const table = tablenames.find(
+              (table) => table.table_id === item.tableName.table_id
+            );
             return {
               icon: this.getIconForTable(item.tableName.tab_name),
               label: table ? table.table_name : item.tableName.tab_name,
               route: `/${item.tableName.tab_name}`,
             };
-          })
+          }),
         ]);
       });
   }
 
+  //   getSidbarLabel(userGroupId:number){
+  // this.crudService.getAll(`permission/getPermissions?user_group_id=${userGroupId}`).subscribe((res: any) => {
+  //   this.SidbarLabel = res.data as PermissionItem[];
+  //   console.log('this sidbar label', this.SidbarLabel);
+  //   this.menuItems.set([
+  //     ...this.menuItems(),
+  //     ...this.SidbarLabel.map((item: PermissionItem) => ({
+  //       icon: this.getIconForTable(item.tableName.tab_name),
+  //       label: item.tableName.tab_name,
+  //       route: `/${item.tableName.tab_name}`,
+  //     }))])
 
-//   getSidbarLabel(userGroupId:number){
-// this.crudService.getAll(`permission/getPermissions?user_group_id=${userGroupId}`).subscribe((res: any) => {
-//   this.SidbarLabel = res.data as PermissionItem[];
-//   console.log('this sidbar label', this.SidbarLabel);
-//   this.menuItems.set([
-//     ...this.menuItems(),
-//     ...this.SidbarLabel.map((item: PermissionItem) => ({
-//       icon: this.getIconForTable(item.tableName.tab_name),
-//       label: item.tableName.tab_name,
-//       route: `/${item.tableName.tab_name}`,
-//     }))])
+  // })
 
-// })
-
-//   }
+  //   }
   private getIconForTable(tableName: string): string {
     switch (tableName) {
       case 'admins':
@@ -144,7 +148,6 @@ export class SidebarComponent {
         return 'group_add';
       case 'wegen_business_category':
         return 'account_tree';
-
 
       default:
         return 'dashboard';
