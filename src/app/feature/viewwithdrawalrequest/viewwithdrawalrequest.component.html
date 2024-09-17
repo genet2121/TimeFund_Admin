@@ -1,0 +1,82 @@
+<div class="p-6 w-full mx-auto bg-white rounded-xl shadow-md space-y-4">
+  <h2 class="text-xl font-semibold">Requested Withdrawal</h2>
+  <div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 ms-14">
+    <div class="col-span-2">
+      <label for="full_name" class="block text-xs mb-3 text-gray-700"
+        >Amount</label
+      >
+      <input
+        type="text"
+        id="full_name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="withdrawalRequest?.amount"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="full_name" class="block text-xs mb-3 text-gray-700"
+        >Description</label
+      >
+      <input
+        type="text"
+        id="full_name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="withdrawalRequest?.description"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="full_name" class="block text-xs mb-3 text-gray-700"
+        >Organizer</label
+      >
+      <input
+        type="text"
+        id="full_name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="withdrawalRequest?.Wegen_User?.fullName"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="full_name" class="block text-xs mb-3 text-gray-700"
+        >Project</label
+      >
+      <input
+        type="text"
+        id="full_name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="withdrawalRequest?.Wegen_Fundraising?.title"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="full_name" class="block text-xs mb-3 text-gray-700"
+        >Status</label
+      >
+      <input
+        type="text"
+        id="full_name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="withdrawalRequest?.status | uppercase"
+        readonly
+      />
+    </div>
+  </div>
+  <div
+    class="flex w-[40%] mx-auto gap-5"
+    *ngIf="withdrawalRequest?.status === 'pending'"
+  >
+    <button
+      class="py-2 px-4 rounded-md bg-[#CCF0EB] text-[#00B69B]"
+      (click)="updateWithDrawalRequestStatus('being processed')"
+    >
+      Approve
+    </button>
+    <button
+      class="py-2 px-4 rounded-md bg-[#FCD7D4] text-[#FF0000]"
+      (click)="updateWithDrawalRequestStatus('canceled')"
+    >
+      Deny
+    </button>
+  </div>
+</div>

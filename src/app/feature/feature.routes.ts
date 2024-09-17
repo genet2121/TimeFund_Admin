@@ -10,6 +10,8 @@ import { UserGroupFormComponent } from './user-group-form/user-group-form.compon
 import { FundraiserComponent } from './fundraiser/fundraiser.component';
 import { ViewfundraiserComponent } from './viewfundraiser/viewfundraiser.component';
 import { GroupComponent } from './group/group.component';
+import { WithdrawalRequestComponent } from './withdrawal-request/withdrawal-request.component';
+import { ViewwithdrawalrequestComponent } from './viewwithdrawalrequest/viewwithdrawalrequest.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -93,6 +95,14 @@ export const featureRoutes: Routes = [
   {
     path: 'user_groups/:id/view',
     component: GroupComponent,
+  },
+  {
+    path: 'withdrawal-requests',
+    component: WithdrawalRequestComponent,
+  },
+  {
+    path: 'withdrawalrequest/:id',
+    component: ViewwithdrawalrequestComponent,
   },
   { path: '**', redirectTo: 'dashboard' },
 ];
