@@ -1,15 +1,8 @@
-.header {
-  position: relative;
-  margin-bottom: 50px;
-  margin-top: 16px;
-  margin-left: 10px;
-}
+
 
 .back-button{
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  margin-bottom: 25px;
+  /* margin-top: 20px; */
+  margin-bottom: 15px;
 
 }
 
@@ -37,8 +30,5 @@
 mat-form-field {
   height: 15px;
   margin-bottom: 5rem;
-   /* width: 80%; */
-
-
 }
 

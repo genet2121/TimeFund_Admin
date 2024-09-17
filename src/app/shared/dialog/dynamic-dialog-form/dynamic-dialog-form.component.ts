@@ -1,4 +1,3 @@
-
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +14,7 @@ import { HelperService } from '../../../core/services/helper.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-user-group-dialog',
+  selector: 'app-dynamic-dialog-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -29,10 +28,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatIconModule,
     MatSlideToggleModule,
   ],
-  templateUrl: './user-group-dialog.component.html',
-  styleUrls: ['./user-group-dialog.component.css'],
+  templateUrl: './dynamic-dialog-form.component.html',
+  styleUrl: './dynamic-dialog-form.component.css'
 })
-export class UserGroupDialogComponent implements OnInit {
+export class DynamicDialogFormComponent {
   userGroupCreateForm: FormGroup;
   user_group_id!: number;
   isViewDetail: boolean = false;
@@ -47,7 +46,7 @@ export class UserGroupDialogComponent implements OnInit {
 
 
   constructor(
-    public dialogRef: MatDialogRef<UserGroupDialogComponent>,
+    public dialogRef: MatDialogRef<DynamicDialogFormComponent>,
     private crudService: CrudService<any>,
     private fb: FormBuilder,
     private helperService: HelperService,
@@ -188,6 +187,12 @@ export class UserGroupDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 }
+
+
+
+
+
+
 
 
 

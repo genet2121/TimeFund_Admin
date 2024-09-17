@@ -105,13 +105,6 @@ export class UserGroupListComponent {
 
   handleAddClick() {
     this.router.navigate(['/user_groups/create'])
-    // const dialogRef = this.dialog.open(UserGroupDialogComponent, {
-    //   width: '500px',
-    //   data: {}
-
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
   }
 
   handleSearchClick() {

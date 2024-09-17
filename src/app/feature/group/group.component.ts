@@ -77,38 +77,66 @@ export class GroupComponent {
     });
     this.isViewDetail = this.router.getCurrentNavigation()?.extras.state?.['view'];
   }
-
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
-      if (this.id !== undefined) {
-        this.crudService
-          .getById('user-group-roles/getUserGroupById', this.id)
-          .subscribe((res: { roles: Role[] }) => {
-            if (res.roles && res.roles.length > 0) {
-              this.groupRole.forEach((group, index) => {
-                this.default_role.forEach((ele) => {
-                  (group as any)[ele] = (res.roles[index] as any)[ele] as boolean;
-                });
-              });
-            }
-            this.dataForm.get('group')?.patchValue(res);
-            this.selectAllChecked = this.groupRole.every(role =>
-              this.default_role.every(action => role[action])
-            )
-          });
-          this.route.queryParamMap.subscribe((params) => {
-            this.isViewDetail = params.get('view') === 'true';
-            console.log('this.isViewDetail', this.isViewDetail);
-            if (this.isViewDetail) {
-              this.dataForm.disable();
-            }
-          });
-      }
     });
 
+    if (this.id) {
 
+      this.crudService.getById('user-group-roles/getUserGroupById', this.id)
+      .subscribe((res: { user_group_id: number, user_group_name: string, role: Role[] }) => {
+        if (res.role && res.role.length > 0) {
+
+          this.groupRole.forEach((group) => {
+            const matchedRole = res.role.find((r) => r.page_name === group.page_name);
+            if (matchedRole) {
+
+              this.default_role.forEach((ele) => {
+                (group as any)[ele] = (matchedRole as any)[ele] as boolean;
+              });
+            }
+          });
+
+
+          this.dataForm.get('group.roles')?.setValue(this.groupRole);
+        }
+
+
+        this.selectAllChecked = this.groupRole.every(role =>
+          this.default_role.every(action => role[action])
+        );
+
+
+        this.dataForm.get('group')?.patchValue({
+          id: res.user_group_id,
+          user_group_name: res.user_group_name,
+          roles: this.groupRole
+        });
+      });
+
+    } else if (!this.id) {
+
+      this.resetGroupRoles();
+    }
   }
+
+
+  resetGroupRoles() {
+    this.groupRole = this.groupRole.map((role) => ({
+      ...role,
+      can_view: false,
+      can_view_detail: false,
+      can_add: false,
+      can_edit: false,
+      can_delete: false,
+    }));
+    this.dataForm.get('group.roles')?.setValue(this.groupRole);
+  }
+
+
+
+
 
   onChange(index: number, action: keyof Role, value: boolean) {
     let role = this.groupRole[index] as any;

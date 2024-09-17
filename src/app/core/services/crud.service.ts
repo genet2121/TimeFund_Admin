@@ -9,7 +9,7 @@ import { environment } from '../../../environmets/environment';
 })
 export class CrudService<T> {
   apiUrl = environment.apiUrl;
-  imageUrl = 'https://server.wegen.timesoftware.dev/api/uploads/';
+
 
   constructor(private http: HttpClient, private helperService: HelperService) {}
 
@@ -49,15 +49,17 @@ export class CrudService<T> {
     return this.http.post(`${this.apiUrl}/${endpoint}`, payload, { headers });
   }
 
-  delete(endpoint: string, id: number): Observable<void> {
+
+  deleteItem(endpoint: string, id: number): Observable<any> {
     const headers = this.helperService.getUserToken();
     return this.http.delete<void>(`${this.apiUrl}/${endpoint}/${id}`, {
       headers,
     });
   }
-  deleteItem(endpoint: string, id: number): Observable<any> {
+
+  suspendItem(endpoint: string, id: number): Observable<any> {
     const headers = this.helperService.getUserToken();
-    return this.http.delete<void>(`${this.apiUrl}/${endpoint}/${id}`, {
+    return this.http.put<void>(`${this.apiUrl}/${endpoint}/${id}`, {
       headers,
     });
   }
