@@ -82,7 +82,6 @@ export class UserGroupFormComponent {
         this.groups = res.data;
       });
 
-
   }
 
   get permissionsArray(): FormArray {

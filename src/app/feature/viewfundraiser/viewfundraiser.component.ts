@@ -1,22 +1,17 @@
 import { Component } from '@angular/core';
-import { CrudService } from '../../core/services/crud.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Fundraising } from '../../core/model/fundraiser.model';
-import { PhaseComponent } from '../../shared/phase/phase.component';
-import { NgbAccordionDirective } from '@ng-bootstrap/ng-bootstrap';
-import phase from '../../core/model/phase.model';
-import api from '../../core/model/api.model';
+import { CrudService } from '../../core/services/crud.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-viewproject',
+  selector: 'app-viewfundraiser',
   standalone: true,
-  imports: [PhaseComponent, CommonModule],
-  providers: [NgbAccordionDirective],
-  templateUrl: './viewproject.component.html',
-  styleUrl: './viewproject.component.css',
+  imports: [CommonModule],
+  templateUrl: './viewfundraiser.component.html',
+  styleUrl: './viewfundraiser.component.css',
 })
-export class ViewprojectComponent {
+export class ViewfundraiserComponent {
   fundraisingInfo: Fundraising | undefined = undefined;
   phases: any[] = [];
   fundraiserId: number = 0;
@@ -33,19 +28,10 @@ export class ViewprojectComponent {
         .subscribe((data) => {
           this.fundraisingInfo = data as Fundraising;
         });
-      this.fetchPhases();
     });
   }
   navigateTo(dir: string) {
     window.location.href = dir;
-  }
-  fetchPhases() {
-    this.crudService
-      .getAll(`phase/getphases/${this.fundraiserId}`)
-      .subscribe((result: any) => {
-        const response = result as api;
-        this.phases = response.data as phase[];
-      });
   }
   suspendProject() {
     this.crudService

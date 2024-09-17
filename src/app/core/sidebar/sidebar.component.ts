@@ -22,12 +22,13 @@ export type MenuItem = {
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-   userGroupId!:number;
-   SidbarLabel: any[] = [];
+  userGroupId!: number;
+  SidbarLabel: any[] = [];
   constructor(
     private router: Router,
     private helperService: HelperService,
-    private crudService: CrudService<any>) {}
+    private crudService: CrudService<any>
+  ) {}
 
   sideNavCollapsed = signal(false);
   @Input() set collapsed(val: boolean) {
@@ -35,15 +36,14 @@ export class SidebarComponent {
   }
   menuItems = signal<MenuItem[]>([
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
-
   ]);
 
 
   profilePicSize = computed(() => (this.sideNavCollapsed() ? '32' : 100));
   ngOnInit(): void {
-         this.userGroupId = this.helperService.getLogInUser.user_group_id
-         console.log('this.userGroupId', this.userGroupId);
-         this.getSidbarLabel(this.userGroupId)
+    this.userGroupId = this.helperService.getLogInUser.user_group_id;
+    console.log('this.userGroupId', this.userGroupId);
+    this.getSidbarLabel(this.userGroupId);
   }
   getSidbarLabel(userGroupId: number) {
     this.crudService.getById('user-group-roles/getUserGroupById', userGroupId).subscribe((res) => {
@@ -92,7 +92,6 @@ export class SidebarComponent {
         return 'trending_up';
       case 'Withdrawal Requests':
         return 'request_page';
-
 
       default:
         return 'dashboard';

@@ -7,11 +7,16 @@ import { ProjectComponent } from './project/project.component';
 import { ViewprojectComponent } from './viewproject/viewproject.component';
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
 import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
+import { FundraiserComponent } from './fundraiser/fundraiser.component';
+import { ViewfundraiserComponent } from './viewfundraiser/viewfundraiser.component';
 import { GroupComponent } from './group/group.component';
 import { ProjectCategoryListComponent } from './project-category-list/project-category-list.component';
 import { FundraiseCategoryListComponent } from './fundraise-category-list/fundraise-category-list.component';
 import { FundraiseCategoryDetailComponent } from './fundraise-category-detail/fundraise-category-detail.component';
 import { ProjectCategoryDetailComponent } from './project-category-detail/project-category-detail.component';
+
+import { WithdrawalRequestComponent } from './withdrawal-request/withdrawal-request.component';
+import { ViewwithdrawalrequestComponent } from './viewwithdrawalrequest/viewwithdrawalrequest.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -37,11 +42,11 @@ export const featureRoutes: Routes = [
   },
   {
     path: 'admin/:id/edit',
-    component:AdminFormComponent
+    component: AdminFormComponent,
   },
   {
     path: 'admin/:id/view',
-    component:AdminFormComponent
+    component: AdminFormComponent,
   },
 
   {
@@ -53,20 +58,40 @@ export const featureRoutes: Routes = [
     component: ViewprojectComponent,
   },
   {
-    path: 'user-groups',
-    component:UserGroupListComponent
+    path: 'fundraisings',
+    component: FundraiserComponent,
+  },
+  {
+    path: 'fundraiser/:id',
+    component: ViewfundraiserComponent,
+  },
+  {
+    path: 'user_groups',
+    component: UserGroupListComponent,
   },
   {
     path: 'user_groups/create',
-    component: GroupComponent
+    component: UserGroupFormComponent,
+  },
+  {
+    path: 'user-groups',
+    component: UserGroupListComponent,
+  },
+  {
+    path: 'user_groups/create',
+    component: GroupComponent,
   },
   {
     path: 'user_groups/:id/edit',
-    component:GroupComponent
+    component: GroupComponent,
   },
   {
     path: 'user_groups/:id/assign_role',
-    component: UserGroupFormComponent
+    component: UserGroupFormComponent,
+  },
+  {
+    path: 'user_groups/:id/edit',
+    component: UserGroupFormComponent,
   },
   {
     path: 'project-category',
@@ -91,7 +116,19 @@ export const featureRoutes: Routes = [
     },
     {
     path: 'user_groups/:id/view',
-    component: GroupComponent
+    component: UserGroupFormComponent,
+  },
+  {
+    path: 'user_groups/:id/view',
+    component: GroupComponent,
+  },
+  {
+    path: 'withdrawal-requests',
+    component: WithdrawalRequestComponent,
+  },
+  {
+    path: 'withdrawalrequest/:id',
+    component: ViewwithdrawalrequestComponent,
   },
   { path: '**', redirectTo: 'dashboard' },
 ];
