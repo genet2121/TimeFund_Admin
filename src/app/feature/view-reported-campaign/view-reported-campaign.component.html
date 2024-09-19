@@ -1,0 +1,143 @@
+<div class="p-6 w-full mx-auto bg-white rounded-xl shadow-md space-y-4">
+  <h2 class="text-xl font-semibold">Projects Detail</h2>
+  <div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 ms-14">
+    <div class="col-span-2">
+      <label for="full_name" class="block text-xs mb-3 text-gray-700"
+        >Full Name</label
+      >
+      <input
+        type="text"
+        id="full_name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="fundraiseReport?.fullName"
+        readonly
+      />
+    </div>
+
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700">Email</label>
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="fundraiseReport?.emailAddress"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Country</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="fundraiseReport?.country"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Phone Number</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="fundraiseReport?.phoneNumber"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Fundraiser URL</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="fundraiseReport?.fundraiserUrl"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >How do you know the fundraiser organizer?
+      </label>
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="fundraiseReport?.howDoYouKnowOrganizer"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Why would you like a refund?</label
+      >
+      <input
+        type="datetime"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        formControlName="email"
+        [value]="fundraiseReport?.whyRefund"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Can you tell us more about your concerns?</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        formControlName="email"
+        [value]="fundraiseReport?.concerns"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Upload any evidence you may have</label
+      >
+      <div>
+        <div
+          class="flex flex-col items-center mx-auto mb-4 border-1 border-[#CACACA] rounded-md"
+        >
+          <div class="flex items-center gap-4 py-6">
+            <mat-icon>description</mat-icon>
+            <div class="flex flex-col">
+              <p class="font-extralight">Evidence</p>
+              <p
+                class="text-[#5D328F] cursor-pointer"
+                (click)="viewDocInNewTab(fundraiseReport?.evidence + '')"
+              >
+                Click to view
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700">Status</label>
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        formControlName="email"
+        [value]="fundraiseReport?.status | uppercase"
+        readonly
+      />
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <button
+      class="bg-[#202224] text-white mx-auto py-2 px-4 rounded-md"
+      (click)="viewDocInNewTab(fundraiseReport?.fundraiserUrl + '')"
+    >
+      Go to campaign
+    </button>
+    <button
+      *ngIf="fundraiseReport?.status === 'unresolved'"
+      class="border-1 border-[#09BC36] mx-auto py-2 px-4 rounded-md text-[#09BC36]"
+      (click)="updateStatus()"
+    >
+      Solved
+    </button>
+  </div>
+</div>

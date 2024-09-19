@@ -6,7 +6,7 @@ import { AdminListComponent } from './admin-list/admin-list.component';
 import { ProjectComponent } from './project/project.component';
 import { ViewprojectComponent } from './viewproject/viewproject.component';
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
-import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
+// import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
 import { FundraiserComponent } from './fundraiser/fundraiser.component';
 import { ViewfundraiserComponent } from './viewfundraiser/viewfundraiser.component';
 import { GroupComponent } from './group/group.component';
@@ -17,6 +17,8 @@ import { ProjectCategoryDetailComponent } from './project-category-detail/projec
 
 import { WithdrawalRequestComponent } from './withdrawal-request/withdrawal-request.component';
 import { ViewwithdrawalrequestComponent } from './viewwithdrawalrequest/viewwithdrawalrequest.component';
+import { ReportedCampaignComponent } from './reported-campaign/reported-campaign.component';
+import { ViewReportedCampaignComponent } from './view-reported-campaign/view-reported-campaign.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -69,10 +71,10 @@ export const featureRoutes: Routes = [
     path: 'user_groups',
     component: UserGroupListComponent,
   },
-  {
-    path: 'user_groups/create',
-    component: UserGroupFormComponent,
-  },
+  // {
+  //   path: 'user_groups/create',
+  //   component: UserGroupFormComponent,
+  // },
   {
     path: 'user-groups',
     component: UserGroupListComponent,
@@ -85,38 +87,34 @@ export const featureRoutes: Routes = [
     path: 'user_groups/:id/edit',
     component: GroupComponent,
   },
-  {
-    path: 'user_groups/:id/assign_role',
-    component: UserGroupFormComponent,
-  },
-  {
-    path: 'user_groups/:id/edit',
-    component: UserGroupFormComponent,
-  },
+  // {
+  //   path: 'user_groups/:id/assign_role',
+  //   component: UserGroupFormComponent,
+  // },
+  // {
+  //   path: 'user_groups/:id/edit',
+  //   component: UserGroupFormComponent,
+  // },
   {
     path: 'project-category',
-    component: ProjectCategoryListComponent
+    component: ProjectCategoryListComponent,
   },
   {
     path: 'project-category/:id/view',
-    component: ProjectCategoryDetailComponent
+    component: ProjectCategoryDetailComponent,
   },
   {
     path: 'project-category/:id/edit',
-    component: ProjectCategoryDetailComponent
+    component: ProjectCategoryDetailComponent,
   },
   {
-   path: 'fundraiser-category',
-   component: FundraiseCategoryListComponent
+    path: 'fundraiser-category',
+    component: FundraiseCategoryListComponent,
   },
 
-    {
-      path: 'fundraiser-category/:id/view',
-      component:FundraiseCategoryDetailComponent
-    },
-    {
-    path: 'user_groups/:id/view',
-    component: UserGroupFormComponent,
+  {
+    path: 'fundraiser-category/:id/view',
+    component: FundraiseCategoryDetailComponent,
   },
   {
     path: 'user_groups/:id/view',
@@ -129,6 +127,14 @@ export const featureRoutes: Routes = [
   {
     path: 'withdrawalrequest/:id',
     component: ViewwithdrawalrequestComponent,
+  },
+  {
+    path: 'fundraiser-reports',
+    component: ReportedCampaignComponent,
+  },
+  {
+    path: 'fundraiser-reports/:id',
+    component: ViewReportedCampaignComponent,
   },
   { path: '**', redirectTo: 'dashboard' },
 ];
