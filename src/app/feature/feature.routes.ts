@@ -6,7 +6,6 @@ import { AdminListComponent } from './admin-list/admin-list.component';
 import { ProjectComponent } from './project/project.component';
 import { ViewprojectComponent } from './viewproject/viewproject.component';
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
-import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
 import { FundraiserComponent } from './fundraiser/fundraiser.component';
 import { ViewfundraiserComponent } from './viewfundraiser/viewfundraiser.component';
 import { GroupComponent } from './group/group.component';
@@ -17,6 +16,7 @@ import { ProjectCategoryDetailComponent } from './project-category-detail/projec
 
 import { WithdrawalRequestComponent } from './withdrawal-request/withdrawal-request.component';
 import { ViewwithdrawalrequestComponent } from './viewwithdrawalrequest/viewwithdrawalrequest.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 export const featureRoutes: Routes = [
   // {
@@ -31,6 +31,18 @@ export const featureRoutes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
+  },
+  {
+    path: 'users/create',
+    component: UserFormComponent,
+  },
+  {
+    path: 'users/:id/edit',
+    component: UserFormComponent,
+  },
+  {
+    path: 'users/:id/view',
+    component: UserFormComponent,
   },
   {
     path: 'administrator',
@@ -65,14 +77,7 @@ export const featureRoutes: Routes = [
     path: 'fundraiser/:id',
     component: ViewfundraiserComponent,
   },
-  {
-    path: 'user_groups',
-    component: UserGroupListComponent,
-  },
-  {
-    path: 'user_groups/create',
-    component: UserGroupFormComponent,
-  },
+
   {
     path: 'user-groups',
     component: UserGroupListComponent,
@@ -85,14 +90,7 @@ export const featureRoutes: Routes = [
     path: 'user_groups/:id/edit',
     component: GroupComponent,
   },
-  {
-    path: 'user_groups/:id/assign_role',
-    component: UserGroupFormComponent,
-  },
-  {
-    path: 'user_groups/:id/edit',
-    component: UserGroupFormComponent,
-  },
+
   {
     path: 'project-category',
     component: ProjectCategoryListComponent
@@ -114,10 +112,7 @@ export const featureRoutes: Routes = [
       path: 'fundraiser-category/:id/view',
       component:FundraiseCategoryDetailComponent
     },
-    {
-    path: 'user_groups/:id/view',
-    component: UserGroupFormComponent,
-  },
+
   {
     path: 'user_groups/:id/view',
     component: GroupComponent,

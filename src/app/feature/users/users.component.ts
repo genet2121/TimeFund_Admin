@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CrudService } from '../../core/services/crud.service';
 import { TableComponent } from '../../shared/table/table.component';
 import tablePermission from '../../core/model/tablepermissions.mode';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import user from '../../core/model/user.model';
 
 @Component({
   selector: 'app-users',
@@ -10,34 +14,109 @@ import tablePermission from '../../core/model/tablepermissions.mode';
   styleUrl: './users.component.css',
 })
 export class UsersComponent {
+  val:any[] = [];
   tableColumns = [
-    { key: 'name', label: 'Name' },
-    { key: 'age', label: 'Age' },
-    { key: 'email', label: 'Email' },
+    { key: 'fullName', label: 'Full Name', },
+    { key: 'email', label: 'E-mail' },
+    { key: 'country', label: 'Country' },
+    { key: 'hasorganization', label: 'Type' },
+    { key: 'is_active', label: 'Status' },
   ];
+  displayedColumns = this.tableColumns.map(c => c.key).concat('action');
+
 
   allowedActions: tablePermission = {
-    edit: true,
+    edit: false,
     view: true,
     delete: true,
     assign_role:false
   };
+  tableData: user[] = [];
 
-  tableData = [
-    { name: 'Alice Johnson', age: 28, email: 'alice.johnson@example.com' },
-    { name: 'Bob Williams', age: 34, email: 'bob.williams@example.com' },
-  ];
-  tableData2 = [
-    { name: 'Noah Young', age: 29, email: 'noah.young@example.com' },
-    { name: 'Olivia King', age: 28, email: 'olivia.king@example.com' },
-  ];
+  constructor(private router: Router, private crudservice: CrudService<any>,  private snackBar: MatSnackBar,) {}
 
-  handleAction(element: any) {
-    console.log('Action performed on:', element);
+  ngOnInit() {
+    this.fetchData();
   }
-  changePage(element: any) {
-    this.tableData = this.tableData2;
+
+  fetchData() {
+    this.crudservice.getAll('users/getallusers')
+      .subscribe((data: user[]) => {
+        this.tableData = this.transformDataForTable(data);
+        console.log('thus', this.tableData)
+      });
+  }
+  transformDataForTable(users: user[]): any[] {
+    return users.map((userTableData) => {
+      let type: string;
+      if (userTableData.hasbusiness) {
+        type = 'Business';
+      } else if (userTableData.hascharity) {
+        type = 'Charity';
+      } else {
+        type = 'Individual';
+      }
+
+      return {
+        id: userTableData.user_id,
+        fullName: userTableData.fullName,
+        email: userTableData.email.length > 10 ? userTableData.email.slice(0, 10) + '...' : userTableData.email,
+        country: userTableData.country.length > 10 ? userTableData.country.slice(0, 10) + '...' : userTableData.country,
+        hasorganization: type,
+        is_active: userTableData.is_active ? 'Active' : 'Suspended',
+      };
+    });
+  }
+
+
+  handleViewAction(element: any) {
+
+    this.router.navigate(['/users', element.id, 'view'],
+
+    );
+  }
+
+  handleEditAction(element: any) {
+    this.router.navigate(['/users', element.id, 'edit'], {
+      state: { edit: true }
+    });
+
+
+  }
+
+  handleDeleteAction(element: any) {
+
+   if(this.crudservice&&element.id){
+    this.crudservice.deleteItem('admin/deleteadmins', element.id).subscribe(res =>{
+      this.val = res as user[];
+      this.snackBar.open('admin deleted successfully!', 'Close', {
+        duration: 3000,
+         verticalPosition: 'top'
+      });
+       this.fetchData();
+
+    })
+   }else{
+    console.log('error')
+   }
+}
+
+  changePage(event: any) {
+    console.log('Page changed:', event);
   }
 
   currentPage = 2;
+
+  handleAddClick() {
+    window.location.href = `/users/create`;
+  }
+
+  handleSearchClick() {
+    console.log('Search button clicked');
+  }
+
+  handleSettingsClick() {
+    console.log('Settings button clicked');
+  }
+
 }

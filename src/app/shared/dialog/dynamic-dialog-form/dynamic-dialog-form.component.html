@@ -11,28 +11,51 @@
 
 <div mat-dialog-content>
   <form [formGroup]="userGroupCreateForm">
-    <div class="grid grid-cols-2 gap-6">
-
+    <div *ngIf="isViewDetail; else editMode" class="grid grid-cols-2 gap-6">
       <mat-form-field appearance="outline">
         <input
           matInput
           [formControlName]="categoryTypeKey"
-          [placeholder]="categoryTypeKey |titlecase"
+          [placeholder]="categoryTypeKey | titlecase"
+          readonly
         />
       </mat-form-field>
-
 
       <mat-form-field appearance="outline">
         <textarea
           matInput
           [formControlName]="categoryDescriptionKey"
-          [placeholder]="categoryDescriptionKey |titlecase"
-        rows="3"></textarea>
+          [placeholder]="categoryDescriptionKey | titlecase"
+          rows="3"
+          readonly
+        ></textarea>
       </mat-form-field>
     </div>
 
+
+    <ng-template #editMode>
+      <div class="grid grid-cols-2 gap-6">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [formControlName]="categoryTypeKey"
+            [placeholder]="categoryTypeKey | titlecase"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            [formControlName]="categoryDescriptionKey"
+            [placeholder]="categoryDescriptionKey | titlecase"
+            rows="3"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </ng-template>
+
     <div class="mt-6">
-      <mat-slide-toggle color="primary" formControlName="is_active">Active</mat-slide-toggle>
+      <mat-slide-toggle color="primary" formControlName="is_active" >Active</mat-slide-toggle>
     </div>
   </form>
 </div>

@@ -1,13 +1,16 @@
 <div class="mat-elevation-z8 bg-white py-4 px-4">
   <app-table
-  tableTitle="Contact Us"
+  tableTitle="Users"
   [columns]="tableColumns"
   [data]="tableData"
   [allowedActions]="allowedActions"
-  [DeleteAction]="handleAction"
-  [EditAction]="handleAction"
-  [DeleteAction]="handleAction"
+  [DeleteAction]="handleDeleteAction"
+  [EditAction]="handleEditAction"
+  [ViewAction]="handleViewAction"
   [PageChangeAction]="changePage"
+  (addClick)="handleAddClick()"
+  (searchClick)="handleSearchClick()"
+  (settingsClick)="handleSettingsClick()"
 ></app-table>
-</div>
 
+</div>

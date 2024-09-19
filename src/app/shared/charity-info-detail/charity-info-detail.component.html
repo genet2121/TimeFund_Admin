@@ -1,0 +1,289 @@
+<h2 class="text-xl font-semibold mb-32">Manager’s Detail</h2>
+
+
+<div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 px-14 mt-7 mb-5">
+  <div class="col-span-2">
+    <label for="full_name" class="block text-xs mb-2 text-gray-700">Manager’s First Name</label>
+    <input
+      type="text"
+      id="full_name"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="firstName"
+      readonly
+    />
+  </div>
+
+  <div class="col-span-2">
+    <label for="description" class="block text-xs mb-2 text-gray-700">Manager’s Last Name</label>
+    <input
+      type="text"
+      id="description"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="lastName"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_category" class="block text-xs mb-3 text-gray-700">Phone Number</label>
+    <input
+      type="text"
+      id="business_category"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityOrganizationInfo.phoneNumber"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_subcategory" class="block text-xs mb-3 text-gray-700">Manager’s Email</label>
+    <input
+      type="text"
+      id="business_subcategory"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityOrganizationInfo.email"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="goal" class="block text-xs mb-3 text-gray-700">Country</label>
+    <input
+      type="text"
+      id="goal"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityOrganizationInfo.country"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="organizer_address" class="block text-xs mb-3 text-gray-700">City</label>
+    <input
+      type="text"
+      id="organizer_address"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityOrganizationInfo.city"
+      readonly
+    />
+  </div>
+
+</div>
+
+<h2 class="text-xl font-semibold mb-32">Charity Detail</h2>
+
+
+<div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 px-14 mt-7 mb-5">
+  <div class="col-span-2">
+    <label for="full_name" class="block text-xs mb-2 text-gray-700">Charity name</label>
+    <input
+      type="text"
+      id="full_name"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.charity_name"
+      readonly
+    />
+  </div>
+
+  <div class="col-span-2">
+    <label for="description" class="block text-xs mb-2 text-gray-700">Charity type</label>
+    <input
+      type="text"
+      id="description"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.charity_type"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_category" class="block text-xs mb-3 text-gray-700">TIN number</label>
+    <input
+      type="text"
+      id="business_category"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_subcategory" class="block text-xs mb-3 text-gray-700">Trade License Number (TLN)</label>
+    <input
+      type="text"
+      id="business_subcategory"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="goal" class="block text-xs mb-3 text-gray-700">Organization email</label>
+    <input
+      type="text"
+      id="goal"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="organizer_address" class="block text-xs mb-3 text-gray-700">Organization phone number</label>
+    <input
+      type="text"
+      id="organizer_address"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      readonly
+    />
+  </div>
+
+  <div class="col-span-2">
+    <label for="business_category" class="block text-xs mb-3 text-gray-700">Region</label>
+    <input
+      type="text"
+      id="business_category"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_subcategory" class="block text-xs mb-3 text-gray-700">Sub-City</label>
+    <input
+      type="text"
+      id="business_subcategory"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="goal" class="block text-xs mb-3 text-gray-700">Woreda</label>
+    <input
+      type="text"
+      id="goal"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="organizer_address" class="block text-xs mb-3 text-gray-700">Kebele</label>
+    <input
+      type="text"
+      id="organizer_address"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      readonly
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="description" class="block text-xs mb-2 text-gray-700">House number</label>
+    <input
+      type="text"
+      id="description"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_category" class="block text-xs mb-3 text-gray-700">Licenses expiry date </label>
+    <input
+      type="text"
+      id="business_category"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="business_subcategory" class="block text-xs mb-3 text-gray-700">Organization website link</label>
+    <input
+      type="text"
+      id="business_subcategory"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+    />
+  </div>
+  <div class="col-span-2">
+    <label for="goal" class="block text-xs mb-3 text-gray-700">Extra information</label>
+    <textarea
+      type="text"
+      id="goal"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      readonly
+      rows="4"
+    ></textarea>
+  </div>
+  <div class="col-span-2">
+    <label for="organizer_address" class="block text-xs mb-3 text-gray-700">Description</label>
+    <textarea
+      type="text"
+      id="organizer_address"
+      class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      readonly
+      rows="4"
+    ></textarea>
+  </div>
+</div>
+<h2 class="text-xl font-semibold mb-32">Organization Detail Documents</h2>
+
+
+<div class="grid gap-11 gap-y-3 text-sm grid-cols-1 md:grid-cols-2 px-10 mt-7 mb-5">
+  <div class="col-span-1">
+    <p class="block text-xs mb-3 text-gray-700">TIN Certificate</p>
+    <div
+      class="flex flex-col items-center mx-auto w-80 mb-4 bg-gray-50 border border-[#CACACA] rounded-md"
+    >
+      <div class="flex items-center gap-4 py-6">
+        <mat-icon>description</mat-icon>
+        <div class="flex flex-col">
+          <p class="font-extralight">Progress Report</p>
+          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-span-1">
+    <p class="block text-xs mb-3 text-gray-700">Registration Certificate</p>
+    <div
+      class="flex flex-col items-center mx-auto w-80 mb-4 bg-gray-50 border border-[#CACACA] rounded-md"
+    >
+      <div class="flex items-center gap-4 py-6">
+        <mat-icon>description</mat-icon>
+        <div class="flex flex-col">
+          <p class="font-extralight">Progress Report</p>
+          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-1">
+    <p class="block text-xs mb-3 text-gray-700">Governing Document</p>
+    <div
+      class="flex flex-col items-center mx-auto w-80 mb-4 bg-gray-50 border border-[#CACACA] rounded-md"
+    >
+      <div class="flex items-center gap-4 py-6">
+        <mat-icon>description</mat-icon>
+        <div class="flex flex-col">
+          <p class="font-extralight">Progress Report</p>
+          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-1">
+    <p class="block text-xs mb-3 text-gray-700">Supporting Documnet</p>
+    <div
+      class="flex flex-col items-center mx-auto w-80 mb-4 bg-gray-50 border border-[#CACACA] rounded-md"
+    >
+      <div class="flex items-center gap-4 py-6">
+        <mat-icon>description</mat-icon>
+        <div class="flex flex-col">
+          <p class="font-extralight">Progress Report</p>
+          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-1">
+    <p class="block text-xs mb-3 text-gray-700">Company Logo</p>
+    <div
+      class="flex flex-col items-center mx-auto w-80 mb-4 bg-gray-50 border border-[#CACACA] rounded-md"
+    >
+      <div class="flex items-center gap-4 py-6">
+        <mat-icon>description</mat-icon>
+        <div class="flex flex-col">
+          <p class="font-extralight">Progress Report</p>
+          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="flex justify-center" >
+  <button
+  class="bg-red-700 hover:bg-successActive text-white text-sm py-2.5 px-5 mr-2 mb-7 rounded-xl shadow-md">
+  Suspend User
+</button></div>

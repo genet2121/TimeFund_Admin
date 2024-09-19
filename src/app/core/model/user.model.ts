@@ -22,4 +22,5 @@ export default interface user {
   createdAt: string;
   updatedAt: string;
   table_id: null | number;
+  is_active:boolean
 }

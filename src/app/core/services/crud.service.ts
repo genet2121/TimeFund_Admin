@@ -9,6 +9,7 @@ import { environment } from '../../../environmets/environment';
 })
 export class CrudService<T> {
   apiUrl = environment.apiUrl;
+  imageUrl = `${this.apiUrl}/uploads/`;
 
 
   constructor(private http: HttpClient, private helperService: HelperService) {}

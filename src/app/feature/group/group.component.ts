@@ -66,7 +66,7 @@ export class GroupComponent {
     private crudService: CrudService<any>,
     private fb: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     this.dataForm = this.fb.group({
       group: this.fb.group({
