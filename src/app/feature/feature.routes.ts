@@ -52,15 +52,15 @@ export const featureRoutes: Routes = [
     component: AdminListComponent,
   },
   {
-    path: 'admin/create',
+    path: 'administrator/create',
     component: AdminFormComponent,
   },
   {
-    path: 'admin/:id/edit',
+    path: 'administrator/:id/edit',
     component: AdminFormComponent,
   },
   {
-    path: 'admin/:id/view',
+    path: 'administrator/:id/view',
     component: AdminFormComponent,
   },
 

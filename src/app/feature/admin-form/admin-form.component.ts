@@ -72,7 +72,7 @@ export class AdminFormComponent implements OnInit {
       });
 
 
-      this.crudservice.getAll('userGroup/getAllUserGroups').subscribe((res: any) => {
+      this.crudservice.getAll('user-group-roles/getAllUserGroups').subscribe((res: any) => {
         this.roles = res.data;
         console.log('user group data', this.roles);
       });
@@ -89,16 +89,18 @@ export class AdminFormComponent implements OnInit {
 
   onSave() {
     if (this.adminForm.valid) {
+      const formData = { ...this.adminForm.value, isActive: this.adminForm.value.status === 'Active' };
+
       if (this.id) {
 
-        this.crudservice.update('admin/editadmins', this.id, this.adminForm.value).subscribe(
+        this.crudservice.update('admin/editadmins', this.id,formData).subscribe(
           (response) => {
             console.log('Admin updated', response);
             this.snackBar.open('Admin updated successfully!', 'Close', {
               duration: 3000,
               verticalPosition: 'top',
             });
-            this.router.navigate(['/admins']);
+            this.router.navigate(['/administrator']);
           },
           (error) => {
             console.error('Error updating admin', error);
@@ -118,7 +120,7 @@ export class AdminFormComponent implements OnInit {
               duration: 3000,
               verticalPosition: 'top',
             });
-            this.router.navigate(['/admins']);
+            this.router.navigate(['/administrator']);
           },
           (error) => {
             console.error('Error creating admin', error);

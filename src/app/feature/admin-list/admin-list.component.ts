@@ -74,13 +74,13 @@ export class AdminListComponent implements OnInit {
 
   handleViewAction(element: any) {
 
-    this.router.navigate(['/admin', element.id, 'view'], {
+    this.router.navigate(['/administrator', element.id, 'view'], {
       queryParams: { view: true }
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/admin', element.id, 'edit'], {
+    this.router.navigate(['/administrator', element.id, 'edit'], {
       state: { edit: true }
     });
 
@@ -111,7 +111,7 @@ export class AdminListComponent implements OnInit {
   currentPage = 2;
 
   handleAddClick() {
-    window.location.href = `/admin/create`;
+    window.location.href = `/administrator/create`;
   }
 
   handleSearchClick() {
