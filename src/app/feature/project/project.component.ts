@@ -83,6 +83,6 @@ export class ProjectComponent implements OnInit {
     }));
   }
   viewAction(element: any) {
-    window.location.href = `project/${element.id}`;
+    window.location.href = `projects/${element.id}`;
   }
 }

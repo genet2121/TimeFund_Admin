@@ -169,6 +169,11 @@ export class GroupComponent {
      if(this.id){
     this.crudService.update('user-group-roles/putUserGroup', this.id, formattedData).subscribe((res)=>{
 
+      this.snackBar.open('user group role updated successfully!', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+      this.router.navigate(['/user-groups']);
     })
      }else{
       this.crudService.post('user-group-roles/createUserGroupRole', formattedData)
@@ -176,7 +181,7 @@ export class GroupComponent {
         (response) => {
           console.log('Permissions created successfully:', response);
           this.dataForm.reset();
-          this.snackBar.open('User group Permissions created successfully!', 'Close', {
+          this.snackBar.open('User group role created successfully!', 'Close', {
             duration: 3000,
             verticalPosition: 'top',
           });

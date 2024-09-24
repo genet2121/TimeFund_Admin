@@ -82,6 +82,6 @@ export class FundraiserComponent implements OnInit {
     }));
   }
   viewAction(element: any) {
-    window.location.href = `fundraiser/${element.id}`;
+    window.location.href = `fundraisings/${element.id}`;
   }
 }
