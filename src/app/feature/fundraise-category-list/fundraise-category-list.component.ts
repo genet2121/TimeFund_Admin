@@ -9,15 +9,23 @@ import fundraiseCategory from '../../core/model/fundraiseCategory.model';
 import { HelperService } from '../../core/services/helper.service';
 import { DynamicDialogFormComponent } from '../../shared/dialog/dynamic-dialog-form/dynamic-dialog-form.component';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-fundraise-category-list',
   standalone: true,
-  imports: [TableComponent, DynamicDialogFormComponent],
+  imports: [
+    TableComponent,
+    DynamicDialogFormComponent,
+    MatProgressBarModule,
+    CommonModule,
+  ],
   templateUrl: './fundraise-category-list.component.html',
   styleUrl: './fundraise-category-list.component.css',
 })
 export class FundraiseCategoryListComponent {
+  _isLoading = true;
   _tableName = 'Fundraiser Category';
   val: any[] = [];
   tableColumns = [
@@ -63,7 +71,7 @@ export class FundraiseCategoryListComponent {
       .getAll('categories/getallcategory')
       .subscribe((data: any) => {
         this.tableData = this.transformDataForTable(data);
-        console.log('thus', this.tableData);
+        this._isLoading = false;
       });
   }
   transformDataForTable(fundraiseCategories: fundraiseCategory[]): any[] {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CrudService } from '../../core/services/crud.service';
 
 import { TableComponent } from '../../shared/table/table.component';
@@ -7,17 +8,19 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import admin from '../../core/model/admin.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-list',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent,MatProgressBarModule,CommonModule],
   templateUrl: './admin-list.component.html',
   styleUrls: ['./admin-list.component.css'],
 })
 export class AdminListComponent implements OnInit {
   val: any[] = [];
   _tableName = 'Administrator';
+  _isLoading = true;
   tableColumns = [
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
@@ -56,7 +59,7 @@ export class AdminListComponent implements OnInit {
   fetchData() {
     this.crudservice.getAll('admin/getalladmins').subscribe((data: admin[]) => {
       this.tableData = this.transformDataForTable(data);
-      console.log('thus', this.tableData);
+      this._isLoading = false;
     });
   }
   transformDataForTable(admins: admin[]): any[] {

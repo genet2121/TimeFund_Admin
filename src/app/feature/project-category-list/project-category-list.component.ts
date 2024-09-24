@@ -9,15 +9,23 @@ import projectCategory from '../../core/model/projectCategory.model';
 import { HelperService } from '../../core/services/helper.service';
 import { DynamicDialogFormComponent } from '../../shared/dialog/dynamic-dialog-form/dynamic-dialog-form.component';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-project-category-list',
   standalone: true,
-  imports: [TableComponent, DynamicDialogFormComponent],
+  imports: [
+    TableComponent,
+    DynamicDialogFormComponent,
+    MatProgressBarModule,
+    CommonModule,
+  ],
   templateUrl: './project-category-list.component.html',
   styleUrl: './project-category-list.component.css',
 })
 export class ProjectCategoryListComponent {
+  _isLoading = true;
   _tableName = 'Project Category';
   val: any[] = [];
   tableColumns = [
@@ -43,7 +51,7 @@ export class ProjectCategoryListComponent {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private helperService: HelperService,
-    private roleService:RoleService
+    private roleService: RoleService
   ) {}
 
   ngOnInit() {
@@ -63,7 +71,7 @@ export class ProjectCategoryListComponent {
       .getAll('businesscategory/getallbusinesscategory')
       .subscribe((data: any) => {
         this.tableData = this.transformDataForTable(data);
-        console.log('thus', this.tableData);
+        this._isLoading = false;
       });
   }
   transformDataForTable(fundraiseCategories: projectCategory[]): any[] {

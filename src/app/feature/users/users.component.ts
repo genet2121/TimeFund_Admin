@@ -6,15 +6,18 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import user from '../../core/model/user.model';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
 export class UsersComponent {
+  _isLoading = true;
   _tableName = 'Users';
   val: any[] = [];
   tableColumns = [
@@ -56,7 +59,7 @@ export class UsersComponent {
   fetchData() {
     this.crudservice.getAll('users/getallusers').subscribe((data: user[]) => {
       this.tableData = this.transformDataForTable(data);
-      console.log('thus', this.tableData);
+      this._isLoading = false;
     });
   }
   transformDataForTable(users: user[]): any[] {

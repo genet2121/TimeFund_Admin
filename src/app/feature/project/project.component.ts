@@ -6,15 +6,18 @@ import { Fundraising } from '../../core/model/fundraiser.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { RouterModule } from '@angular/router';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [TableComponent, RouterModule],
+  imports: [TableComponent, RouterModule, MatProgressBarModule, CommonModule],
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
+  _isLoading = true;
   _tableName = 'Projects';
   tabledata: any[] = [];
   tableColumns: Column[] = [
@@ -57,6 +60,7 @@ export class ProjectComponent implements OnInit {
           this.tabledata = this.transformData(
             result.filter((project) => project.for_project === true)
           );
+          this._isLoading = false;
         },
         (error) => {
           console.error('Error fetching data', error);

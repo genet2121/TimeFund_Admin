@@ -6,16 +6,19 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import { CrudService } from '../../core/services/crud.service';
 import { TableComponent } from '../../shared/table/table.component';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-fundraiser',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './fundraiser.component.html',
   styleUrl: './fundraiser.component.css',
 })
 export class FundraiserComponent implements OnInit {
   _tableName = 'Fundraisings';
+  _isLoading = true;
   tabledata: any[] = [];
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
@@ -57,6 +60,7 @@ export class FundraiserComponent implements OnInit {
           this.tabledata = this.transformData(
             result.filter((project) => project.for_project === false)
           );
+          this._isLoading = false;
         },
         (error) => {
           alert(`Error fetching data ${error}`);

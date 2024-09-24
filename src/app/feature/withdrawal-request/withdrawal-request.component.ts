@@ -5,15 +5,18 @@ import { Column } from '../../core/model/tablecolumn.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import withdrawrequstmodel from '../../core/model/withdrawrequest.model';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-withdrawal-request',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './withdrawal-request.component.html',
   styleUrl: './withdrawal-request.component.css',
 })
 export class WithdrawalRequestComponent {
+  _isLoading = true;
   _tableName = 'Withdrawal Requests';
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
@@ -29,13 +32,17 @@ export class WithdrawalRequestComponent {
     delete: true,
     assign_role: false,
   };
-  constructor(private crudService: CrudService<any>, private roleService:RoleService) {}
+  constructor(
+    private crudService: CrudService<any>,
+    private roleService: RoleService
+  ) {}
   ngOnInit() {
     this.crudService
       .getAll(`withdraw-requests/withdraw-requests`)
       .subscribe((result) => {
         let data = result;
         this.rowData = this.dataFormater(data);
+        this._isLoading = false;
       });
     const allowedActions = this.roleService.getPermissionForTable(
       this._tableName

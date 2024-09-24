@@ -8,16 +8,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import userGroup from '../../core/model/userGroup.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-user-group-list',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './user-group-list.component.html',
   styleUrl: './user-group-list.component.css',
 })
 export class UserGroupListComponent {
   _tableName = 'User Groups';
+  _isLoading = true;
   val: any[] = [];
   tableColumns = [
     { key: 'user_group_name', label: 'UserGroup Name' },
@@ -49,7 +52,7 @@ export class UserGroupListComponent {
     );
     this.allowedActions.add = allowedActions.can_add;
     this.allowedActions.edit = allowedActions.can_edit;
-    this.allowedActions.view = false;
+    this.allowedActions.view = allowedActions.can_view_detail;
     this.allowedActions.delete = allowedActions.can_delete;
   }
 
@@ -58,6 +61,7 @@ export class UserGroupListComponent {
       .getAll('user-group-roles/getAllUserGroups')
       .subscribe((data: any) => {
         this.tableData = this.transformDataForTable(data.data);
+        this._isLoading = false;
         console.log('thus', this.tableData);
       });
   }
