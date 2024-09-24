@@ -40,7 +40,7 @@ export class TableComponent {
   @Input() ViewAction: (element: any) => void = () => {};
   @Input() AssignRoleAction: (element: any) => void = () => {};
   @Input() PageChangeAction: (element: any) => void = () => {};
-  @Input() allowedActions?: tablePermission = undefined;
+  @Input() allowedActions?: tablePermission  = undefined;
   @Output() addClick = new EventEmitter<void>();
   @Output() searchClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();

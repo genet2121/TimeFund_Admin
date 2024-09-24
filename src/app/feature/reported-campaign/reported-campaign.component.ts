@@ -40,6 +40,7 @@ export class ReportedCampaignComponent {
     { key: 'status', label: 'Status' },
   ];
   permissions: tablePermission = {
+    add:false,
     view: true,
     edit: true,
     delete: true,

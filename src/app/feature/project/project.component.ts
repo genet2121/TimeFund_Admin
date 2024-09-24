@@ -5,6 +5,7 @@ import { CrudService } from '../../core/services/crud.service';
 import { Fundraising } from '../../core/model/fundraiser.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { RouterModule } from '@angular/router';
+import { RoleService } from '../../core/services/role.service';
 
 @Component({
   selector: 'app-project',
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
+  _tableName = 'Projects';
   tabledata: any[] = [];
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
@@ -22,20 +24,29 @@ export class ProjectComponent implements OnInit {
     { key: 'closingdate', label: 'Closing date' },
     { key: 'is_active', label: 'Status' },
   ];
-  permissions: tablePermission = {
-    view: true,
+  allowedActions: tablePermission = {
+    add: false,
     edit: true,
+    view: true,
     delete: true,
-    assign_role: false
+    assign_role: false,
   };
 
   constructor(
     private crudService: CrudService<any>,
-    public router: RouterModule
+    public router: RouterModule,
+    private roleService: RoleService
   ) {}
 
   ngOnInit(): void {
     this.fetchProjects();
+    const allowedActions = this.roleService.getPermissionForTable(
+      this._tableName
+    );
+    this.allowedActions.add = allowedActions.can_add;
+    this.allowedActions.edit = allowedActions.can_edit;
+    this.allowedActions.view = allowedActions.can_view_detail;
+    this.allowedActions.delete = allowedActions.can_delete;
   }
 
   fetchProjects(): void {
@@ -43,7 +54,9 @@ export class ProjectComponent implements OnInit {
       .getAll('fundraising/getallfundraisings/undefined')
       .subscribe(
         (result: Fundraising[]) => {
-          this.tabledata = this.transformData(result.filter(project => project.for_project === true));
+          this.tabledata = this.transformData(
+            result.filter((project) => project.for_project === true)
+          );
         },
         (error) => {
           console.error('Error fetching data', error);
