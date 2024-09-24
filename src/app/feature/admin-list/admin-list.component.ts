@@ -49,7 +49,7 @@ export class AdminListComponent implements OnInit {
     );
     this.allowedActions.add = false;
     this.allowedActions.edit = allowedActions.can_edit;
-    this.allowedActions.view = false;
+    this.allowedActions.view = true;
     this.allowedActions.delete = allowedActions.can_delete;
   }
 

@@ -49,8 +49,6 @@ export class SidebarComponent {
     this.crudService.getById('user-group-roles/getUserGroupById', userGroupId).subscribe((res) => {
       console.log('res on sidebar', res);
       this.SidbarLabel = res.role;
-
-      localStorage.setItem('userRoles', JSON.stringify(this.SidbarLabel));
       const filteredSidebarLabels = this.SidbarLabel.filter((item) => item.can_view&&item.required_on_menu);
 
       const newMenuItems = filteredSidebarLabels.map((item: any) => {
