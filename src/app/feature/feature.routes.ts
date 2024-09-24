@@ -20,7 +20,8 @@ import { ViewwithdrawalrequestComponent } from './viewwithdrawalrequest/viewwith
 import { UserFormComponent } from './user-form/user-form.component';
 import { ReportedCampaignComponent } from './reported-campaign/reported-campaign.component';
 import { ViewReportedCampaignComponent } from './view-reported-campaign/view-reported-campaign.component';
-
+import { RoleGuard } from '../core/services/auth.guard';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 export const featureRoutes: Routes = [
   // {
   //   path: '',
@@ -59,17 +60,31 @@ export const featureRoutes: Routes = [
     path: 'administrator/:id/edit',
     component: AdminFormComponent,
   },
+  // {
+  //   path: 'administrator/:id/view',
+  //   component: AdminFormComponent,
+  // },
   {
     path: 'administrator/:id/view',
     component: AdminFormComponent,
-  },
+    canActivate: [RoleGuard],
+    data: {
+        pageName: 'Administrator',
+        action: 'can_view'
+    }
+}
+,
 
+  {
+    path: 'forbidden',
+    component:PagenotfoundComponent
+  },
   {
     path: 'projects',
     component: ProjectComponent,
   },
   {
-    path: 'project/:id',
+    path: 'projects/:id',
     component: ViewprojectComponent,
   },
   {
@@ -77,7 +92,7 @@ export const featureRoutes: Routes = [
     component: FundraiserComponent,
   },
   {
-    path: 'fundraiser/:id',
+    path: 'fundraisings/:id',
     component: ViewfundraiserComponent,
   },
 
@@ -87,13 +102,14 @@ export const featureRoutes: Routes = [
     component: UserGroupListComponent,
   },
   {
-    path: 'user_groups/create',
+    path: 'user-groups/create',
     component: GroupComponent,
   },
   {
-    path: 'user_groups/:id/edit',
+    path: 'user-groups/:id/edit',
     component: GroupComponent,
   },
+
 
 
   {
@@ -123,7 +139,7 @@ export const featureRoutes: Routes = [
     component: FundraiseCategoryDetailComponent,
   },
   {
-    path: 'user_groups/:id/view',
+    path: 'user-groups/:id/view',
     component: GroupComponent,
   },
   {
@@ -131,7 +147,7 @@ export const featureRoutes: Routes = [
     component: WithdrawalRequestComponent,
   },
   {
-    path: 'withdrawalrequest/:id',
+    path: 'withdrawal-requests/:id',
     component: ViewwithdrawalrequestComponent,
   },
   {

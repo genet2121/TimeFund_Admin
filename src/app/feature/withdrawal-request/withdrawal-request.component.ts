@@ -49,6 +49,6 @@ export class WithdrawalRequestComponent {
   }
 
   viewAction(element: any) {
-    window.location.href = `withdrawalrequest/${element.id}`;
+    window.location.href = `withdrawal-requests/${element.id}`;
   }
 }

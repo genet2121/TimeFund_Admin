@@ -57,13 +57,13 @@ export class UserGroupListComponent {
     }));
   }
   handleViewAction(element: any) {
-    this.router.navigate(['/user_groups', element.id, 'view'], {
+    this.router.navigate(['/user-groups', element.id, 'view'], {
       queryParams: { view: true }
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/user_groups',  element.id, 'edit',])
+    this.router.navigate(['/user-groups',  element.id, 'edit',])
     // const dialogRef = this.dialog.open(UserGroupDialogComponent, {
     //   width: '500px',
     //   data: {id: element.id}
@@ -104,7 +104,7 @@ export class UserGroupListComponent {
   currentPage = 2;
 
   handleAddClick() {
-    this.router.navigate(['/user_groups/create'])
+    this.router.navigate(['/user-groups/create'])
   }
 
   handleSearchClick() {

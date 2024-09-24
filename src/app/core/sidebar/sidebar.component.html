@@ -1,17 +1,15 @@
 
-
 <mat-nav-list>
   <a
     mat-list-item
     *ngFor="let item of menuItems()"
     [routerLink]="item.route"
     routerLinkActive="active-item"
-    [routerLinkActiveOptions]="{ exact: true }"
+    [routerLinkActiveOptions]="{ exact: false }"
+    [class.active-item]="isRouteActive(item.route!)"
   >
-  <!-- <mat-icon>{{ item.icon }}</mat-icon> -->
     <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
     <span matListItemTitle style="font-size: 15px;">{{ item.label }}</span>
   </a>
 </mat-nav-list>
-
 
