@@ -6,58 +6,59 @@ import { TableComponent } from '../../shared/table/table.component';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import admin from '../../core/model/admin.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RoleService } from '../../core/services/role.service';
 
 @Component({
   selector: 'app-admin-list',
   standalone: true,
   imports: [TableComponent],
   templateUrl: './admin-list.component.html',
-  styleUrls: ['./admin-list.component.css']
+  styleUrls: ['./admin-list.component.css'],
 })
 export class AdminListComponent implements OnInit {
-   val:any[] = [];
+  val: any[] = [];
+  _tableName = 'Administrator';
   tableColumns = [
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
     { key: 'user_group_id', label: 'Role' },
     { key: 'is_active', label: 'Status' },
   ];
-  displayedColumns = this.tableColumns.map(c => c.key).concat('action');
-
+  displayedColumns = this.tableColumns.map((c) => c.key).concat('action');
 
   allowedActions: tablePermission = {
-    edit: true,
-    view: true,
-    delete: true,
-    assign_role:false
+    add: false,
+    edit: false,
+    view: false,
+    delete: false,
+    assign_role: false,
   };
   tableData: admin[] = [];
 
-  constructor(private router: Router, private crudservice: CrudService<any>,  private snackBar: MatSnackBar,) {}
+  constructor(
+    private router: Router,
+    private crudservice: CrudService<any>,
+    private snackBar: MatSnackBar,
+    private roleService: RoleService
+  ) {}
 
   ngOnInit() {
     this.fetchData();
+    const allowedActions = this.roleService.getPermissionForTable(
+      this._tableName
+    );
+    this.allowedActions.add = false;
+    this.allowedActions.edit = allowedActions.can_edit;
+    this.allowedActions.view = false;
+    this.allowedActions.delete = allowedActions.can_delete;
   }
 
   fetchData() {
-    this.crudservice.getAll('admin/getalladmins')
-      .subscribe((data: admin[]) => {
-        this.tableData = this.transformDataForTable(data);
-        console.log('thus', this.tableData)
-      });
+    this.crudservice.getAll('admin/getalladmins').subscribe((data: admin[]) => {
+      this.tableData = this.transformDataForTable(data);
+      console.log('thus', this.tableData);
+    });
   }
-  // transformDataForTable(admins: admin[]): any[] {
-  //   return admins.map((adminTableData) => ({
-
-  //     id: adminTableData.admin_id,
-  //     fullName:
-  //     adminTableData.fullName,
-  //     email: adminTableData.email,
-  //     user_group_id: adminTableData.UserGroupRole.user_group_name,
-  //     is_active: adminTableData.isActive ? 'Active' : 'InActive',
-
-  //   }));
-  // }
   transformDataForTable(admins: admin[]): any[] {
     return admins.map((adminTableData) => {
       return {
@@ -73,36 +74,33 @@ export class AdminListComponent implements OnInit {
   }
 
   handleViewAction(element: any) {
-
     this.router.navigate(['/administrator', element.id, 'view'], {
-      queryParams: { view: true }
+      queryParams: { view: true },
     });
   }
 
   handleEditAction(element: any) {
     this.router.navigate(['/administrator', element.id, 'edit'], {
-      state: { edit: true }
+      state: { edit: true },
     });
-
-
   }
 
   handleDeleteAction(element: any) {
-
-   if(this.crudservice&&element.id){
-    this.crudservice.deleteItem('admin/deleteadmins', element.id).subscribe(res =>{
-      this.val = res as admin[];
-      this.snackBar.open('admin deleted successfully!', 'Close', {
-        duration: 3000,
-         verticalPosition: 'top'
-      });
-       this.fetchData();
-
-    })
-   }else{
-    console.log('error')
-   }
-}
+    if (this.crudservice && element.id) {
+      this.crudservice
+        .deleteItem('admin/deleteadmins', element.id)
+        .subscribe((res) => {
+          this.val = res as admin[];
+          this.snackBar.open('admin deleted successfully!', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+          });
+          this.fetchData();
+        });
+    } else {
+      console.log('error');
+    }
+  }
 
   changePage(event: any) {
     console.log('Page changed:', event);

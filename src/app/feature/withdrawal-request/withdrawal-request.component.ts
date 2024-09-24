@@ -4,6 +4,7 @@ import { CrudService } from '../../core/services/crud.service';
 import { Column } from '../../core/model/tablecolumn.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import withdrawrequstmodel from '../../core/model/withdrawrequest.model';
+import { RoleService } from '../../core/services/role.service';
 
 @Component({
   selector: 'app-withdrawal-request',
@@ -13,6 +14,7 @@ import withdrawrequstmodel from '../../core/model/withdrawrequest.model';
   styleUrl: './withdrawal-request.component.css',
 })
 export class WithdrawalRequestComponent {
+  _tableName = 'Withdrawal Requests';
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'fullname', label: 'Organizer Name' },
@@ -20,13 +22,14 @@ export class WithdrawalRequestComponent {
     { key: 'status', label: 'Status' },
   ];
   rowData: any[] = [];
-  permissions: tablePermission = {
-    view: true,
+  allowedActions: tablePermission = {
+    add: true,
     edit: true,
+    view: true,
     delete: true,
     assign_role: false,
   };
-  constructor(private crudService: CrudService<any>) {}
+  constructor(private crudService: CrudService<any>, private roleService:RoleService) {}
   ngOnInit() {
     this.crudService
       .getAll(`withdraw-requests/withdraw-requests`)
@@ -34,12 +37,19 @@ export class WithdrawalRequestComponent {
         let data = result;
         this.rowData = this.dataFormater(data);
       });
+    const allowedActions = this.roleService.getPermissionForTable(
+      this._tableName
+    );
+    this.allowedActions.add = allowedActions.can_add;
+    this.allowedActions.edit = allowedActions.can_edit;
+    this.allowedActions.view = allowedActions.can_view_detail;
+    this.allowedActions.delete = allowedActions.can_delete;
   }
 
   dataFormater(data: any) {
     let newData = data as withdrawrequstmodel[];
     let formattedData = newData.map((request) => ({
-      id:request.request_id,
+      id: request.request_id,
       title: request.Wegen_Fundraising.title,
       fullname: request.Wegen_User.fullName,
       amount: request.amount,

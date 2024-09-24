@@ -5,6 +5,7 @@ import { TableComponent } from '../../shared/table/table.component';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import user from '../../core/model/user.model';
+import { RoleService } from '../../core/services/role.service';
 
 @Component({
   selector: 'app-users',
@@ -14,37 +15,49 @@ import user from '../../core/model/user.model';
   styleUrl: './users.component.css',
 })
 export class UsersComponent {
-  val:any[] = [];
+  _tableName = 'Users';
+  val: any[] = [];
   tableColumns = [
-    { key: 'fullName', label: 'Full Name', },
+    { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
     { key: 'country', label: 'Country' },
     { key: 'hasorganization', label: 'Type' },
     { key: 'is_active', label: 'Status' },
   ];
-  displayedColumns = this.tableColumns.map(c => c.key).concat('action');
-
+  displayedColumns = this.tableColumns.map((c) => c.key).concat('action');
 
   allowedActions: tablePermission = {
-    edit: false,
+    add: true,
+    edit: true,
     view: true,
     delete: true,
-    assign_role:false
+    assign_role: false,
   };
   tableData: user[] = [];
 
-  constructor(private router: Router, private crudservice: CrudService<any>,  private snackBar: MatSnackBar,) {}
+  constructor(
+    private router: Router,
+    private crudservice: CrudService<any>,
+    private snackBar: MatSnackBar,
+    private roleService: RoleService
+  ) {}
 
   ngOnInit() {
     this.fetchData();
+    const allowedActions = this.roleService.getPermissionForTable(
+      this._tableName
+    );
+    this.allowedActions.add = allowedActions.can_add;
+    this.allowedActions.edit = allowedActions.can_edit;
+    this.allowedActions.view = allowedActions.can_view_detail;
+    this.allowedActions.delete = allowedActions.can_delete;
   }
 
   fetchData() {
-    this.crudservice.getAll('users/getallusers')
-      .subscribe((data: user[]) => {
-        this.tableData = this.transformDataForTable(data);
-        console.log('thus', this.tableData)
-      });
+    this.crudservice.getAll('users/getallusers').subscribe((data: user[]) => {
+      this.tableData = this.transformDataForTable(data);
+      console.log('thus', this.tableData);
+    });
   }
   transformDataForTable(users: user[]): any[] {
     return users.map((userTableData) => {
@@ -60,46 +73,46 @@ export class UsersComponent {
       return {
         id: userTableData.user_id,
         fullName: userTableData.fullName,
-        email: userTableData.email.length > 10 ? userTableData.email.slice(0, 10) + '...' : userTableData.email,
-        country: userTableData.country.length > 10 ? userTableData.country.slice(0, 10) + '...' : userTableData.country,
+        email:
+          userTableData.email.length > 10
+            ? userTableData.email.slice(0, 10) + '...'
+            : userTableData.email,
+        country:
+          userTableData.country.length > 10
+            ? userTableData.country.slice(0, 10) + '...'
+            : userTableData.country,
         hasorganization: type,
         is_active: userTableData.is_active ? 'Active' : 'Suspended',
       };
     });
   }
 
-
   handleViewAction(element: any) {
-
-    this.router.navigate(['/users', element.id, 'view'],
-
-    );
+    this.router.navigate(['/users', element.id, 'view']);
   }
 
   handleEditAction(element: any) {
     this.router.navigate(['/users', element.id, 'edit'], {
-      state: { edit: true }
+      state: { edit: true },
     });
-
-
   }
 
   handleDeleteAction(element: any) {
-
-   if(this.crudservice&&element.id){
-    this.crudservice.deleteItem('admin/deleteadmins', element.id).subscribe(res =>{
-      this.val = res as user[];
-      this.snackBar.open('admin deleted successfully!', 'Close', {
-        duration: 3000,
-         verticalPosition: 'top'
-      });
-       this.fetchData();
-
-    })
-   }else{
-    console.log('error')
-   }
-}
+    if (this.crudservice && element.id) {
+      this.crudservice
+        .deleteItem('admin/deleteadmins', element.id)
+        .subscribe((res) => {
+          this.val = res as user[];
+          this.snackBar.open('admin deleted successfully!', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+          });
+          this.fetchData();
+        });
+    } else {
+      console.log('error');
+    }
+  }
 
   changePage(event: any) {
     console.log('Page changed:', event);
@@ -118,5 +131,4 @@ export class UsersComponent {
   handleSettingsClick() {
     console.log('Settings button clicked');
   }
-
 }

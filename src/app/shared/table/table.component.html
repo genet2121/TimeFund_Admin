@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center mb-4 mt-3">
     <p class="text-lg font-normal">{{ tableTitle }}</p>
     <div class="flex gap-4">
-      <button mat-icon-button aria-label="Add" (click)="onAddClick()">
+      <button mat-icon-button aria-label="Add" (click)="onAddClick()" *ngIf="allowedActions?.add">
         <mat-icon>add_circle</mat-icon>
       </button>
       <button mat-icon-button aria-label="Search" (click)="onSearchClick()">

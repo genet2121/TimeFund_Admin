@@ -5,6 +5,7 @@ import { Column } from '../../core/model/tablecolumn.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { CrudService } from '../../core/services/crud.service';
 import { TableComponent } from '../../shared/table/table.component';
+import { RoleService } from '../../core/services/role.service';
 
 @Component({
   selector: 'app-fundraiser',
@@ -14,6 +15,7 @@ import { TableComponent } from '../../shared/table/table.component';
   styleUrl: './fundraiser.component.css',
 })
 export class FundraiserComponent implements OnInit {
+  _tableName = 'Fundraisings';
   tabledata: any[] = [];
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
@@ -22,20 +24,29 @@ export class FundraiserComponent implements OnInit {
     { key: 'closingdate', label: 'Closing date' },
     { key: 'status', label: 'Status' },
   ];
-  permissions: tablePermission = {
-    view: true,
+  allowedActions: tablePermission = {
+    add: true,
     edit: true,
+    view: true,
     delete: true,
     assign_role: false,
   };
 
   constructor(
     private crudService: CrudService<any>,
-    public router: RouterModule
+    public router: RouterModule,
+    private roleService: RoleService
   ) {}
 
   ngOnInit(): void {
     this.fetchProjects();
+    const allowedActions = this.roleService.getPermissionForTable(
+      this._tableName
+    );
+    this.allowedActions.add = allowedActions.can_add;
+    this.allowedActions.edit = allowedActions.can_edit;
+    this.allowedActions.view = allowedActions.can_view_detail;
+    this.allowedActions.delete = allowedActions.can_delete;
   }
 
   fetchProjects(): void {
@@ -60,8 +71,7 @@ export class FundraiserComponent implements OnInit {
         fundraising.title.length > 10
           ? fundraising.title.slice(0, 10) + '...'
           : fundraising.title,
-      category:
-        fundraising.Category.category_type || 'N/A',
+      category: fundraising.Category.category_type || 'N/A',
       goal: fundraising.goal,
       closingdate: new Date(fundraising.end_date).toLocaleDateString(),
       status: fundraising.is_active ? 'Active' : 'Suspended',
