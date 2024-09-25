@@ -95,6 +95,8 @@ export class SidebarComponent {
         return 'trending_up';
       case 'Withdrawal Requests':
         return 'request_page';
+        case 'Fundraiser Reports':
+          return 'campaign';
 
       default:
         return 'dashboard';

@@ -14,6 +14,7 @@ import FundraiserReport from '../../core/model/fundraiserreport.model';
   styleUrl: './reported-campaign.component.css',
 })
 export class ReportedCampaignComponent {
+  isSearchVisible = false;
   constructor(
     private crudService: CrudService<any>,
     public router: RouterModule
@@ -59,4 +60,8 @@ export class ReportedCampaignComponent {
       };
     });
   }
+  handleSearchClick() {
+    this.isSearchVisible = !this.isSearchVisible;
+  }
+
 }

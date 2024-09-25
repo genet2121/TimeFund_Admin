@@ -17,6 +17,7 @@ import { RoleService } from '../../core/services/role.service';
 export class UsersComponent {
   _tableName = 'Users';
   val: any[] = [];
+  isSearchVisible = false
   tableColumns = [
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
@@ -88,12 +89,12 @@ export class UsersComponent {
   }
 
   handleViewAction(element: any) {
-    this.router.navigate(['/users', element.id, 'view']);
+    this.router.navigate(['/users', element.id]);
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/users', element.id, 'edit'], {
-      state: { edit: true },
+    this.router.navigate(['/users', element.id,], {
+      state: { param: true },
     });
   }
 
@@ -125,7 +126,7 @@ export class UsersComponent {
   }
 
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
 
   handleSettingsClick() {

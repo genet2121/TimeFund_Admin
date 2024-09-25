@@ -58,6 +58,7 @@ export class ProjectCategoryDetailComponent {
   tableData: any[] = [];
   category!: fundraiseCategory;
   dataForm!:FormGroup;
+  isSearchVisible = false;
 
 
   constructor(private router: Router, private crudservice: CrudService<any>,
@@ -159,14 +160,6 @@ export class ProjectCategoryDetailComponent {
   }
 
 
-  handleAssignRoleAction(element:any){
-    this.router.navigate(['/user_groups', element.id, 'assign_role'], {
-      state: { edit: true }
-    });
-  }
-
-
-
 handleDeleteAction(element: any) {
 
   if(this.crudservice&&element.id){
@@ -213,8 +206,9 @@ handleDeleteAction(element: any) {
   }
 
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
+
 
   handleSettingsClick() {
     console.log('Settings button clicked');

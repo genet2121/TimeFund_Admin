@@ -41,11 +41,11 @@ export const featureRoutes: Routes = [
     component: UserFormComponent,
   },
   {
-    path: 'users/:id/edit',
+    path: 'users/:id',
     component: UserFormComponent,
   },
   {
-    path: 'users/:id/view',
+    path: 'users/:id',
     component: UserFormComponent,
   },
   {
@@ -57,7 +57,7 @@ export const featureRoutes: Routes = [
     component: AdminFormComponent,
   },
   {
-    path: 'administrator/:id/edit',
+    path: 'administrator/:id',
     component: AdminFormComponent,
   },
   // {
@@ -65,7 +65,7 @@ export const featureRoutes: Routes = [
   //   component: AdminFormComponent,
   // },
   {
-    path: 'administrator/:id/view',
+    path: 'administrator/:id',
     component: AdminFormComponent,
     canActivate: [RoleGuard],
     data: {
@@ -106,7 +106,7 @@ export const featureRoutes: Routes = [
     component: GroupComponent,
   },
   {
-    path: 'user-groups/:id/edit',
+    path: 'user-groups/:id',
     component: GroupComponent,
   },
 
@@ -117,11 +117,11 @@ export const featureRoutes: Routes = [
     component: ProjectCategoryListComponent,
   },
   {
-    path: 'project-category/:id/view',
+    path: 'project-category/:id',
     component: ProjectCategoryDetailComponent,
   },
   {
-    path: 'project-category/:id/edit',
+    path: 'project-category/:id',
     component: ProjectCategoryDetailComponent,
   },
   {
@@ -130,12 +130,12 @@ export const featureRoutes: Routes = [
   },
 
     {
-      path: 'fundraiser-category/:id/view',
+      path: 'fundraiser-category/:id',
       component:FundraiseCategoryDetailComponent
     },
 
   {
-    path: 'fundraiser-category/:id/view',
+    path: 'fundraiser-category/:id',
     component: FundraiseCategoryDetailComponent,
   },
   {

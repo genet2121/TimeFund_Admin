@@ -52,7 +52,7 @@ export class AdminFormComponent implements OnInit {
       password: ['', Validators.required],
     });
 
-    this.isViewDetail = this.router.getCurrentNavigation()?.extras.state?.['view'];
+    this.isViewDetail = this.router.getCurrentNavigation()?.extras.state?.['param'];
     //this.isEdit  = this.router.getCurrentNavigation()?.extras.state?.['edit'];
   }
 
@@ -78,8 +78,8 @@ export class AdminFormComponent implements OnInit {
       });
 
       this.route.queryParamMap.subscribe((params) => {
-        this.isViewDetail = params.get('view') === 'true';
-        this.isEdit = params.get('edit') === 'true';
+        this.isViewDetail = params.get('param') === 'true';
+        this.isEdit = params.get('param') === 'true';
         if (this.isViewDetail) {
           this.adminForm.disable();
         }

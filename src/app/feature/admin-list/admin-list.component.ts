@@ -7,11 +7,14 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import admin from '../../core/model/admin.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { FocusMonitorDetectionMode } from '@angular/cdk/a11y';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-list',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, FormsModule, CommonModule],
   templateUrl: './admin-list.component.html',
   styleUrls: ['./admin-list.component.css'],
 })
@@ -34,6 +37,8 @@ export class AdminListComponent implements OnInit {
     assign_role: false,
   };
   tableData: admin[] = [];
+  isSearchVisible = false;
+
 
   constructor(
     private router: Router,
@@ -47,7 +52,7 @@ export class AdminListComponent implements OnInit {
     const allowedActions = this.roleService.getPermissionForTable(
       this._tableName
     );
-    this.allowedActions.add = false;
+    this.allowedActions.add = true;
     this.allowedActions.edit = allowedActions.can_edit;
     this.allowedActions.view = true;
     this.allowedActions.delete = allowedActions.can_delete;
@@ -74,14 +79,14 @@ export class AdminListComponent implements OnInit {
   }
 
   handleViewAction(element: any) {
-    this.router.navigate(['/administrator', element.id, 'view'], {
-      queryParams: { view: true },
+    this.router.navigate(['/administrator', element.id, ], {
+      queryParams: { param: true },
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/administrator', element.id, 'edit'], {
-      state: { edit: true },
+    this.router.navigate(['/administrator', element.id, ], {
+      state: { param: true },
     });
   }
 
@@ -112,9 +117,13 @@ export class AdminListComponent implements OnInit {
     window.location.href = `/administrator/create`;
   }
 
+
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
+
+
+
 
   handleSettingsClick() {
     console.log('Settings button clicked');

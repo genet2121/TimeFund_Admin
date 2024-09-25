@@ -33,11 +33,11 @@
   [DeleteAction]="handleDeleteAction"
   [EditAction]="handleEditAction"
   [ViewAction]="handleViewAction"
-  [AssignRoleAction]="handleAssignRoleAction"
   [PageChangeAction]="changePage"
   (addClick)="handleAddClick()"
   (searchClick)="handleSearchClick()"
   (settingsClick)="handleSettingsClick()"
+  [isSearchVisible]="isSearchVisible"
 ></app-table>
 <hr class="w-full" style="border: 1px  solid; "/>
 

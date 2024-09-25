@@ -36,7 +36,7 @@ export class ProjectCategoryListComponent {
   };
   tableData: any[] = [];
   loggedInUser!: any;
-
+  isSearchVisible = false;
   constructor(
     private router: Router,
     private crudservice: CrudService<any>,
@@ -84,9 +84,7 @@ export class ProjectCategoryListComponent {
   }
 
   handleViewAction(element: any) {
-    this.router.navigate(['/project-category', element.id, 'view'], {
-      queryParams: { view: true },
-    });
+    this.router.navigate(['/project-category', element.id]);
   }
 
   handleEditAction(element: any) {
@@ -111,11 +109,7 @@ export class ProjectCategoryListComponent {
     });
   }
 
-  handleAssignRoleAction(element: any) {
-    this.router.navigate(['/user_groups', element.id, 'assign_role'], {
-      state: { edit: true },
-    });
-  }
+
 
   handleDeleteAction(element: any) {
     this.crudservice
@@ -162,8 +156,9 @@ export class ProjectCategoryListComponent {
   }
 
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
+
 
   handleSettingsClick() {
     console.log('Settings button clicked');
