@@ -166,7 +166,16 @@
     </div>
     <div class="flex flex-col">
       <p class="font-semibold">Facilitator</p>
-      <p class="border rounded-md py-2 px-4">Samuel</p>
+      <p
+        class="border rounded-md py-2 px-4 cursor-pointer"
+        (click)="openFacilitatorAssignmentDialog()"
+      >
+        {{
+          fundraisingInfo?.facilitator_assign_id === null
+            ? "Not Assigned"
+            : fundraisingInfo?.Admin?.fullName
+        }}
+      </p>
     </div>
   </div>
   <div class="flex justify-center">

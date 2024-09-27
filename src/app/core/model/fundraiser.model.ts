@@ -1,3 +1,4 @@
+import admin from "./admin.model";
 import phase from "./phase.model";
 
 interface FundraisingMedia {
@@ -84,6 +85,7 @@ export interface Fundraising {
   end_date: string;
   createdAt: string;
   updatedAt: string;
+  facilitator_assign_id: any;
   Wegen_FundraisingMedium: FundraisingMedia;
   Wegen_FundraisingStatus: FundraisingStatus;
   Wegen_Currency: Currency;
@@ -92,5 +94,6 @@ export interface Fundraising {
   Wegen_BusinessSubCategory: any;
   Wegen_SubCategory: SubCategory;
   Category: Category;
-  phases:phase[];
+  phases: phase[];
+  Admin:admin
 }

@@ -5,15 +5,18 @@ import { Column } from '../../core/model/tablecolumn.model';
 import { RouterModule } from '@angular/router';
 import { CrudService } from '../../core/services/crud.service';
 import FundraiserReport from '../../core/model/fundraiserreport.model';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-reported-campaign',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './reported-campaign.component.html',
   styleUrl: './reported-campaign.component.css',
 })
 export class ReportedCampaignComponent {
+  _isLoading = true;
   constructor(
     private crudService: CrudService<any>,
     public router: RouterModule
@@ -27,6 +30,7 @@ export class ReportedCampaignComponent {
     this.crudService.getAll('FundraiserReport/getallreports').subscribe(
       (result: FundraiserReport[]) => {
         this.tabledata = this.dataTransformer(result);
+        this._isLoading = false;
       },
       (error) => {
         console.error('Error fetching data', error);
@@ -40,7 +44,7 @@ export class ReportedCampaignComponent {
     { key: 'status', label: 'Status' },
   ];
   permissions: tablePermission = {
-    add:false,
+    add: false,
     view: true,
     edit: true,
     delete: true,
