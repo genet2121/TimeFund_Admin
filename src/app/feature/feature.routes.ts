@@ -22,6 +22,8 @@ import { ReportedCampaignComponent } from './reported-campaign/reported-campaign
 import { ViewReportedCampaignComponent } from './view-reported-campaign/view-reported-campaign.component';
 import { RoleGuard } from '../core/services/auth.guard';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { ContactUsListComponent } from './contact-us-list/contact-us-list.component';
+import { ContactUsDetailComponent } from './contact-us-detail/contact-us-detail.component';
 export const featureRoutes: Routes = [
   // {
   //   path: '',
@@ -157,6 +159,16 @@ export const featureRoutes: Routes = [
   {
     path: 'fundraiser-reports/:id',
     component: ViewReportedCampaignComponent,
+  },
+  {
+    path: 'contacts',
+    component: ContactUsListComponent
+
+  },
+  {
+    path: 'contacts/:id',
+    component: ContactUsDetailComponent
+
   },
   { path: '**', redirectTo: 'dashboard' },
 ];

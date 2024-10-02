@@ -13,3 +13,11 @@ span {
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
 }
+.status-read{
+  border: 1px #1E1B21 solid;
+  color: #1E1B21;
+}
+.status-unread{
+  background-color: #1E1B21;
+  color: white;
+}

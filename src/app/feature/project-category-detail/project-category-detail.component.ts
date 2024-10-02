@@ -49,7 +49,7 @@ export class ProjectCategoryDetailComponent {
 
 
   allowedActions: tablePermission = {
-    add:false,
+    add:true,
     edit: true,
     view: true,
     delete: true,

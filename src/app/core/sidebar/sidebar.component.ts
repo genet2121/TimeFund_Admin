@@ -97,6 +97,8 @@ export class SidebarComponent {
         return 'request_page';
         case 'Fundraiser Reports':
           return 'campaign';
+          case 'Contacts':
+            return 'contact_page';
 
       default:
         return 'dashboard';

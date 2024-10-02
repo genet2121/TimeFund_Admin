@@ -1,0 +1,11 @@
+<div class="mat-elevation-z8 bg-white py-4 px-4">
+  <app-table
+  [data]="tabledata"
+  [columns]="tableColumns"
+  [allowedActions]="allowedActions"
+  tableTitle="Contacts"
+  [ViewAction]="viewAction"
+  (searchClick)="handleSearchClick()"
+  [isSearchVisible]="isSearchVisible"
+></app-table>
+</div>
