@@ -50,12 +50,12 @@
           aria-label="Edit">
           <img src="../../../assets/icons/fi-rr-edit.svg" height="20px" width="20px" />
         </button>
-        <button mat-icon-button (click)="onDeleteAction(element)" class="text-red-600" aria-label="Delete">
+        <button mat-icon-button (click)="onDeleteAction(element)" class="text-red-600" *ngIf="allowedActions?.delete" aria-label="Delete">
           <img src="../../../assets/icons/fi-rr-trash.svg" height="20px" width="20px" />
         </button>
         <button mat-icon-button (click)="onAssignRoleAction(element)" class="text-cyan-700"
           *ngIf="allowedActions?.assign_role" aria-label="Edit">
-          <mat-icon>assignment_add</mat-icon>
+          <mat-icon style="font-size: 20px;">assignment_add</mat-icon>
         </button>
       </div>
     </td>

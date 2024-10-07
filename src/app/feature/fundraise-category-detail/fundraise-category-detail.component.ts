@@ -46,7 +46,7 @@ export class FundraiseCategoryDetailComponent {
 
 
   allowedActions: tablePermission = {
-    add:false,
+    add:true,
     edit: true,
     view: true,
     delete: true,

@@ -70,4 +70,40 @@
 
 
   </div>
+  <h2 class="text-xl font-semibold">Response</h2>
+  <p *ngIf="contactData.has_answered === false">This contact has not been responded to.</p>
+  <div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 ms-14" *ngIf="contactData.has_answered === true">
+
+    <div class="col-span-2">
+      <label for="subject" class="block text-xs mb-3 text-gray-700"
+        >Subject</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.Response?.subject "
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="message" class="block text-xs mb-3 text-gray-700">Message</label>
+      <textarea
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.Response?.response"
+        readonly
+      ></textarea>
+    </div>
+    <div class="col-span-2">
+      <label for="created_at" class="block text-xs mb-3 text-gray-700"
+        >Responded At</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.Response?.createdAt  | date:'short'"
+        readonly
+      />
+    </div>
+  </div>
 </div>

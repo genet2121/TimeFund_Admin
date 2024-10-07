@@ -267,10 +267,10 @@ export var  groupRoles =[
     "page_name": "Contacts",
     "can_add": false,
     "can_edit": false,
-    "can_view": false,
+    "can_view": true,
     "can_delete": false,
     "can_view_detail": true,
-    "required_on_menu":false
+    "required_on_menu":true
   },
   {
     "id":null,

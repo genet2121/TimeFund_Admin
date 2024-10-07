@@ -7,6 +7,10 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import { RouterModule } from '@angular/router';
 import { RoleService } from '../../core/services/role.service';
 import ContactUs from '../../core/model/contactUs.model';
+import { DynamicDialogFormComponent } from '../../shared/dialog/dynamic-dialog-form/dynamic-dialog-form.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactMessageResponseComponent } from '../../shared/dialog/contact-message-response/contact-message-response.component';
+import { HelperService } from '../../core/services/helper.service';
 
 @Component({
   selector: 'app-contact-us-list',
@@ -23,22 +27,24 @@ export class ContactUsListComponent {
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
     { key: 'created_at', label: 'Date - Time' },
-    { key: 'subject', label: 'Subject' },
+    // { key: 'subject', label: 'Subject' },
     { key: 'message', label: 'Message' },
     { key: 'has_answered', label: 'Status' },
   ];
   allowedActions: tablePermission = {
     add: false,
-    edit: true,
+    edit: false,
     view: true,
-    delete: true,
-    assign_role: false,
+    delete: false,
+    assign_role: true,
   };
 
   constructor(
     private crudService: CrudService<any>,
     public router: RouterModule,
-    private roleService: RoleService
+    private roleService: RoleService,
+    public dialog: MatDialog,
+    private helperService:HelperService,
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +55,7 @@ export class ContactUsListComponent {
     this.allowedActions.add = allowedActions.can_add;
     this.allowedActions.edit = allowedActions.can_edit;
     this.allowedActions.view = allowedActions.can_view_detail;
-    this.allowedActions.delete = allowedActions.can_delete;
+    this.allowedActions.delete = false;
   }
 
   fetchContacts(): void {
@@ -67,7 +73,7 @@ export class ContactUsListComponent {
     return contacts.map((contact) => ({
       id: contact.contact_id,
       name: contact.name,
-      email: contact.email.length > 0 ? contact.email.slice(0, 10) + '...' : contact.email,
+      email: contact.email,
       created_at: new Date(contact.created_at).toLocaleDateString(),
       subject: contact.subject,
       message: contact.message.length > 0 ? contact.message.slice(0, 10) + '...' : contact.message,
@@ -77,7 +83,31 @@ export class ContactUsListComponent {
   viewAction(element: any) {
     window.location.href = `contacts/${element.id}`;
   }
+
+
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
+  }
+  AssignRoleAction(element: any){
+    const dialogRef = this.dialog.open(ContactMessageResponseComponent, {
+      width: '700px',
+      height:'350px',
+      data: {
+        endpoint: `contact/respond/${element.id}/${this.helperService.getLogInUser.admin_id}`,
+        id: null,
+        // patchEndpoint:'contact/messages',
+        view: false,
+        title: 'Add Response Message',
+        buttonText: 'Add Response',
+        categoryTypeKey: 'subject',
+        categoryDescriptionKey: 'response',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Dialog closed, perform action with result:', result);
+      }
+    });
   }
 }
