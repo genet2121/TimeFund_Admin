@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HelperService } from '../../../core/services/helper.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-contact-message-response',
@@ -27,6 +29,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatDialogModule,
     MatIconModule,
     MatSlideToggleModule,
+    NgbAlertModule
   ],
   templateUrl: './contact-message-response.component.html',
   styleUrl: './contact-message-response.component.css'
@@ -43,7 +46,8 @@ export class ContactMessageResponseComponent {
   responseKey!: string;
   business_category_id!:number;
 
-
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<ContactMessageResponseComponent>,
@@ -105,20 +109,26 @@ export class ContactMessageResponseComponent {
 
   onSave() {
     if (this.contactResponseForm.valid) {
-
       const payload = {
-        admin_id:this.helperService.getLogInUser.admin_id,
-        subject:this.contactResponseForm.get([this.subjectKey])?.value,
-        response: this.contactResponseForm.get( [this.responseKey])?.value};
-        this.crudService.create(`${this.endpoint}`,  payload).subscribe(
-          (response) =>
+        admin_id: this.helperService.getLogInUser.admin_id,
+        subject: this.contactResponseForm.get([this.subjectKey])?.value,
+        response: this.contactResponseForm.get([this.responseKey])?.value
+      };
 
-            this.closeDialog(),
-          (error) => console.error('Error updating data', error)
-        );
-      }
-
+      this.crudService.create(`${this.endpoint}`, payload).subscribe(
+        (response) => {
+          this.successMessage = 'Response saved successfully!';
+          setTimeout(() => this.successMessage = null, 3000);
+          this.closeDialog();
+        },
+        (error) => {
+          this.errorMessage = 'Failed to save response. Please try again.';
+          setTimeout(() => this.errorMessage = null, 3000);
+        }
+      );
+    }
   }
+
 
   closeDialog(): void {
     this.dialogRef.close();

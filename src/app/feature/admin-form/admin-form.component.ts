@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from '../../core/services/crud.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin-form',
@@ -22,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    NgbAlertModule
   ],
   templateUrl: './admin-form.component.html',
   styleUrls: ['./admin-form.component.css'],
@@ -33,6 +35,8 @@ export class AdminFormComponent implements OnInit {
   mode!: string;
   id!: number;
   roles: any[] = [];
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -93,50 +97,39 @@ export class AdminFormComponent implements OnInit {
 
       if (this.id) {
 
-        this.crudservice.update('admin/editadmins', this.id,formData).subscribe(
+        this.crudservice.update('admin/editadmins', this.id, formData).subscribe(
           (response) => {
-            console.log('Admin updated', response);
-            this.snackBar.open('Admin updated successfully!', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
-            this.router.navigate(['/administrator']);
+            this.successMessage = 'Updated successfully!';
+            setTimeout(() => {
+              this.successMessage = null;
+              this.router.navigate(['/administrator']);
+            }, 2000);
           },
           (error) => {
-            console.error('Error updating admin', error);
-            this.snackBar.open('Failed to update admin.', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
+            this.errorMessage = 'Failed to update admin. Please try again.';
+            setTimeout(() => this.errorMessage = null, 3000);
           }
         );
       } else {
 
         this.crudservice.create('admin/createadmins', this.adminForm.value).subscribe(
           (response) => {
-            console.log('Admin created', response);
-            this.adminForm.reset()
-            this.snackBar.open('Admin created successfully!', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
-            this.router.navigate(['/administrator']);
+            this.adminForm.reset();
+            this.successMessage = 'Administrator created successfully!';
+            setTimeout(() => {
+              this.successMessage = null;
+              this.router.navigate(['/administrator']);
+            }, 2000);
           },
           (error) => {
-            console.error('Error creating admin', error);
-            this.snackBar.open('Failed to create admin.', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
+            this.errorMessage = 'Failed to create admin. Please try again.';
+            setTimeout(() => this.errorMessage = null, 3000);
           }
         );
       }
     } else {
-      console.log('Form not valid!');
-      this.snackBar.open('Please fill all required fields correctly.', 'Close', {
-        duration: 3000,
-        verticalPosition: 'top',
-      });
+      this.errorMessage = 'Please fill all required fields correctly.';
+      setTimeout(() => this.errorMessage = null, 3000);
     }
   }
 

@@ -8,6 +8,12 @@
 <h2 class="text-center text-2xl font-semibold mb-6 mt-36">
   {{ title }}
 </h2>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">
+  {{ successMessage }}
+</ngb-alert>
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">
+  {{ errorMessage }}
+</ngb-alert>
 
 <div mat-dialog-content>
   <form [formGroup]="contactResponseForm">
