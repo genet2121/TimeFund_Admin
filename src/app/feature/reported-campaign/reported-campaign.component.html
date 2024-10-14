@@ -6,5 +6,7 @@
     [columns]="tableColumns"
     [allowedActions]="permissions"
     [ViewAction]="viewAction"
+    (searchClick)="handleSearchClick()"
+    [isSearchVisible]="isSearchVisible"
   ></app-table>
 </div>

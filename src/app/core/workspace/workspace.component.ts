@@ -35,6 +35,9 @@ export class WorkspaceComponent {
   sidenavWidth = computed(() => (this.collapsed() ? '64px' : '250px'));
   userName: string = '';
   ngOnInit() {
+    if (!this.helperService.isUserLoggedIn()) {
+      window.location.replace('/auth/login');
+    }
     this.userName = this.helperService.getLogInUser.fullName;
   }
   logoutHandler() {

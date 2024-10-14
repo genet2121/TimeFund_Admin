@@ -44,6 +44,7 @@ export class FundraiseCategoryListComponent {
   };
   tableData: any[] = [];
   loggedInUser: any;
+  isSearchVisible = false;
 
   constructor(
     private router: Router,
@@ -87,9 +88,7 @@ export class FundraiseCategoryListComponent {
     }));
   }
   handleViewAction(element: any) {
-    this.router.navigate(['/fundraiser-category', element.id, 'view'], {
-      queryParams: { view: true },
-    });
+    this.router.navigate(['/fundraiser-category', element.id,]);
   }
   handleEditAction(element: any) {
     const dialogRef = this.dialog.open(DynamicDialogFormComponent, {
@@ -161,8 +160,9 @@ export class FundraiseCategoryListComponent {
     });
   }
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
+
 
   handleSettingsClick() {
     console.log('Settings button clicked');

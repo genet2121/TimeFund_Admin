@@ -1,9 +1,10 @@
-<mat-toolbar>
+<mat-toolbar class="toolbar-with-border">
   <div class="flex items-center">
-    <img src="../../../assets/time_fund_logo.png" class="w-36 self-center" />
-    <button mat-icon-button (click)="collapsed.set(!collapsed())" class="ms-4 mt-4">
+    <button mat-icon-button (click)="collapsed.set(!collapsed())" class="ms-0 mt-1">
       <mat-icon class=" ">menu</mat-icon>
     </button>
+    <img src="../../../assets/time_fund_logo.png" class="w-36 self-center" />
+
   </div>
 
   <div class="flex-grow flex justify-center items-center space-x-2">
@@ -28,10 +29,11 @@
       <mat-icon>logout</mat-icon>Logout
     </button>
   </mat-menu>
+
 </mat-toolbar>
 
 <mat-sidenav-container class="mat-sidenav-container">
-  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()" class="sidebar-with-border">
     <app-sidebar [collapsed]="collapsed()"></app-sidebar>
   </mat-sidenav>
 

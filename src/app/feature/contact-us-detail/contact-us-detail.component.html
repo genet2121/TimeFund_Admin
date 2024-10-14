@@ -1,0 +1,109 @@
+<div class="p-6 w-full mx-auto bg-white rounded-xl shadow-md space-y-4">
+  <h2 class="text-xl font-semibold">Contact Us Detail</h2>
+  <div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 ms-14">
+    <div class="col-span-2">
+      <label for="name" class="block text-xs mb-3 text-gray-700"
+        >Name</label
+      >
+      <input
+        type="text"
+        id="name"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.name"
+        readonly
+      />
+    </div>
+
+    <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Email</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.email"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="created_at" class="block text-xs mb-3 text-gray-700"
+        >created At</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.created_at  | date:'short'"
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="subject" class="block text-xs mb-3 text-gray-700"
+        >Subject</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.subject "
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="message" class="block text-xs mb-3 text-gray-700">Message</label>
+      <textarea
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.message"
+        readonly
+      ></textarea>
+    </div>
+    <div class="col-span-2">
+      <label for="has_answered" class="block text-xs mb-3 text-gray-700"
+        >Answered</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.has_answered"
+        readonly
+      />
+    </div>
+
+
+  </div>
+  <h2 class="text-xl font-semibold">Response</h2>
+  <p *ngIf="contactData.has_answered === false">This contact has not been responded to.</p>
+  <div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 ms-14" *ngIf="contactData.has_answered === true">
+
+    <div class="col-span-2">
+      <label for="subject" class="block text-xs mb-3 text-gray-700"
+        >Subject</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.Response?.subject "
+        readonly
+      />
+    </div>
+    <div class="col-span-2">
+      <label for="message" class="block text-xs mb-3 text-gray-700">Message</label>
+      <textarea
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.Response?.response"
+        readonly
+      ></textarea>
+    </div>
+    <div class="col-span-2">
+      <label for="created_at" class="block text-xs mb-3 text-gray-700"
+        >Responded At</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        [value]="contactData.Response?.createdAt  | date:'short'"
+        readonly
+      />
+    </div>
+  </div>
+</div>

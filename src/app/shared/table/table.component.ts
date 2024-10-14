@@ -17,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatSort, Sort, } from '@angular/material/sort';
 import { HelperService } from '../../core/services/helper.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-table',
@@ -27,6 +29,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CommonModule,
     MatPaginatorModule,
     MatIconModule,
+    CommonModule,
+    FormsModule,
+    MatInputModule
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
@@ -44,9 +49,11 @@ export class TableComponent {
   @Output() addClick = new EventEmitter<void>();
   @Output() searchClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
+  @Input() isSearchVisible: boolean = false;
   private _liveAnnouncer = inject(LiveAnnouncer);
 
   dataSource!: MatTableDataSource<any>;
+  searchTerm: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -80,8 +87,10 @@ export class TableComponent {
       }
     }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isSearchVisible']) {
+    }
 
-    ngOnChanges(changes: SimpleChanges) {
     if (changes['columns']) {
       this.updateDisplayedColumns();
     }
@@ -90,6 +99,7 @@ export class TableComponent {
       this.dataSource.data = this.data;
     }
   }
+
 
   // ngAfterViewInit() {
   //   this.dataSource.paginator = this.paginator;
@@ -140,5 +150,9 @@ export class TableComponent {
     if (!this.displayedColumns.includes('action')) {
       this.displayedColumns.push('action');
     }
+  }
+
+  applyFilter() {
+    this.dataSource.filter = this.searchTerm.trim().toLowerCase();
   }
 }

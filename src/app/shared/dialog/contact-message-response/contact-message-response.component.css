@@ -1,0 +1,43 @@
+.header {
+  position: relative;
+  margin-bottom: 50px;
+  margin-top: 16px;
+  margin-left: 10px;
+}
+
+.back-button{
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  margin-bottom: 25px;
+
+}
+
+
+.dialog-title {
+  font-size: 20px;
+  color: black;
+  margin-top: 40px;
+
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.save-button {
+  background: rgba(93, 50, 143, 1);
+  color: white;
+  bottom: 8px;
+  left: 200px;
+}
+
+mat-form-field {
+  height: 15px;
+  margin-bottom: 5rem;
+   /* width: 80%; */
+
+
+}

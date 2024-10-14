@@ -25,6 +25,7 @@ export class WithdrawalRequestComponent {
     { key: 'status', label: 'Status' },
   ];
   rowData: any[] = [];
+  isSearchVisible = false
   allowedActions: tablePermission = {
     add: true,
     edit: true,
@@ -67,5 +68,8 @@ export class WithdrawalRequestComponent {
 
   viewAction(element: any) {
     window.location.href = `withdrawal-requests/${element.id}`;
+  }
+  handleSearchClick() {
+    this.isSearchVisible = !this.isSearchVisible;
   }
 }

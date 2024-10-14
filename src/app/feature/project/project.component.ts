@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   _isLoading = true;
   _tableName = 'Projects';
   tabledata: any[] = [];
+  isSearchVisible = false
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Business Category' },
@@ -85,4 +86,8 @@ export class ProjectComponent implements OnInit {
   viewAction(element: any) {
     window.location.href = `projects/${element.id}`;
   }
+  handleSearchClick() {
+    this.isSearchVisible = !this.isSearchVisible;
+  }
+
 }

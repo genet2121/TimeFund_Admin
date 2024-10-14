@@ -1,16 +1,20 @@
 <mat-progress-bar mode="indeterminate" *ngIf="_isLoading"></mat-progress-bar>
 <div class="mat-elevation-z8 bg-white py-4 px-4">
+
   <app-table
-    tableTitle="Admins"
-    [columns]="tableColumns"
-    [data]="tableData"
-    [allowedActions]="allowedActions"
-    [DeleteAction]="handleDeleteAction"
-    [EditAction]="handleEditAction"
-    [ViewAction]="handleViewAction"
-    [PageChangeAction]="changePage"
-    (addClick)="handleAddClick()"
-    (searchClick)="handleSearchClick()"
-    (settingsClick)="handleSettingsClick()"
-  ></app-table>
+  tableTitle="Admins"
+  [columns]="tableColumns"
+  [data]="tableData"
+  [allowedActions]="allowedActions"
+  [DeleteAction]="handleDeleteAction"
+  [EditAction]="handleEditAction"
+  [ViewAction]="handleViewAction"
+  [PageChangeAction]="changePage"
+  (addClick)="handleAddClick()"
+  (searchClick)="handleSearchClick()"
+  (settingsClick)="handleSettingsClick()"
+  [isSearchVisible]="isSearchVisible"
+></app-table>
+
+
 </div>

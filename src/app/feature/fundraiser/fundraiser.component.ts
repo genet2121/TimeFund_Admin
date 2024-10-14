@@ -20,6 +20,7 @@ export class FundraiserComponent implements OnInit {
   _tableName = 'Fundraisings';
   _isLoading = true;
   tabledata: any[] = [];
+  isSearchVisible = false
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Business Category' },
@@ -84,4 +85,9 @@ export class FundraiserComponent implements OnInit {
   viewAction(element: any) {
     window.location.href = `fundraisings/${element.id}`;
   }
+
+  handleSearchClick() {
+    this.isSearchVisible = !this.isSearchVisible;
+  }
+
 }

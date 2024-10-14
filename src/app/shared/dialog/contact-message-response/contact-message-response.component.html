@@ -1,0 +1,74 @@
+
+<div class="header">
+  <button class="back-button" mat-dialog-close>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+
+<h2 class="text-center text-2xl font-semibold mb-6 mt-36">
+  {{ title }}
+</h2>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">
+  {{ successMessage }}
+</ngb-alert>
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">
+  {{ errorMessage }}
+</ngb-alert>
+
+<div mat-dialog-content>
+  <form [formGroup]="contactResponseForm">
+    <div *ngIf="isViewDetail; else editMode" class="grid grid-cols-2 gap-6">
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [formControlName]="subjectKey"
+          [placeholder]="subjectKey | titlecase"
+          readonly
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <textarea
+          matInput
+          [formControlName]="responseKey"
+          [placeholder]="responseKey | titlecase"
+          rows="3"
+          readonly
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+
+    <ng-template #editMode>
+      <div class="grid grid-cols-2 gap-6">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [formControlName]="subjectKey"
+            [placeholder]="subjectKey | titlecase"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            [formControlName]="responseKey"
+            [placeholder]="responseKey | titlecase"
+            rows="3"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </ng-template>
+
+  </form>
+</div>
+
+<div class="flex justify-center" >
+  <button
+    class="bg-purple-700 hover:bg-successActive text-white text-sm py-2.5 px-5 mr-2 mb-7 rounded-xl shadow-md"
+    (click)="onSave()"
+    *ngIf="!isViewDetail">
+    {{ buttonText }}
+  </button>
+</div>
+

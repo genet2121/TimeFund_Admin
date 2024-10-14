@@ -36,6 +36,7 @@ export class UserGroupListComponent {
     assign_role: false,
   };
   tableData: any[] = [];
+  isSearchVisible = false;
 
   constructor(
     private router: Router,
@@ -79,14 +80,8 @@ export class UserGroupListComponent {
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/user-groups',  element.id, 'edit',])
-    // const dialogRef = this.dialog.open(UserGroupDialogComponent, {
-    //   width: '500px',
-    //   data: {id: element.id}
+    this.router.navigate(['/user-groups',  element.id])
 
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
   }
   handleAssignRoleAction(element: any) {
     this.router.navigate(['/user_groups', element.id, 'assign_role'], {
@@ -121,7 +116,7 @@ export class UserGroupListComponent {
   }
 
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
 
   handleSettingsClick() {

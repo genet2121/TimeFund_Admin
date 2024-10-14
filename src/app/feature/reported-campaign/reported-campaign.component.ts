@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class ReportedCampaignComponent {
   _isLoading = true;
+  isSearchVisible = false;
   constructor(
     private crudService: CrudService<any>,
     public router: RouterModule
@@ -63,4 +64,8 @@ export class ReportedCampaignComponent {
       };
     });
   }
+  handleSearchClick() {
+    this.isSearchVisible = !this.isSearchVisible;
+  }
+
 }

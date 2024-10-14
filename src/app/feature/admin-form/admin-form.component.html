@@ -1,5 +1,12 @@
 <div class="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-md space-y-4" [formGroup]="adminForm">
   <h2 class="text-xl font-semibold">Admin</h2>
+  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">
+    {{ successMessage }}
+  </ngb-alert>
+  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">
+    {{ errorMessage }}
+  </ngb-alert>
+
   <div class="grid gap-11 gap-y-3 text-sm grid-cols-2 md:grid-cols-5 ms-14">
 
     <div class="col-span-2">
@@ -41,7 +48,7 @@
         </option>
       </select>
     </div>
- 
+
     <div class="md:col-span-2">
       <label for="status" class="block text-xs mb-3 text-gray-700">Status</label>
       <select id="status" class="h-12 border mb-3 rounded px-4 w-full bg-gray-50" formControlName="status">

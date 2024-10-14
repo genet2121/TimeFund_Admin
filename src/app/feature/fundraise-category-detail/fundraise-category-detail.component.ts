@@ -46,7 +46,7 @@ export class FundraiseCategoryDetailComponent {
 
 
   allowedActions: tablePermission = {
-    add:false,
+    add:true,
     edit: true,
     view: true,
     delete: true,
@@ -55,6 +55,7 @@ export class FundraiseCategoryDetailComponent {
   tableData: any[] = [];
   category!: fundraiseCategory;
   dataForm!:FormGroup;
+  isSearchVisible = false;
 
 
   constructor(private router: Router, private crudservice: CrudService<any>,
@@ -152,11 +153,7 @@ export class FundraiseCategoryDetailComponent {
       }
     });
   }
-  handleAssignRoleAction(element:any){
-    this.router.navigate(['/user_groups', element.id, 'assign_role'], {
-      state: { edit: true }
-    });
-  }
+
 
 
   handleDeleteAction(element: any) {
@@ -205,7 +202,7 @@ export class FundraiseCategoryDetailComponent {
   }
 
   handleSearchClick() {
-    console.log('Search button clicked');
+    this.isSearchVisible = !this.isSearchVisible;
   }
 
   handleSettingsClick() {

@@ -22,6 +22,8 @@ import { ReportedCampaignComponent } from './reported-campaign/reported-campaign
 import { ViewReportedCampaignComponent } from './view-reported-campaign/view-reported-campaign.component';
 import { RoleGuard } from '../core/services/auth.guard';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { ContactUsListComponent } from './contact-us-list/contact-us-list.component';
+import { ContactUsDetailComponent } from './contact-us-detail/contact-us-detail.component';
 export const featureRoutes: Routes = [
   // {
   //   path: '',
@@ -41,11 +43,11 @@ export const featureRoutes: Routes = [
     component: UserFormComponent,
   },
   {
-    path: 'users/:id/edit',
+    path: 'users/:id',
     component: UserFormComponent,
   },
   {
-    path: 'users/:id/view',
+    path: 'users/:id',
     component: UserFormComponent,
   },
   {
@@ -57,7 +59,7 @@ export const featureRoutes: Routes = [
     component: AdminFormComponent,
   },
   {
-    path: 'administrator/:id/edit',
+    path: 'administrator/:id',
     component: AdminFormComponent,
   },
   // {
@@ -65,7 +67,7 @@ export const featureRoutes: Routes = [
   //   component: AdminFormComponent,
   // },
   {
-    path: 'administrator/:id/view',
+    path: 'administrator/:id',
     component: AdminFormComponent,
     canActivate: [RoleGuard],
     data: {
@@ -106,7 +108,7 @@ export const featureRoutes: Routes = [
     component: GroupComponent,
   },
   {
-    path: 'user-groups/:id/edit',
+    path: 'user-groups/:id',
     component: GroupComponent,
   },
 
@@ -117,11 +119,11 @@ export const featureRoutes: Routes = [
     component: ProjectCategoryListComponent,
   },
   {
-    path: 'project-category/:id/view',
+    path: 'project-category/:id',
     component: ProjectCategoryDetailComponent,
   },
   {
-    path: 'project-category/:id/edit',
+    path: 'project-category/:id',
     component: ProjectCategoryDetailComponent,
   },
   {
@@ -130,12 +132,12 @@ export const featureRoutes: Routes = [
   },
 
     {
-      path: 'fundraiser-category/:id/view',
+      path: 'fundraiser-category/:id',
       component:FundraiseCategoryDetailComponent
     },
 
   {
-    path: 'fundraiser-category/:id/view',
+    path: 'fundraiser-category/:id',
     component: FundraiseCategoryDetailComponent,
   },
   {
@@ -157,6 +159,16 @@ export const featureRoutes: Routes = [
   {
     path: 'fundraiser-reports/:id',
     component: ViewReportedCampaignComponent,
+  },
+  {
+    path: 'contacts',
+    component: ContactUsListComponent
+
+  },
+  {
+    path: 'contacts/:id',
+    component: ContactUsDetailComponent
+
   },
   { path: '**', redirectTo: 'dashboard' },
 ];

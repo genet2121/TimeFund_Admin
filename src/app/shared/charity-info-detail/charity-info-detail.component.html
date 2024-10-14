@@ -87,7 +87,7 @@
       type="text"
       id="description"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
-      [value]="charityData.charity_type"
+      [value]="charityData.Wegen_CharityType.charity_type"
       readonly
     />
   </div>
@@ -97,6 +97,8 @@
       type="text"
       id="business_category"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.tin_number"
+      readonly
     />
   </div>
   <div class="col-span-2">
@@ -105,6 +107,8 @@
       type="text"
       id="business_subcategory"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.trade_license_number"
+      readonly
     />
   </div>
   <div class="col-span-2">
@@ -113,6 +117,7 @@
       type="text"
       id="goal"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.email"
       readonly
     />
   </div>
@@ -122,6 +127,7 @@
       type="text"
       id="organizer_address"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.phonenumber"
       readonly
     />
   </div>
@@ -132,6 +138,8 @@
       type="text"
       id="business_category"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.region"
+      readonly
     />
   </div>
   <div class="col-span-2">
@@ -140,6 +148,8 @@
       type="text"
       id="business_subcategory"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.subcity"
+      readonly
     />
   </div>
   <div class="col-span-2">
@@ -148,6 +158,7 @@
       type="text"
       id="goal"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.woreda"
       readonly
     />
   </div>
@@ -157,6 +168,7 @@
       type="text"
       id="organizer_address"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.kebele"
       readonly
     />
   </div>
@@ -166,6 +178,7 @@
       type="text"
       id="description"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.house_number"
     />
   </div>
   <div class="col-span-2">
@@ -174,6 +187,8 @@
       type="text"
       id="business_category"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.expiry_date"
+      readonly
     />
   </div>
   <div class="col-span-2">
@@ -182,6 +197,8 @@
       type="text"
       id="business_subcategory"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.website_link"
+      readonly
     />
   </div>
   <div class="col-span-2">
@@ -190,6 +207,7 @@
       type="text"
       id="goal"
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+      [value]="charityData.extra_details"
       readonly
       rows="4"
     ></textarea>
@@ -202,6 +220,7 @@
       class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
       readonly
       rows="4"
+      [value]="charityData.charity_description"
     ></textarea>
   </div>
 </div>
@@ -217,8 +236,8 @@
       <div class="flex items-center gap-4 py-6">
         <mat-icon>description</mat-icon>
         <div class="flex flex-col">
-          <p class="font-extralight">Progress Report</p>
-          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+          <p class="font-extralight">{{charityData.Wegen_CharityMedium.tin_certificate}}</p>
+          <p class="text-[#5D328F] cursor-pointer" (click)="navigateTo(imageUrl + charityData.Wegen_CharityMedium.tin_certificate)">Click to view</p>
         </div>
       </div>
     </div>
@@ -232,8 +251,8 @@
       <div class="flex items-center gap-4 py-6">
         <mat-icon>description</mat-icon>
         <div class="flex flex-col">
-          <p class="font-extralight">Progress Report</p>
-          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+          <p class="font-extralight">{{charityData.Wegen_CharityMedium.registration_certificate}}</p>
+          <p class="text-[#5D328F] cursor-pointer" (click)="navigateTo(imageUrl + charityData.Wegen_CharityMedium.registration_certificate)">Click to view</p>
         </div>
       </div>
     </div>
@@ -246,8 +265,8 @@
       <div class="flex items-center gap-4 py-6">
         <mat-icon>description</mat-icon>
         <div class="flex flex-col">
-          <p class="font-extralight">Progress Report</p>
-          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+          <p class="font-extralight">{{charityData.Wegen_CharityMedium.governing_document}}</p>
+          <p class="text-[#5D328F] cursor-pointer" (click)="navigateTo(imageUrl + charityData.Wegen_CharityMedium.governing_document)">Click to view</p>
         </div>
       </div>
     </div>
@@ -260,8 +279,8 @@
       <div class="flex items-center gap-4 py-6">
         <mat-icon>description</mat-icon>
         <div class="flex flex-col">
-          <p class="font-extralight">Progress Report</p>
-          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+          <p class="font-extralight">{{charityData.Wegen_CharityMedium.supporting_document}}</p>
+          <p class="text-[#5D328F] cursor-pointer" (click)="navigateTo(imageUrl + charityData.Wegen_CharityMedium.supporting_document)">Click to view</p>
         </div>
       </div>
     </div>
@@ -274,8 +293,8 @@
       <div class="flex items-center gap-4 py-6">
         <mat-icon>description</mat-icon>
         <div class="flex flex-col">
-          <p class="font-extralight">Progress Report</p>
-          <p class="text-[#5D328F] cursor-pointer">Click to view</p>
+          <p class="font-extralight">{{charityData.Wegen_CharityMedium.logo_image}}</p>
+          <p class="text-[#5D328F] cursor-pointer" (click)="navigateTo(imageUrl + charityData.Wegen_CharityMedium.logo_image)">Click to view</p>
         </div>
       </div>
     </div>
