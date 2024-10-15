@@ -137,6 +137,18 @@
         Project Image
       </button>
     </div>
+        <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Verification Status</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        formControlName="email"
+        [value]="fundraisingInfo?.is_verified ? 'VERIFIED' : 'NOT VERIFIED'"
+        readonly
+      />
+    </div>
   </div>
   <!--Start of Phases Section -->
   <div>

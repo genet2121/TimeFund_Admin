@@ -30,7 +30,7 @@ export class FundraiserComponent implements OnInit {
   ];
   allowedActions: tablePermission = {
     add: true,
-    edit: true,
+    edit: false,
     view: true,
     delete: true,
     assign_role: false,
