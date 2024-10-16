@@ -11,6 +11,7 @@ import { DynamicDialogFormComponent } from '../../shared/dialog/dynamic-dialog-f
 import { RoleService } from '../../core/services/role.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-project-category-list',
@@ -27,6 +28,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class ProjectCategoryListComponent {
   _isLoading = true;
   _tableName = 'Project Category';
+  total: number = 0;
+  currentPage = 0;
   val: any[] = [];
   tableColumns = [
     { key: 'business_category_type', label: 'Category Name' },
@@ -67,10 +70,15 @@ export class ProjectCategoryListComponent {
   }
 
   fetchData() {
+    this._isLoading = true;
     this.crudservice
-      .getAll('businesscategory/getallbusinesscategory')
+      .getAll(
+        `businesscategory/getallbusinesscategory?page=${this.currentPage + 1}`
+      )
       .subscribe((data: any) => {
-        this.tableData = this.transformDataForTable(data);
+        const fetchData = data as api<projectCategory>;
+        this.tableData = this.transformDataForTable(fetchData.data);
+        this.total = fetchData.total;
         this._isLoading = false;
       });
   }
@@ -117,8 +125,6 @@ export class ProjectCategoryListComponent {
     });
   }
 
-
-
   handleDeleteAction(element: any) {
     this.crudservice
       .deleteItem('businesscategory/removebusinesscategory', element.id)
@@ -137,11 +143,9 @@ export class ProjectCategoryListComponent {
   }
 
   changePage(event: any) {
-    console.log('Page changed:', event);
+    this.currentPage = event.pageIndex;
+    this.fetchData();
   }
-
-  currentPage = 2;
-
   handleAddClick() {
     const dialogRef = this.dialog.open(DynamicDialogFormComponent, {
       width: '700px',
@@ -167,22 +171,7 @@ export class ProjectCategoryListComponent {
     this.isSearchVisible = !this.isSearchVisible;
   }
 
-
   handleSettingsClick() {
     console.log('Settings button clicked');
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

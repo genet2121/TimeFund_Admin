@@ -1,14 +1,14 @@
 <mat-progress-bar mode="indeterminate" *ngIf="_isLoading"></mat-progress-bar>
 <div class="mat-elevation-z8 bg-white py-4 px-4">
   <app-table
-  tableTitle="Withdrawal Request"
-  [columns]="tableColumns"
-  [data]="rowData"
-  [allowedActions]="allowedActions"
-  [ViewAction]="viewAction"
-  (searchClick)="handleSearchClick()"
-  [isSearchVisible]="isSearchVisible"
-></app-table>
-
+    tableTitle="Withdrawal Request"
+    [total]="total"
+    [columns]="tableColumns"
+    [data]="rowData"
+    [allowedActions]="allowedActions"
+    [ViewAction]="viewAction"
+    (searchClick)="handleSearchClick()"
+    [isSearchVisible]="isSearchVisible"
+    [PageChangeAction]="changePage.bind(this)"
+  ></app-table>
 </div>
-

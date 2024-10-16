@@ -7,6 +7,7 @@ import { CrudService } from '../../core/services/crud.service';
 import FundraiserReport from '../../core/model/fundraiserreport.model';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-reported-campaign',
@@ -18,6 +19,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class ReportedCampaignComponent {
   _isLoading = true;
   isSearchVisible = false;
+  total: number = 0;
+  currentPage = 0;
   constructor(
     private crudService: CrudService<any>,
     public router: RouterModule
@@ -28,15 +31,19 @@ export class ReportedCampaignComponent {
   }
 
   fetchProjects(): void {
-    this.crudService.getAll('FundraiserReport/getallreports').subscribe(
-      (result: FundraiserReport[]) => {
-        this.tabledata = this.dataTransformer(result);
-        this._isLoading = false;
-      },
-      (error) => {
-        console.error('Error fetching data', error);
-      }
-    );
+    this.crudService
+      .getAll(`FundraiserReport/getallreports?page=${this.currentPage + 1}`)
+      .subscribe(
+        (result: any) => {
+          const fetchedData = result as api<FundraiserReport>;
+          this.tabledata = this.dataTransformer(fetchedData.data);
+          this._isLoading = false;
+          this.total = fetchedData.total;
+        },
+        (error) => {
+          console.error('Error fetching data', error);
+        }
+      );
   }
   tabledata: any[] = [];
   tableColumns: Column[] = [
@@ -67,5 +74,8 @@ export class ReportedCampaignComponent {
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
+  changePage(event: any) {
+    this.currentPage = event.pageIndex;
+    this.fetchProjects();
+  }
 }

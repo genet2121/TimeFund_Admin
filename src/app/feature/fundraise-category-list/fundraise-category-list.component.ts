@@ -11,6 +11,7 @@ import { DynamicDialogFormComponent } from '../../shared/dialog/dynamic-dialog-f
 import { RoleService } from '../../core/services/role.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-fundraise-category-list',
@@ -27,6 +28,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class FundraiseCategoryListComponent {
   _isLoading = true;
   _tableName = 'Fundraiser Category';
+  total: number = 0;
+  currentPage = 0;
   val: any[] = [];
   tableColumns = [
     { key: 'category_type', label: 'Category Name' },
@@ -68,10 +71,13 @@ export class FundraiseCategoryListComponent {
   }
 
   fetchData() {
+    this._isLoading = true;
     this.crudservice
-      .getAll('categories/getallcategory')
+      .getAll(`categories/getallcategory?page=${this.currentPage + 1}`)
       .subscribe((data: any) => {
-        this.tableData = this.transformDataForTable(data);
+        const fetchData = data as api<fundraiseCategory>;
+        this.tableData = this.transformDataForTable(fetchData.data);
+        this.total = fetchData.total;
         this._isLoading = false;
       });
   }
@@ -88,7 +94,7 @@ export class FundraiseCategoryListComponent {
     }));
   }
   handleViewAction(element: any) {
-    this.router.navigate(['/fundraiser-category', element.id,]);
+    this.router.navigate(['/fundraiser-category', element.id]);
   }
   handleEditAction(element: any) {
     const dialogRef = this.dialog.open(DynamicDialogFormComponent, {
@@ -134,10 +140,9 @@ export class FundraiseCategoryListComponent {
       );
   }
   changePage(event: any) {
-    console.log('Page changed:', event);
+    this.currentPage = event.pageIndex;
+    this.fetchData();
   }
-
-  currentPage = 2;
 
   handleAddClick() {
     const dialogRef = this.dialog.open(DynamicDialogFormComponent, {
@@ -162,7 +167,6 @@ export class FundraiseCategoryListComponent {
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
 
   handleSettingsClick() {
     console.log('Settings button clicked');

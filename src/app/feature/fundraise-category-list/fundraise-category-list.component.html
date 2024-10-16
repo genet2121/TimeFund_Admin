@@ -2,6 +2,7 @@
 <div class="mat-elevation-z8 bg-white py-4 px-4">
   <app-table
   tableTitle="Fundraise Categorys"
+  [total]="total"
   [columns]="tableColumns"
   [data]="tableData"
   [allowedActions]="allowedActions"
@@ -9,7 +10,7 @@
   [EditAction]="handleEditAction"
   [ViewAction]="handleViewAction"
   [AssignRoleAction]="handleAssignRoleAction"
-  [PageChangeAction]="changePage"
+  [PageChangeAction]="changePage.bind(this)"
   (addClick)="handleAddClick()"
   (searchClick)="handleSearchClick()"
   (settingsClick)="handleSettingsClick()"

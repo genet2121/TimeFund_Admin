@@ -2,13 +2,14 @@
 <div class="mat-elevation-z8 bg-white py-4 px-4">
   <app-table
   tableTitle="Project Categorys"
+  [total]="total"
   [columns]="tableColumns"
   [data]="tableData"
   [allowedActions]="allowedActions"
   [DeleteAction]="handleDeleteAction"
   [EditAction]="handleEditAction"
   [ViewAction]="handleViewAction"
-  [PageChangeAction]="changePage"
+  [PageChangeAction]="changePage.bind(this)"
   (addClick)="handleAddClick()"
   (searchClick)="handleSearchClick()"
   (settingsClick)="handleSettingsClick()"

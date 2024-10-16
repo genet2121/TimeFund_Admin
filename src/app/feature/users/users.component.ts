@@ -8,6 +8,7 @@ import user from '../../core/model/user.model';
 import { RoleService } from '../../core/services/role.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-users',
@@ -19,8 +20,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class UsersComponent {
   _isLoading = true;
   _tableName = 'Users';
+  total: number = 0;
+  currentPage = 0;
   val: any[] = [];
-  isSearchVisible = false
+  isSearchVisible = false;
   tableColumns = [
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
@@ -58,10 +61,15 @@ export class UsersComponent {
   }
 
   fetchData() {
-    this.crudservice.getAll('users/getallusers').subscribe((data: user[]) => {
-      this.tableData = this.transformDataForTable(data);
-      this._isLoading = false;
-    });
+    this._isLoading = true;
+    this.crudservice
+      .getAll(`users/getallusers?page=${this.currentPage + 1}`)
+      .subscribe((data: any) => {
+        const fetchedData = data as api<user>;
+        this.tableData = this.transformDataForTable(fetchedData.data);
+        this.total = fetchedData.total;
+        this._isLoading = false;
+      });
   }
   transformDataForTable(users: user[]): any[] {
     return users.map((userTableData) => {
@@ -96,7 +104,7 @@ export class UsersComponent {
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/users', element.id,], {
+    this.router.navigate(['/users', element.id], {
       state: { param: true },
     });
   }
@@ -119,10 +127,9 @@ export class UsersComponent {
   }
 
   changePage(event: any) {
-    console.log('Page changed:', event);
+    this.currentPage = event.pageIndex;
+    this.fetchData();
   }
-
-  currentPage = 2;
 
   handleAddClick() {
     window.location.href = `/users/create`;

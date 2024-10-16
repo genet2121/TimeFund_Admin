@@ -10,11 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RoleService } from '../../core/services/role.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-admin-list',
   standalone: true,
-  imports: [TableComponent,MatProgressBarModule,CommonModule,FormsModule],
+  imports: [TableComponent, MatProgressBarModule, CommonModule, FormsModule],
   templateUrl: './admin-list.component.html',
   styleUrls: ['./admin-list.component.css'],
 })
@@ -22,6 +23,8 @@ export class AdminListComponent implements OnInit {
   val: any[] = [];
   _tableName = 'Administrator';
   _isLoading = true;
+  total: number = 0;
+  currentPage = 0;
   tableColumns = [
     { key: 'fullName', label: 'Full Name' },
     { key: 'email', label: 'E-mail' },
@@ -39,7 +42,6 @@ export class AdminListComponent implements OnInit {
   };
   tableData: admin[] = [];
   isSearchVisible = false;
-
 
   constructor(
     private router: Router,
@@ -60,10 +62,15 @@ export class AdminListComponent implements OnInit {
   }
 
   fetchData() {
-    this.crudservice.getAll('admin/getalladmins').subscribe((data: admin[]) => {
-      this.tableData = this.transformDataForTable(data);
-      this._isLoading = false;
-    });
+    this._isLoading = true;
+    this.crudservice
+      .getAll(`admin/getalladmins?page=${this.currentPage + 1}`)
+      .subscribe((data: any) => {
+        const fetchedData = data as api<admin>;
+        this.tableData = this.transformDataForTable(fetchedData.data);
+        this._isLoading = false;
+        this.total = fetchedData.total;
+      });
   }
   transformDataForTable(admins: admin[]): any[] {
     return admins.map((adminTableData) => {
@@ -80,13 +87,13 @@ export class AdminListComponent implements OnInit {
   }
 
   handleViewAction(element: any) {
-    this.router.navigate(['/administrator', element.id, ], {
+    this.router.navigate(['/administrator', element.id], {
       queryParams: { param: true },
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/administrator', element.id, ], {
+    this.router.navigate(['/administrator', element.id], {
       state: { param: true },
     });
   }
@@ -109,22 +116,17 @@ export class AdminListComponent implements OnInit {
   }
 
   changePage(event: any) {
-    console.log('Page changed:', event);
+    this.currentPage = event.pageIndex;
+    this.fetchData()
   }
-
-  currentPage = 2;
 
   handleAddClick() {
     window.location.href = `/administrator/create`;
   }
 
-
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
-
-
 
   handleSettingsClick() {
     console.log('Settings button clicked');

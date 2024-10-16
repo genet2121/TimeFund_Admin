@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { RoleService } from '../../core/services/role.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-project',
@@ -19,8 +20,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class ProjectComponent implements OnInit {
   _isLoading = true;
   _tableName = 'Projects';
+  total: number = 0;
+  currentPage = 0;
   tabledata: any[] = [];
-  isSearchVisible = false
+  isSearchVisible = false;
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Business Category' },
@@ -54,12 +57,17 @@ export class ProjectComponent implements OnInit {
   }
 
   fetchProjects(): void {
+    this._isLoading = true;
     this.crudService
-      .getAll('fundraising/getallfundraisings/undefined')
+      .getAll(
+        `fundraising/getallfundraisings/undefined?page=${this.currentPage + 1}&for_project=true`
+      )
       .subscribe(
-        (result: Fundraising[]) => {
+        (result: any) => {
+          const fetchedData = result as api<Fundraising>;
+          this.total = fetchedData.total;
           this.tabledata = this.transformData(
-            result.filter((project) => project.for_project === true)
+            fetchedData.data.filter((project) => project.for_project === true)
           );
           this._isLoading = false;
         },
@@ -89,5 +97,8 @@ export class ProjectComponent implements OnInit {
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
+  changePage(event: any) {
+    this.currentPage = event.pageIndex;
+    this.fetchProjects();
+  }
 }
