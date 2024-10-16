@@ -5,16 +5,22 @@ import { Column } from '../../core/model/tablecolumn.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import withdrawrequstmodel from '../../core/model/withdrawrequest.model';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-withdrawal-request',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './withdrawal-request.component.html',
   styleUrl: './withdrawal-request.component.css',
 })
 export class WithdrawalRequestComponent {
+  _isLoading = true;
   _tableName = 'Withdrawal Requests';
+  total: number = 0;
+  currentPage = 0;
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'fullname', label: 'Organizer Name' },
@@ -22,7 +28,7 @@ export class WithdrawalRequestComponent {
     { key: 'status', label: 'Status' },
   ];
   rowData: any[] = [];
-  isSearchVisible = false
+  isSearchVisible = false;
   allowedActions: tablePermission = {
     add: true,
     edit: true,
@@ -30,14 +36,12 @@ export class WithdrawalRequestComponent {
     delete: true,
     assign_role: false,
   };
-  constructor(private crudService: CrudService<any>, private roleService:RoleService) {}
+  constructor(
+    private crudService: CrudService<any>,
+    private roleService: RoleService
+  ) {}
   ngOnInit() {
-    this.crudService
-      .getAll(`withdraw-requests/withdraw-requests`)
-      .subscribe((result) => {
-        let data = result;
-        this.rowData = this.dataFormater(data);
-      });
+    this.fetchDate();
     const allowedActions = this.roleService.getPermissionForTable(
       this._tableName
     );
@@ -45,6 +49,20 @@ export class WithdrawalRequestComponent {
     this.allowedActions.edit = allowedActions.can_edit;
     this.allowedActions.view = allowedActions.can_view_detail;
     this.allowedActions.delete = allowedActions.can_delete;
+  }
+
+  fetchDate(){
+    this._isLoading = true;
+    this.crudService
+      .getAll(
+        `withdraw-requests/withdraw-requests?page=${this.currentPage + 1}`
+      )
+      .subscribe((result: any) => {
+        let fetchedData = result as api<withdrawrequstmodel>;
+        this.rowData = this.dataFormater(fetchedData.data);
+        this.total = fetchedData.total;
+        this._isLoading = false;
+      });
   }
 
   dataFormater(data: any) {
@@ -64,5 +82,9 @@ export class WithdrawalRequestComponent {
   }
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
+  }
+  changePage(event: any) {
+    this.currentPage = event.pageIndex;
+    this.fetchDate();
   }
 }

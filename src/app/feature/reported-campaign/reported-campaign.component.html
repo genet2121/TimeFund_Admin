@@ -1,10 +1,13 @@
+<mat-progress-bar mode="indeterminate" *ngIf="_isLoading"></mat-progress-bar>
 <div class="mat-elevation-z8 bg-white py-4 px-4">
   <app-table
     tableTitle="Reported Campaigns"
+    [total]="total"
     [data]="tabledata"
     [columns]="tableColumns"
     [allowedActions]="permissions"
     [ViewAction]="viewAction"
+    [PageChangeAction]="changePage.bind(this)"
     (searchClick)="handleSearchClick()"
     [isSearchVisible]="isSearchVisible"
   ></app-table>

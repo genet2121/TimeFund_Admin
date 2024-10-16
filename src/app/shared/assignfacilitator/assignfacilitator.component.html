@@ -1,0 +1,18 @@
+<div class="p-6 flex flex-col">
+  <h1 class="text-lg font-bold text-center">Assign Facilitator</h1>
+  <mat-form-field>
+    <mat-label>Facilitator</mat-label>
+    <mat-select [(value)]="facilitatorId">
+      @for (admin of adminList; track admin) {
+      <mat-option [value]="admin.admin_id">{{ admin.fullName }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button
+    mat-stroked-button
+    (click)="assingFacilitator()"
+    [disabled]="isLoading"
+  >
+    Assign
+  </button>
+</div>

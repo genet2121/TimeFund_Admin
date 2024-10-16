@@ -6,18 +6,24 @@ import tablePermission from '../../core/model/tablepermissions.mode';
 import { CrudService } from '../../core/services/crud.service';
 import { TableComponent } from '../../shared/table/table.component';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-fundraiser',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './fundraiser.component.html',
   styleUrl: './fundraiser.component.css',
 })
 export class FundraiserComponent implements OnInit {
   _tableName = 'Fundraisings';
+  _isLoading = true;
+  total: number = 0;
+  currentPage: number = 0;
   tabledata: any[] = [];
-  isSearchVisible = false
+  isSearchVisible = false;
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Business Category' },
@@ -27,7 +33,7 @@ export class FundraiserComponent implements OnInit {
   ];
   allowedActions: tablePermission = {
     add: true,
-    edit: true,
+    edit: false,
     view: true,
     delete: true,
     assign_role: false,
@@ -51,13 +57,19 @@ export class FundraiserComponent implements OnInit {
   }
 
   fetchProjects(): void {
+    this._isLoading = true;
     this.crudService
-      .getAll('fundraising/getallfundraisings/undefined')
+      .getAll(
+        `fundraising/getallfundraisings/undefined?page=${this.currentPage + 1}&for_project=false`
+      )
       .subscribe(
-        (result: Fundraising[]) => {
+        (result: any) => {
+          const fetchedData = result as api<Fundraising>;
+          this.total = fetchedData.total;
           this.tabledata = this.transformData(
-            result.filter((project) => project.for_project === false)
+            fetchedData.data.filter((project) => project.for_project === false)
           );
+          this._isLoading = false;
         },
         (error) => {
           alert(`Error fetching data ${error}`);
@@ -85,5 +97,9 @@ export class FundraiserComponent implements OnInit {
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
+  changePage(event: any) {
+    console.log(event.pageIndex)
+    this.currentPage = event.pageIndex;
+    this.fetchProjects();
+  }
 }

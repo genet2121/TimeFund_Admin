@@ -1,23 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CrudService } from '../../core/services/crud.service';
-
 import { TableComponent } from '../../shared/table/table.component';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import userGroup from '../../core/model/userGroup.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-user-group-list',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, MatProgressBarModule, CommonModule],
   templateUrl: './user-group-list.component.html',
   styleUrl: './user-group-list.component.css',
 })
 export class UserGroupListComponent {
   _tableName = 'User Groups';
+  _isLoading = true;
+  current_page = 0;
+  page_size:number = 0;
   val: any[] = [];
   tableColumns = [
     { key: 'user_group_name', label: 'UserGroup Name' },
@@ -50,16 +54,18 @@ export class UserGroupListComponent {
     );
     this.allowedActions.add = allowedActions.can_add;
     this.allowedActions.edit = allowedActions.can_edit;
-    this.allowedActions.view = false;
+    this.allowedActions.view = allowedActions.can_view_detail;
     this.allowedActions.delete = allowedActions.can_delete;
   }
 
   fetchData() {
+    this._isLoading = true;
     this.crudservice
-      .getAll('user-group-roles/getAllUserGroups')
+      .getAll(`user-group-roles/getAllUserGroups?page=${this.current_page + 1}`)
       .subscribe((data: any) => {
         this.tableData = this.transformDataForTable(data.data);
-        console.log('thus', this.tableData);
+        this._isLoading = false;
+        this.page_size = data.total;
       });
   }
   transformDataForTable(userGroups: userGroup[]): any[] {
@@ -71,13 +77,12 @@ export class UserGroupListComponent {
   }
   handleViewAction(element: any) {
     this.router.navigate(['/user-groups', element.id, 'view'], {
-      queryParams: { view: true }
+      queryParams: { view: true },
     });
   }
 
   handleEditAction(element: any) {
-    this.router.navigate(['/user-groups',  element.id])
-
+    this.router.navigate(['/user-groups', element.id]);
   }
   handleAssignRoleAction(element: any) {
     this.router.navigate(['/user_groups', element.id, 'assign_role'], {
@@ -101,14 +106,13 @@ export class UserGroupListComponent {
     }
   }
 
-  changePage(event: any) {
-    console.log('Page changed:', event);
+  changePage($event:any) {
+    this.current_page = $event.pageIndex;
+    this.fetchData();
   }
 
-  currentPage = 2;
-
   handleAddClick() {
-    this.router.navigate(['/user-groups/create'])
+    this.router.navigate(['/user-groups/create']);
   }
 
   handleSearchClick() {

@@ -137,6 +137,18 @@
         Project Image
       </button>
     </div>
+        <div class="col-span-2">
+      <label for="email" class="block text-xs mb-3 text-gray-700"
+        >Verification Status</label
+      >
+      <input
+        type="text"
+        class="h-12 border mb-3 rounded px-4 w-full bg-gray-50"
+        formControlName="email"
+        [value]="fundraisingInfo?.is_verified ? 'VERIFIED' : 'NOT VERIFIED'"
+        readonly
+      />
+    </div>
   </div>
   <!--Start of Phases Section -->
   <div>
@@ -166,7 +178,16 @@
     </div>
     <div class="flex flex-col">
       <p class="font-semibold">Facilitator</p>
-      <p class="border rounded-md py-2 px-4">Samuel</p>
+      <p
+        class="border rounded-md py-2 px-4 cursor-pointer"
+        (click)="openFacilitatorAssignmentDialog()"
+      >
+        {{
+          fundraisingInfo?.facilitator_assign_id === null
+            ? "Not Assigned"
+            : fundraisingInfo?.Admin?.fullName
+        }}
+      </p>
     </div>
   </div>
   <div class="flex justify-center">

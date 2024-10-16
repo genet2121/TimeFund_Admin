@@ -31,7 +31,9 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     CommonModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginator,
+    RouterModule,
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
@@ -40,11 +42,12 @@ export class TableComponent {
   @Input() tableTitle: string = '';
   @Input() columns: Column[] = [];
   @Input() data: any[] = [];
+  @Input() total:number = 0;
   @Input() DeleteAction: (element: any) => void = () => {};
   @Input() EditAction: (element: any) => void = () => {};
   @Input() ViewAction: (element: any) => void = () => {};
   @Input() AssignRoleAction: (element: any) => void = () => {};
-  @Input() PageChangeAction: (element: any) => void = () => {};
+  @Input() PageChangeAction: ($event: any) =>  void = () => {};
   @Input() allowedActions?: tablePermission  = undefined;
   @Output() addClick = new EventEmitter<void>();
   @Output() searchClick = new EventEmitter<void>();
@@ -101,19 +104,8 @@ export class TableComponent {
   }
 
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.paginator.pageIndex = this.page;
-  //   this.paginator.pageSize = this.pageSize;
-  // }
-  // onPageChange(event: PageEvent) {
-  //   this.page = event.pageIndex;
-  // }
   onDeleteAction = (element: any) => {
     this.DeleteAction(element);
-    console.log('++++++++++', this.crudservice)
-    // console.log('DeleteAction:', this.DeleteAction);
-
   }
 
   onEditAction(element: any) {
@@ -126,9 +118,6 @@ export class TableComponent {
   onAssignRoleAction(element: any){
     this.AssignRoleAction(element);
 
-  }
-  onPageChangeAction(element:any){
-    this.onPageChangeAction(element)
   }
 
 

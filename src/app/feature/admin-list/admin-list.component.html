@@ -1,7 +1,9 @@
+<mat-progress-bar mode="indeterminate" *ngIf="_isLoading"></mat-progress-bar>
 <div class="mat-elevation-z8 bg-white py-4 px-4">
 
   <app-table
   tableTitle="Admins"
+  [total]="total"
   [columns]="tableColumns"
   [data]="tableData"
   [allowedActions]="allowedActions"

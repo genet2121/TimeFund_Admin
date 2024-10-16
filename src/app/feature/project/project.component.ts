@@ -6,18 +6,24 @@ import { Fundraising } from '../../core/model/fundraiser.model';
 import tablePermission from '../../core/model/tablepermissions.mode';
 import { RouterModule } from '@angular/router';
 import { RoleService } from '../../core/services/role.service';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import api from '../../core/model/api.model';
 
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [TableComponent, RouterModule],
+  imports: [TableComponent, RouterModule, MatProgressBarModule, CommonModule],
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
+  _isLoading = true;
   _tableName = 'Projects';
+  total: number = 0;
+  currentPage = 0;
   tabledata: any[] = [];
-  isSearchVisible = false
+  isSearchVisible = false;
   tableColumns: Column[] = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Business Category' },
@@ -51,13 +57,19 @@ export class ProjectComponent implements OnInit {
   }
 
   fetchProjects(): void {
+    this._isLoading = true;
     this.crudService
-      .getAll('fundraising/getallfundraisings/undefined')
+      .getAll(
+        `fundraising/getallfundraisings/undefined?page=${this.currentPage + 1}&for_project=true`
+      )
       .subscribe(
-        (result: Fundraising[]) => {
+        (result: any) => {
+          const fetchedData = result as api<Fundraising>;
+          this.total = fetchedData.total;
           this.tabledata = this.transformData(
-            result.filter((project) => project.for_project === true)
+            fetchedData.data.filter((project) => project.for_project === true)
           );
+          this._isLoading = false;
         },
         (error) => {
           console.error('Error fetching data', error);
@@ -85,5 +97,8 @@ export class ProjectComponent implements OnInit {
   handleSearchClick() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
+  changePage(event: any) {
+    this.currentPage = event.pageIndex;
+    this.fetchProjects();
+  }
 }
