@@ -3,4 +3,6 @@ export default interface dashboard {
   totalDonations: number;
   totalFundraisers: number;
   totalProjects: number;
+  totalBlogs: number;
+
 }

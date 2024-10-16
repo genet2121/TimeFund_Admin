@@ -21,3 +21,35 @@
     icon="../../../assets/icons/blog_icon.png"
   ></app-dashborardcard>
 </div>
+
+<div class="mt-10 flex justify-center items-center bg-white rounded-lg card-with-border">
+
+  <div style="width: 50%; height: 400px;">
+    <apx-chart
+      [series]="columnChartOptions?.series"
+      [chart]="columnChartOptions?.chart"
+      [xaxis]="columnChartOptions?.xaxis"
+      [dataLabels]="columnChartOptions?.dataLabels"
+      [colors]="columnChartOptions?.colors"
+      [plotOptions]="columnChartOptions?.plotOptions"
+      [legend]="columnChartOptions?.legend"
+    ></apx-chart>
+    <p style="margin-top: 10px; font-weight: bold;">Total Donation Per Month</p>
+
+  </div>
+
+
+  <div style="width: 45%; height: 390px;">
+    <apx-chart
+      [series]="donutChartOptions?.series"
+      [chart]="donutChartOptions?.chart"
+      [labels]="donutChartOptions?.labels"
+      [responsive]="donutChartOptions?.responsive"
+    ></apx-chart>
+  </div>
+
+</div>
+
+
+
+
